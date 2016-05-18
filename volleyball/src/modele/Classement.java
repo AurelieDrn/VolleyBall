@@ -1,23 +1,19 @@
-/**
- * 
- */
-package modele;
+package Modele;
 
-/**
- * @author Yumiao Fu
- *
- */
+
+import java.util.ArrayList;
+import java.util.List;
+
+
 public class Classement {
-
-	public void initialiser() {
-		
+	private List<Equipe> listEquipeClassement;
+	private List<>
+	
+	public Classement(){
+		this.listEquipeClassement = new ArrayList<>();
 	}
 	
-	public void miseAJour() {
-		
-	}
+	public initialiser
 	
-	public int getRangEquipe(Equipe equipe) {
-		return 0;
-	}
+	
 }

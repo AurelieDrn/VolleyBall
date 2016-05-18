@@ -1,15 +1,5 @@
-/**
- * 
- */
-package modele;
+package Modele;
 
-/**
- * @author Yumiao Fu
- *
- */
 public class Championnat {
-
-	public void initialiserClassement() {
-		
-	}
+	
 }

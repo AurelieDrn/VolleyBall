@@ -1,12 +1,5 @@
-/**
- * 
- */
-package modele;
+package Modele;
 
-/**
- * @author Yumiao Fu
- *
- */
 public enum Etat {
-	EnCours, Fini;
+	encours, fini;
 }

@@ -1,68 +1,102 @@
-/**
- * 
- */
-package modele;
+package Modele;
 
-import org.newdawn.slick.Animation;
+import java.util.Observable;
 
-/**
- * @author Yumiao Fu
- *
- */
-public class Joueur {
+public class Joueur extends Observable{
+	private int numero;
+	private String nom;
+	private Role role;
+	private int force;
+	private int resistance;
+	private int vitesse;
+	private int precision;
+	private int forcePsy;
+	private boolean estBlesse;
+	private int salaire;
+	private Position position;
 	
-	private int direction;
-	private boolean moving;
-	private float x;
-	private float y;
-	private Animation[] animation;
+	public Joueur(){
+		super();
+	}
 	
-	public Joueur(int direction, float x, float y) {
-		this.direction = direction;
-		this.x = x;
-		this.y = y;
-		this.moving = false;
-		this.animation = new Animation[8];
+	public Joueur(int numero, String nom, Role role, int force, int resistance, int vitesse, int precision, int forcePsy, int salaire){
+		this.numero = numero;
+		this.nom = nom;
+		this.role = role;
+		this.force  = force;
+		this.resistance = resistance;
+		this.vitesse = vitesse;
+		this.precision = precision;
+		this.forcePsy = forcePsy;
+		this.salaire = salaire;
+		this.estBlesse = false;
+		this.position.init();
 	}
-
-	public Animation[] getAnimation() {
-		return animation;
+	 
+	public int getNumero() {
+		return numero;
 	}
-
-	public void setAnimation(Animation[] animation) {
-		this.animation = animation;
+	public void setNumero(int numero) {
+		this.numero = numero;
 	}
-
-	public int getDirection() {
-		return direction;
+	public String getNom() {
+		return nom;
 	}
-
-	public void setDirection(int direction) {
-		this.direction = direction;
+	public void setNom(String nom) {
+		this.nom = nom;
 	}
-
-	public boolean isMoving() {
-		return moving;
+	public Role getRole() {
+		return role;
 	}
-
-	public void setMoving(boolean moving) {
-		this.moving = moving;
+	public void setRole(Role role) {
+		this.role = role;
 	}
-
-	public float getX() {
-		return x;
+	public int getForce() {
+		return force;
 	}
-
-	public void setX(float x) {
-		this.x = x;
+	public void setForce(int force) {
+		this.force = force;
 	}
-
-	public float getY() {
-		return y;
+	public int getResistance() {
+		return resistance;
 	}
-
-	public void setY(float y) {
-		this.y = y;
+	public void setResistance(int resistance) {
+		this.resistance = resistance;
+	}
+	public int getVitesse() {
+		return vitesse;
+	}
+	public void setVitesse(int vitesse) {
+		this.vitesse = vitesse;
+	}
+	public int getPrecision() {
+		return precision;
+	}
+	public void setPrecision(int precision) {
+		this.precision = precision;
+	}
+	public int getForcePsy() {
+		return forcePsy;
+	}
+	public void setForcePsy(int forcePsy) {
+		this.forcePsy = forcePsy;
+	}
+	public boolean isEstBlesse() {
+		return estBlesse;
+	}
+	public void setEstBlesse(boolean estBlesse) {
+		this.estBlesse = estBlesse;
+	}
+	public int getSalaire() {
+		return salaire;
+	}
+	public void setSalaire(int salaire) {
+		this.salaire = salaire;
+	}
+	
+	public void init(){
+		this.setChanged();
+		this.notifyObservers();
 	}
 	
 }
