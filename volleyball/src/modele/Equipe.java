@@ -5,31 +5,25 @@ package modele;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Observable;
+
 /**
  * @author Yumiao Fu
- *
+ * relecteurs Aurélie Durand
  */
 public class Equipe {
 	private int numeroEquipe;
 	private String nomEquipe;
 	private int budget;
-	private List<Joueur> listJoueur;
-	private List<Sponsor> listSponsor;
-	
-	public Equipe(){
-		super();
-	}
-	
+	private List<Joueur> listJoueurs;
+	private List<Sponsor> listSponsors;
+		
 	public Equipe(int numero, String nom, int budget){
 		this.numeroEquipe = numero;
 		this.nomEquipe = nom;
 		this.budget = budget;
-		this.listJoueur = new ArrayList<>();
-		this.listSponsor = new ArrayList<>();
+		this.listJoueurs = new ArrayList<>();
+		this.listSponsors = new ArrayList<>();
 	}
-
-	
 
 	public int getNumeroEquipe() {
 		return this.numeroEquipe;
@@ -56,23 +50,17 @@ public class Equipe {
 	}
 
 	public List<Joueur> getListJoueur() {
-		return this.listJoueur;
+		return this.listJoueurs;
 	}
 
-	public void setListJoueur(List<Joueur> listJoueur) {
-		this.listJoueur = listJoueur;
+	public void setListJoueurs(List<Joueur> listJoueurs) {
+		this.listJoueurs = listJoueurs;
 	}
-	public List<Sponsor> getListSponsor() {
-		return listSponsor;
-	}
-
-	public void setListSponsor(List<Sponsor> listSponsor) {
-		this.listSponsor = listSponsor;
+	public List<Sponsor> getListSponsors() {
+		return listSponsors;
 	}
 
-	public void init(){
-		this.setChanged();
-		this.notifyObservers();
-	}	
-
+	public void setListSponsors(List<Sponsor> listSponsors) {
+		this.listSponsors = listSponsors;
+	}
 }

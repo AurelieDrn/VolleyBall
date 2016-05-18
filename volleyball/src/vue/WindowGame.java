@@ -6,7 +6,6 @@ package vue;
 import java.util.ArrayList;
 
 import org.newdawn.slick.Animation;
-import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.BasicGame;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -25,7 +24,7 @@ public class WindowGame extends BasicGame {
 
 	private GameContainer container;
 	private TiledMap map;
-	
+	// coordonnées x et y initialisés au coin inférieur gauche
 	private float x = 256, y = 608;
 	//private int direction = 0;
 	//private boolean moving = true;
@@ -53,9 +52,13 @@ public class WindowGame extends BasicGame {
 		//this.joueurs.add(animations);
 	}
 	
+	/*
+	 * Ajoute les sprites pour effectuer une animation
+	 */
 	private Animation loadAnimation(SpriteSheet spriteSheet, int startX, int endX, int y) {
 	    Animation animation = new Animation();
 	    for (int x = startX; x < endX; x++) {
+	    	// le deuxième argument de addFrame correspond à la vitesse d'enchaînement des sprites
 	        animation.addFrame(spriteSheet.getSprite(x, y), 500);
 	    }
 	    return animation;
@@ -70,6 +73,7 @@ public class WindowGame extends BasicGame {
 		this.map.render(0, 0);
 		for(int i=0; i < this.joueurs.size(); i++) {
 			Joueur j = this.joueurs.get(i);
+			// dessine les joueurs sur le terrain
 			g.drawAnimation(j.getAnimation()[j.getDirection() + (j.isMoving() ? 4 : 0)], x+j.getX()*32, y-j.getY()*32);
 		}
 	}
@@ -96,6 +100,7 @@ public class WindowGame extends BasicGame {
 	
 	@Override
     public void keyReleased(int key, char c) {
+		// Ferme la fenêtre au clic sur la touche ECHAP
         if (Input.KEY_ESCAPE == key) {
             container.exit();
         }
@@ -112,6 +117,9 @@ public class WindowGame extends BasicGame {
 	    }
 	}
 	
+	/*
+	 * Crée les objets animations pour chaque joueur de la liste joueurs
+	 */
 	public void createAnimations() throws SlickException {
 		for(int i=0; i < this.joueurs.size(); i++) {
 			SpriteSheet spriteSheet = new SpriteSheet("/src/main/resources/sprites/character.png", 32, 32);

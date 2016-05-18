@@ -5,9 +5,10 @@ package modele;
 
 /**
  * @author Yumiao Fu
- *
+ * relecteurs Aurélie Durand
  */
 public class Set {
+
 	private boolean premierSet;
 	private boolean secondSet;
 	private boolean dernierSet;
@@ -24,7 +25,7 @@ public class Set {
 		this.dernierSet = dernier;
 	}
 
-	public boolean isPremierSet() {
+	public boolean getPremierSet() {
 		return this.premierSet;
 	}
 
@@ -32,7 +33,7 @@ public class Set {
 		this.premierSet = premierSet;
 	}
 
-	public boolean isSecondSet() {
+	public boolean getSecondSet() {
 		return this.secondSet;
 	}
 
@@ -40,7 +41,7 @@ public class Set {
 		this.secondSet = secondSet;
 	}
 
-	public boolean isDernierSet() {
+	public boolean getDernierSet() {
 		return this.dernierSet;
 	}
 

@@ -5,16 +5,13 @@ package modele;
 
 /**
  * @author Yumiao Fu
- *
+ * relecteurs Aurélie Durand
  */
 public class Sponsor {
+
 	private String nomSponsor;
 	private int rangExige;
 	private int montantSubvention;
-	
-	public Sponsor(){
-		super();
-	}
 	
 	public Sponsor(String nom, int rangExige, int montantSubvention){
 		this.nomSponsor = nom;
@@ -45,5 +42,4 @@ public class Sponsor {
 	public void setMontantSubvention(int montantSubvention) {
 		this.montantSubvention = montantSubvention;
 	}
-
 }

@@ -1,55 +1,57 @@
 /**
  * 
  */
-package Modele;
+package modele;
 
 /**
- * @author Yumiao
+ * @author Yumiao Fu
  *
  */
 public class Match {
-	private Equipe gagnant;
-	private Equipe perdant;
+
+	private Equipe equipeJoueur;
+	private Equipe equipeIA;
 	private Etat etat;
 	private int nbTempsMortEquipeIA;
 	private int nbTempsMortEquipeJoueur;
 	private int nbChangementsEquipeIA;
-	private int nbChangementEquipeJoueur;
+	private int nbChangementsEquipeJoueur;
 	private boolean doitFaireService;
-	private Position positionBalle;
+	private Balle balle;
 	private Score score;
 	
-	public Match(Equipe gagnant, Equipe perdant){
-		this.gagnant = gagnant;
-		this.perdant = perdant;
-		this.etat = this.etat.fini;
-		this.nbChangementEquipeJoueur = 0;
-		this.nbChangementsEquipeIA = 0;
+	public Match(Equipe equipeJoueur, Equipe equipeIA) {
+		this.equipeJoueur = equipeJoueur;
+		this.equipeIA = equipeIA;
+		
+		this.etat = Etat.EnCours;
 		this.nbTempsMortEquipeIA = 0;
 		this.nbTempsMortEquipeJoueur = 0;
-		this.doitFaireService = false;
-		this.positionBalle.init();
-		this.score.init();	
+		this.nbChangementsEquipeIA = 0;
+		this.nbChangementsEquipeJoueur = 0;
+		this.doitFaireService = true;
+		this.balle = new Balle(7, 2);
+		this.score = new Score();
 	}
 
-	public Equipe getGagnant() {
-		return this.gagnant;
+	public Equipe getEquipeJoueur() {
+		return equipeJoueur;
 	}
 
-	public void setGagnant(Equipe gagnant) {
-		this.gagnant = gagnant;
+	public void setEquipeJoueur(Equipe equipeJoueur) {
+		this.equipeJoueur = equipeJoueur;
 	}
 
-	public Equipe getPerdant() {
-		return this.perdant;
+	public Equipe getEquipeIA() {
+		return equipeIA;
 	}
 
-	public void setPerdant(Equipe perdant) {
-		this.perdant = perdant;
+	public void setEquipeIA(Equipe equipeIA) {
+		this.equipeIA = equipeIA;
 	}
 
 	public Etat getEtat() {
-		return this.etat;
+		return etat;
 	}
 
 	public void setEtat(Etat etat) {
@@ -57,7 +59,7 @@ public class Match {
 	}
 
 	public int getNbTempsMortEquipeIA() {
-		return this.nbTempsMortEquipeIA;
+		return nbTempsMortEquipeIA;
 	}
 
 	public void setNbTempsMortEquipeIA(int nbTempsMortEquipeIA) {
@@ -65,7 +67,7 @@ public class Match {
 	}
 
 	public int getNbTempsMortEquipeJoueur() {
-		return this.nbTempsMortEquipeJoueur;
+		return nbTempsMortEquipeJoueur;
 	}
 
 	public void setNbTempsMortEquipeJoueur(int nbTempsMortEquipeJoueur) {
@@ -73,39 +75,43 @@ public class Match {
 	}
 
 	public int getNbChangementsEquipeIA() {
-		return this.nbChangementsEquipeIA;
+		return nbChangementsEquipeIA;
 	}
 
 	public void setNbChangementsEquipeIA(int nbChangementsEquipeIA) {
 		this.nbChangementsEquipeIA = nbChangementsEquipeIA;
 	}
 
-	public int getNbChangementEquipeJoueur() {
-		return this.nbChangementEquipeJoueur;
+	public int getNbChangementsEquipeJoueur() {
+		return nbChangementsEquipeJoueur;
 	}
 
-	public void setNbChangementEquipeJoueur(int nbChangementEquipeJoueur) {
-		this.nbChangementEquipeJoueur = nbChangementEquipeJoueur;
+	public void setNbChangementsEquipeJoueur(int nbChangementsEquipeJoueur) {
+		this.nbChangementsEquipeJoueur = nbChangementsEquipeJoueur;
 	}
 
 	public boolean isDoitFaireService() {
-		return this.doitFaireService;
+		return doitFaireService;
 	}
 
 	public void setDoitFaireService(boolean doitFaireService) {
 		this.doitFaireService = doitFaireService;
 	}
 
-	public Position getPositionBalle() {
-		return this.positionBalle;
+	public Balle getBalle() {
+		return balle;
 	}
 
-	public void setPositionBalle(Position positionBalle) {
-		this.positionBalle = positionBalle;
+	public void setBalle(Balle balle) {
+		this.balle = balle;
 	}
 
 	public Score getScore() {
-		return this.score;
+		return score;
 	}
-}
 
+	public void setScore(Score score) {
+		this.score = score;
+	}
+	
+}
