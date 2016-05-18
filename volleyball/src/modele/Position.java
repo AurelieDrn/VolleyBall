@@ -1,5 +1,12 @@
-package Modele;
+/**
+ * 
+ */
+package modele;
 
+/**
+ * @author Yumiao Fu
+ *
+ */
 public class Position {
 	private int x;
 	private int y;

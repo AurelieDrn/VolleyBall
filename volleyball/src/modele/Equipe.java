@@ -1,10 +1,16 @@
-package Modele;
+/**
+ * 
+ */
+package modele;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
-
-public class Equipe extends Observable{
+/**
+ * @author Yumiao Fu
+ *
+ */
+public class Equipe {
 	private int numeroEquipe;
 	private String nomEquipe;
 	private int budget;

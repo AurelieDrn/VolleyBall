@@ -1,7 +1,13 @@
-package Modele;
+/**
+ * 
+ */
+package modele;
 
+/**
+ * @author Yumiao Fu
+ *
+ */
 public class Score {
-	
 	private int scoreEquipeIA;
 	private int scoreEquipeJoueur;
 	private Set setEquipeIA;
@@ -53,6 +59,4 @@ public class Score {
 		this.scoreEquipeJoueur = 0;
 	}
 
-
-	
 }

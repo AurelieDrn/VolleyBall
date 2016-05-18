@@ -1,5 +1,12 @@
-package Modele;
+/**
+ * 
+ */
+package modele;
 
+/**
+ * @author Yumiao Fu
+ *
+ */
 public class Set {
 	private boolean premierSet;
 	private boolean secondSet;
@@ -41,4 +48,3 @@ public class Set {
 		this.dernierSet = dernierSet;
 	}
 }
-	

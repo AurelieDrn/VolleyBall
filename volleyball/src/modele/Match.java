@@ -1,5 +1,12 @@
+/**
+ * 
+ */
 package Modele;
 
+/**
+ * @author Yumiao
+ *
+ */
 public class Match {
 	private Equipe gagnant;
 	private Equipe perdant;

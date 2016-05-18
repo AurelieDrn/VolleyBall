@@ -1,8 +1,13 @@
-package Modele;
+/**
+ * 
+ */
+package modele;
 
-import java.util.Observable;
-
-public class Joueur extends Observable{
+/**
+ * @author Yumiao Fu
+ *
+ */
+public class Joueur {
 	private int numero;
 	private String nom;
 	private Role role;
@@ -93,10 +98,5 @@ public class Joueur extends Observable{
 	public void setSalaire(int salaire) {
 		this.salaire = salaire;
 	}
-	
-	public void init(){
-		this.setChanged();
-		this.notifyObservers();
-	}
-	
+
 }
