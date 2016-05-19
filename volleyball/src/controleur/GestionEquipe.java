@@ -36,8 +36,8 @@ public class GestionEquipe {
 	}
 	
 	public void payerSalaireJoueurs(){
-		for(Joueur joueur : this.equipe.getMembres()){
-			joueur.setGain(joueur.getGain()+ joueur.getSalaireHebdo());
+		for(Joueur joueur : this.equipe.getListJoueur()){
+			joueur.setGain(joueur.getGain()+ joueur.getSalaire());
 		}
 	}
 	
@@ -51,6 +51,6 @@ public class GestionEquipe {
 	} 
 	
 	public void obtenirArgentSponsors(Sponsor sponsor){
-		this.equipe.setBudget(this.equipe.getBudget() + sponsor.getSub());
+		this.equipe.setBudget(this.equipe.getBudget() + sponsor.getMontantSubvention());
 	}
 }

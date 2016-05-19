@@ -79,6 +79,26 @@ public class Equipe implements Comparable<Equipe>{
 		this.nomEquipe = nomEquipe;
 	}
 
+	public int getBudget() {
+		return budget;
+	}
+
+	public void setBudget(int budget) {
+		this.budget = budget;
+	}
+
+	public int getSalaireHebdo() {
+		return salaireHebdo;
+	}
+
+	public void setSalaireHebdo(int salaireHebdo) {
+		this.salaireHebdo = salaireHebdo;
+	}
+
+	public List<Joueur> getListJoueurs() {
+		return listJoueurs;
+	}
+
 	public List<Joueur> getListJoueur() {
 		return this.listJoueurs;
 	}

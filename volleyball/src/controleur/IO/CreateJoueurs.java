@@ -19,7 +19,9 @@ public class CreateJoueurs {
 		this.nbrJoueurs = 96;
 		for(int i = 0; i<this.nbrJoueurs; i++){
 			int fatigue = 0;
-			int force = loadRandom();;
+			int numero = 0;
+			
+			int force = loadRandom();
 			int salaireHebdo = loadRandomSalary();
 			int precision = loadRandom();
 			int fpsy = loadRandom();
@@ -27,10 +29,9 @@ public class CreateJoueurs {
 			int vitesse = loadRandom();
 			Role role = Role.randomRole();
 			int resistance = loadRandom();
-			Position position = null;
-			boolean estBlesse = false;
-			joueurs.add(new Joueur(position, salaireHebdo, role, fatigue, force, precision, fpsy, vitesse, resistance));
-		}
+			Position position = new Position(0,0);
+			this.joueurs.add(new Joueur(0, null, fpsy, salaireHebdo, role, 0, force, precision, vitesse, resistance, position, 0, 0, false, false));
+		}	
 	}
     public static int randomInt(int min, int max) {
 

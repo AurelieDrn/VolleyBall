@@ -16,25 +16,24 @@ public class Joueur {
 	private String nom;
 	private int forcePsy;
 	private int salaire;
-	private int direction; // de 0 à 4
-	private boolean moving; // vrai si le joueur est en mouvement
-	private float x;
-	private float y;
-	private int gain;
-	private int salaireHebdo;
-	private boolean estBlesse;
 	private Role role;
 	private int fatigue;
 	private int force;
 	private int precision;
-	private int psy;
 	private int vitesse;
 	private int resistance;
+	private Position position;
+	private int gain;
+	private int direction; // de 0 à 4
+	private boolean moving; // vrai si le joueur est en mouvement
+	private float x;
+	private float y;
+	private boolean estBlesse;
 	
 
 	private Animation[] animation; // permet d'animer le joueur
 	
-	public Joueur(int numero, String nom, Role role, int force, int resistance, int vitesse, int precision, int forcePsy, int salaire) {
+	public Joueur(int numero, String nom, Role role, int force, int resistance, int vitesse, int precision, int forcePsy, int salaire, int gain) {
 		this.numero = numero;
 		this.nom = nom;
 		this.role = role;
@@ -43,15 +42,38 @@ public class Joueur {
 		this.vitesse = vitesse;
 		this.precision = precision;
 		this.forcePsy = forcePsy;
-		this.salaire = salaire;
-		
+		this.salaire = salaire;	
 		this.estBlesse = false;
 		this.direction = 0;
 		this.moving = false;
 		this.x = 0;
 		this.y = 0;
+		this.gain = gain;
 	}
-	
+
+
+	public Joueur(int numero, String nom, int forcePsy, int salaire, Role role, int fatigue, int force, int precision,
+			int vitesse, int resistance, Position position, int gain, int direction, boolean moving, 
+			boolean estBlesse) {
+		super();
+		this.numero = numero;
+		this.nom = nom;
+		this.forcePsy = forcePsy;
+		this.salaire = salaire;
+		this.role = role;
+		this.fatigue = fatigue;
+		this.force = force;
+		this.precision = precision;
+		this.vitesse = vitesse;
+		this.resistance = resistance;
+		this.position = position;
+		this.gain = gain;
+		this.direction = direction;
+		this.moving = moving;
+		this.estBlesse = estBlesse;
+	}
+
+
 	// Constructeur provisoire pour tester rapidement dans l'interface
 	public Joueur(int direction, int x, int y) {
 		this.direction = direction;
@@ -61,29 +83,9 @@ public class Joueur {
 		this.animation = new Animation[8];
 		this.gain = 0;
 		this.role = null; 
-		this.salaireHebdo = 200;//idem pour le salaire
 		this.estBlesse = false;
 	}
 	
-	public Joueur( int salaireHebdo, Role role, int fatigue, int force, int precision, int psy,
-			int vitesse, int resistance) {
-		super();
-		this.salaireHebdo = salaireHebdo;
-		this.role = role;
-		this.fatigue = fatigue;
-		this.force = force;
-		this.precision = precision;
-		this.psy = psy;
-		this.vitesse = vitesse;
-		this.resistance = resistance;
-	}
-	public int getSalaireHebdo() {
-		return salaireHebdo;
-	}
-
-	public void setSalaireHebdo(int salaireHebdo) {
-		this.salaireHebdo = salaireHebdo;
-	}
 
 	public Role getRole() {
 		return role;
@@ -202,15 +204,15 @@ public class Joueur {
 	public void setFatigue(int fatigue) {
 		this.fatigue = fatigue;
 	}
-	
 
-	public int getPsy() {
-		return psy;
+
+	@Override
+	public String toString() {
+		return "Joueur [numero=" + numero + ", nom=" + nom + ", forcePsy=" + forcePsy + ", salaire=" + salaire
+				+ ", role=" + role + ", fatigue=" + fatigue + ", force=" + force + ", precision=" + precision
+				+ ", vitesse=" + vitesse + ", resistance=" + resistance + ", position=" + position + ", gain=" + gain
+				+ ", direction=" + direction + ", moving=" + moving + ", x=" + x + ", y=" + y + ", estBlesse="
+				+ estBlesse + ", animation=" + Arrays.toString(animation) + "]\n";
 	}
-	public void setPsy(int psy) {
-		this.psy = psy;
-	}
-
-
 	
 }
