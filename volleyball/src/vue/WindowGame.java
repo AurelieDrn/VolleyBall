@@ -4,6 +4,7 @@
 package vue;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.AppGameContainer;
@@ -31,12 +32,12 @@ public class WindowGame extends BasicGame {
 	//private boolean moving = true;
 	
 	//private ArrayList<Animation[]> joueurs;
-	private ArrayList<Joueur> joueurs;
+	private List<Joueur> joueurs;
 	
-	public WindowGame(ArrayList<Joueur> joueurs) {
+	public WindowGame(List<Joueur> list) {
 		super("WindowGame");
 		//this.joueurs = new ArrayList<Animation[]>();
-		this.joueurs = joueurs;
+		this.joueurs = list;
 	}
 	
 	/* (non-Javadoc)
@@ -128,7 +129,7 @@ public class WindowGame extends BasicGame {
 		}
 	}
 	
-	public ArrayList<Joueur> getJoueurs() {
+	public List<Joueur> getJoueurs() {
 		return joueurs;
 	}
 
