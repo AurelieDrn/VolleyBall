@@ -3,6 +3,8 @@
  */
 package modele;
 
+import java.util.Arrays;
+
 import org.newdawn.slick.Animation;
 
 /**
@@ -10,12 +12,24 @@ import org.newdawn.slick.Animation;
  *
  */
 public class Joueur {
-	
+	private int numero;
 	private int direction;
 	private boolean moving;
 	private float x;
 	private float y;
+	private Position position;
+	private int gain;
+	private int salaireHebdo;
+	private boolean estBlesse;
 	private Animation[] animation;
+	private Role role;
+	private int fatigue;
+	private int force;
+	private int precision;
+	private int psy;
+	private int vitesse;
+	private int resistance;
+	
 	
 	public Joueur(int direction, float x, float y) {
 		this.direction = direction;
@@ -23,6 +37,46 @@ public class Joueur {
 		this.y = y;
 		this.moving = false;
 		this.animation = new Animation[8];
+		this.gain = 0;
+		this.role = null; // je sais pas comment définir le role,
+		this.salaireHebdo = 200;//idem pour le salaire
+		this.estBlesse = false;
+	}
+	
+	public Joueur(Position position, int salaireHebdo, Role role, int fatigue, int force, int precision, int psy,
+			int vitesse, int resistance) {
+		super();
+		this.position = position;
+		this.salaireHebdo = salaireHebdo;
+		this.role = role;
+		this.fatigue = fatigue;
+		this.force = force;
+		this.precision = precision;
+		this.psy = psy;
+		this.vitesse = vitesse;
+		this.resistance = resistance;
+	}
+	public int getSalaireHebdo() {
+		return salaireHebdo;
+	}
+
+	public void setSalaireHebdo(int salaireHebdo) {
+		this.salaireHebdo = salaireHebdo;
+	}
+
+	public Role getRole() {
+		return role;
+	}
+
+	public void setRole(Role role) {
+		this.role = role;
+	}
+	public int getGain() {
+		return gain;
+	}
+
+	public void setGain(int gain) {
+		this.gain = gain;
 	}
 
 	public Animation[] getAnimation() {
@@ -64,5 +118,69 @@ public class Joueur {
 	public void setY(float y) {
 		this.y = y;
 	}
+	public int getNumero() {
+		return numero;
+	}
+	public void setNumero(int numero) {
+		this.numero = numero;
+	}
+	public Position getPosition() {
+		return position;
+	}
+	public void setPosition(Position position) {
+		this.position = position;
+	}
+	public boolean isEstBlesse() {
+		return estBlesse;
+	}
+	public void setEstBlesse(boolean estBlesse) {
+		this.estBlesse = estBlesse;
+	}
+	public int getFatigue() {
+		return fatigue;
+	}
+	public void setFatigue(int fatigue) {
+		this.fatigue = fatigue;
+	}
+	public int getForce() {
+		return force;
+	}
+	public void setForce(int force) {
+		this.force = force;
+	}
+	public int getPrecision() {
+		return precision;
+	}
+	public void setPrecision(int precision) {
+		this.precision = precision;
+	}
+	public int getPsy() {
+		return psy;
+	}
+	public void setPsy(int psy) {
+		this.psy = psy;
+	}
+	public int getVitesse() {
+		return vitesse;
+	}
+	public void setVitesse(int vitesse) {
+		this.vitesse = vitesse;
+	}
+	public int getResistance() {
+		return resistance;
+	}
+	public void setResistance(int resistance) {
+		this.resistance = resistance;
+	}
+
+	@Override
+	public String toString() {
+		return "Joueur [numero=" + numero + ", direction=" + direction + ", moving=" + moving + ", x=" + x + ", y=" + y
+				+ ", position=" + position + ", gain=" + gain + ", salaireHebdo=" + salaireHebdo + ", estBlesse="
+				+ estBlesse + ", animation=" + Arrays.toString(animation) + ", role=" + role + ", fatigue=" + fatigue
+				+ ", force=" + force + ", precision=" + precision + ", psy=" + psy + ", vitesse=" + vitesse
+				+ ", resistance=" + resistance + "]\n";
+	}
+
 	
 }
