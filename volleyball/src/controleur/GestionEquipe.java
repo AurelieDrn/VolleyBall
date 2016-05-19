@@ -48,7 +48,7 @@ public class GestionEquipe {
 	public void obtenirSponsor(Sponsor sponsor){
 		this.equipe.addSponsor(sponsor);
 		obtenirArgentSponsors(sponsor);
-	}
+	} 
 	
 	public void obtenirArgentSponsors(Sponsor sponsor){
 		this.equipe.setBudget(this.equipe.getBudget() + sponsor.getSub());
