@@ -5,7 +5,6 @@ import java.util.Arrays;
 import java.util.List;
 
 import modele.Joueur;
-import modele.Position;
 import modele.Role;
 
 public class CreateJoueurs {
@@ -27,10 +26,9 @@ public class CreateJoueurs {
 			int fpsy = loadRandom();
 			int resis = loadRandom();
 			int vitesse = loadRandom();
-			Role role = Role.randomRole();
+			Role role = Role.getRandom();
 			int resistance = loadRandom();
-			Position position = new Position(0,0);
-			this.joueurs.add(new Joueur(0, null, fpsy, salaireHebdo, role, 0, force, precision, vitesse, resistance, position, 0, 0, false, false));
+
 		}	
 	}
     public static int randomInt(int min, int max) {
