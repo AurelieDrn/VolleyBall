@@ -18,7 +18,7 @@ public class GestionEquipe {
 	public GestionEquipe(Equipe equipe) {
 		super();
 		this.equipe = equipe;
-	}
+	} 
 	
 	public void recruterJoueur(Joueur joueur){
 		if(this.equipe.getBudget() > joueur.getSalaire() && !(this.equipe.equipeComplete())) {

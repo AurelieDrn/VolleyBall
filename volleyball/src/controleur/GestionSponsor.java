@@ -14,7 +14,7 @@ import modele.Sponsor;
  * @author Meriem EL QSIMI
  *
  */
-public class GestionSponsor {
+public class GestionSponsor { 
 	private List<Sponsor> listSponsors;
 	private Classement classement;
 	private GestionEquipe gestionEquipeIA;

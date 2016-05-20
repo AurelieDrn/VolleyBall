@@ -28,7 +28,8 @@ public class CreateJoueurs {
 			int vitesse = loadRandom();
 			Role role = Role.getRandom();
 			int resistance = loadRandom();
-
+			this.joueurs.add(new Joueur(resistance, null, role, resistance, resistance, resistance, resistance, resistance, resistance));
+			
 		}	
 	}
     public static int randomInt(int min, int max) {

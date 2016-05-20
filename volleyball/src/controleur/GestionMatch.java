@@ -10,7 +10,7 @@ import modele.Joueur;
  * @author Meriem El Qsimi
  *
  */
-public class GestionMatch {
+public class GestionMatch { 
 	private Match match;
 	private GestionEquipe gestionEquipeIA;
 	private GestionEquipe gestionEquipeJoueur;
