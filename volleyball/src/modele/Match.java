@@ -90,7 +90,7 @@ public class Match {
 		this.nbChangementsEquipeJoueur = nbChangementsEquipeJoueur;
 	}
 
-	public boolean isDoitFaireService() {
+	public boolean getDoitFaireService() {
 		return doitFaireService;
 	}
 
@@ -100,10 +100,6 @@ public class Match {
 
 	public Balle getBalle() {
 		return balle;
-	}
-
-	public void setBalle(Balle balle) {
-		this.balle = balle;
 	}
 
 	public Score getScore() {

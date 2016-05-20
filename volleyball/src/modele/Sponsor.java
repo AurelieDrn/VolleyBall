@@ -8,10 +8,10 @@ package modele;
  * relecteurs Aurélie Durand
  */
 public class Sponsor {
-	private int rangExige;
-	private String nomSponsor;
-	private int montantSubvention;
 
+	private String nomSponsor;
+	private int rangExige;
+	private int montantSubvention;
 	
 	public Sponsor(String nom, int rangExige, int montantSubvention){
 		this.nomSponsor = nom;

@@ -8,33 +8,25 @@ import java.util.List;
 
 /**
  * @author Yumiao Fu
- * relecteurs Aurélie Durand
+ * relecteurs Aurélie Durand, Meriem El Qsimi
  */
-public class Equipe implements Comparable<Equipe>{
-
+public class Equipe implements Comparable<Equipe> {
+	
 	private int numeroEquipe;
 	private String nomEquipe;
 	private int budget;
 	private List<Joueur> listJoueurs;
 	private List<Sponsor> listSponsors;
-	private int salaireHebdo;
-	
-	public Equipe(int numero, String nom) { 
-		super();
+	private final int SALAIRE = 5000;
+		
+	public Equipe(int numero, String nom) {
 		this.numeroEquipe = numero;
 		this.nomEquipe = nom;
-		this.budget = budget;
+		this.budget = 0;
 		this.listJoueurs = new ArrayList<>();
 		this.listSponsors = new ArrayList<>();
-		this.salaireHebdo = 5000; //je sais pas comment on va l'attribuer
-		//le salaire hebdo sera-il le même pour toutes les équipes? ou bien on l'attribue lors de la création?
 	}
-	
 
-		
-
-
-	
 	public boolean equipeComplete(){
 		return this.listJoueurs.size() == 12;
 	}
@@ -43,24 +35,20 @@ public class Equipe implements Comparable<Equipe>{
 		return this.listJoueurs.add(joueur);
 	}
 	
-	public void deleteJoueur(Joueur joueur){
-		this.listJoueurs.remove(joueur);
+	public boolean deleteJoueur(Joueur joueur){
+		return this.listJoueurs.remove(joueur);
 	}
 	
 	public boolean addSponsor(Sponsor sponsor){
 		return this.listSponsors.add(sponsor);
 	}
 	
+	public boolean deleteSponsor(Sponsor sponsor) {
+		return this.listSponsors.remove(sponsor);
+	}
+	
 	public void deleteJoueur(Sponsor sponsor){
 		this.listJoueurs.remove(sponsor);
-	}
-
-	
-	
-	@Override
-	public int compareTo(Equipe eq) {
-		int last = this.nomEquipe.compareTo(eq.nomEquipe);	
-		return last == 0 ? this.nomEquipe.compareTo(eq.nomEquipe) : last;
 	}
 	
 	public int getNumeroEquipe() {
@@ -80,23 +68,11 @@ public class Equipe implements Comparable<Equipe>{
 	}
 
 	public int getBudget() {
-		return budget;
+		return this.budget;
 	}
-
+	
 	public void setBudget(int budget) {
 		this.budget = budget;
-	}
-
-	public int getSalaireHebdo() {
-		return salaireHebdo;
-	}
-
-	public void setSalaireHebdo(int salaireHebdo) {
-		this.salaireHebdo = salaireHebdo;
-	}
-
-	public List<Joueur> getListJoueurs() {
-		return listJoueurs;
 	}
 
 	public List<Joueur> getListJoueur() {
@@ -106,11 +82,20 @@ public class Equipe implements Comparable<Equipe>{
 	public void setListJoueurs(List<Joueur> listJoueurs) {
 		this.listJoueurs = listJoueurs;
 	}
-	public List<Sponsor> getListSponsors() {
-		return listSponsors;
+	
+	public void obtenirSalaire() {
+		this.budget = this.budget + SALAIRE;
 	}
 
-	public void setListSponsors(List<Sponsor> listSponsors) {
-		this.listSponsors = listSponsors;
+	@Override
+	public int compareTo(Equipe eq) {
+		int last = this.nomEquipe.compareTo(eq.nomEquipe);	
+		return last == 0 ? this.nomEquipe.compareTo(eq.nomEquipe) : last;
+	}
+
+	@Override
+	public String toString() {
+		return "Equipe [numeroEquipe=" + numeroEquipe + ", nomEquipe=" + nomEquipe + ", budget=" + budget
+				+ ", listJoueurs=" + listJoueurs + ", listSponsors=" + listSponsors + "]";
 	}
 }

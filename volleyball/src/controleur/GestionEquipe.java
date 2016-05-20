@@ -3,15 +3,14 @@
  */
 package controleur;
 
-import java.util.List;
-
+import modele.Caracteristique;
 import modele.Equipe;
 import modele.Joueur;
 import modele.Sponsor;
 
 /**
- * @author Aurelie
- *
+ * @author Meriem El Qsimi
+ * relecteurs Aurélie Durand
  */
 public class GestionEquipe {
 	private Equipe equipe;
@@ -21,34 +20,45 @@ public class GestionEquipe {
 		this.equipe = equipe;
 	}
 	
-	public void recruterJoueur( Joueur joueur){
-		if(!this.equipe.equipeComplete()){
+	public void recruterJoueur(Joueur joueur){
+		if(this.equipe.getBudget() > joueur.getSalaire() && !(this.equipe.equipeComplete())) {
 			this.equipe.addJoueur(joueur);
 		}
 	}
 	
-	public void licencierJoueur( Joueur joueur){
+	public void licencierJoueur(Joueur joueur){
 		this.equipe.deleteJoueur(joueur);
 	}
 	
 	public void reposerJoueur(Joueur joueur){
-		
+		joueur.setFatigue(joueur.getFatigue()+1);
+	}
+	
+	public void entrainerJoueur(Joueur joueur){
+		Caracteristique caracteristique = Caracteristique.getRandom();
+		switch(caracteristique){
+			case force:
+				joueur.setForce(joueur.getForce()+1);
+			case resistance:
+				joueur.setResistance(joueur.getResistance()+1);
+			case vitesse:
+				joueur.setVitesse(joueur.getVitesse()+1);
+			case precision:
+				joueur.setPrecision(joueur.getPrecision()+1);
+			default:
+				System.out.println("Quelle caractéristique dois-je améliorer ?");
+		}
 	}
 	
 	public void payerSalaireJoueurs(){
 		for(Joueur joueur : this.equipe.getListJoueur()){
-			joueur.setGain(joueur.getGain()+ joueur.getSalaire());
+			this.equipe.setBudget(this.equipe.getBudget()-joueur.getSalaire());
 		}
 	}
 	
 	public void obtenirSalaireEquipe(){
-		
+		this.equipe.obtenirSalaire();
 	}
-	
-	public void obtenirSponsor(Sponsor sponsor){
-		this.equipe.addSponsor(sponsor);
-		obtenirArgentSponsors(sponsor);
-	} 
 	
 	public void obtenirArgentSponsors(Sponsor sponsor){
 		this.equipe.setBudget(this.equipe.getBudget() + sponsor.getMontantSubvention());
