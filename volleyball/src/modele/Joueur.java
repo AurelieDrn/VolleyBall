@@ -9,7 +9,7 @@ import org.newdawn.slick.Animation;
 
 /**
  * @author Yumiao Fu
- * relecteurs Aurélie Durand
+ * relecteurs Aurélie Durand, Meriem EL QSIMI
  */
 public class Joueur {
 	
@@ -23,7 +23,7 @@ public class Joueur {
 	private int forcePsy;
 	private boolean estBlesse;
 	private int salaire;
-	
+	private boolean enJeu;
 	private int direction; // de 0 à 4
 	private boolean moving; // vrai si le joueur est en mouvement
 	private float x;
@@ -38,7 +38,7 @@ public class Joueur {
 		this.salaire = salaire;
 		this.role = role;
 		this.forcePsy = forcePsy;
-		
+		this.enJeu = false;
 		// caractéristiques améliorables
 		this.force = force;
 		this.resistance = resistance;
@@ -54,6 +54,14 @@ public class Joueur {
 		this.fatigue = 0;
 	}
 	
+	public boolean isEnJeu() {
+		return enJeu;
+	}
+
+	public void setEnJeu(boolean enJeu) {
+		this.enJeu = enJeu;
+	}
+
 	// Constructeur provisoire pour tester rapidement dans l'interface
 	public Joueur(int direction, int x, int y) {
 		this.direction = direction;
@@ -195,7 +203,7 @@ public class Joueur {
 				+ resistance + ", vitesse=" + vitesse + ", precision=" + precision + ", forcePsy=" + forcePsy
 				+ ", estBlesse=" + estBlesse + ", salaire=" + salaire + ", direction=" + direction + ", moving="
 				+ moving + ", x=" + x + ", y=" + y + ", fatigue=" + fatigue + ", animation="
-				+ Arrays.toString(animation) + "]";
+				+ Arrays.toString(animation) + "]\n";
 	}
 
 }

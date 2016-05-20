@@ -11,7 +11,7 @@ public class TestModele {
 		}
 		
 		Equipe equipe = EquipeFactory.getEquipe();
-		System.out.println(equipe);
+		//System.out.println(equipe);
 	}
 
 }
