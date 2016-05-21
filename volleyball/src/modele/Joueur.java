@@ -5,11 +5,11 @@ package modele;
 
 import java.util.Arrays;
 
-import org.newdawn.slick.Animation;
+//import org.newdawn.slick.Animation;
 
 /**
  * @author Yumiao Fu
- * relecteurs Aurélie Durand, Meriem EL QSIMI
+ * relecteurs Auré–˜ie Durand, Meriem EL QSIMI
  */
 public class Joueur {
 	
@@ -24,13 +24,13 @@ public class Joueur {
 	private boolean estBlesse;
 	private int salaire;
 	private boolean enJeu;
-	private int direction; // de 0 à 4
+	private int direction; // de 0 ï¿½ 4
 	private boolean moving; // vrai si le joueur est en mouvement
 	private float x;
 	private float y;
 	private int fatigue;
 	
-	private Animation[] animation; // permet d'animer le joueur
+//private Animation[] animation; // permet d'animer le joueur
 	
 	public Joueur(int numero, String nom, Role role, int force, int resistance, int vitesse, int precision, int forcePsy, int salaire) {
 		this.numero = numero;
@@ -39,13 +39,13 @@ public class Joueur {
 		this.role = role;
 		this.forcePsy = forcePsy;
 		this.enJeu = false;
-		// caractéristiques améliorables
+		// caracté–žistiques amé–˜iorables
 		this.force = force;
 		this.resistance = resistance;
 		this.vitesse = vitesse;
 		this.precision = precision;
 
-		// états
+		// é– ats
 		this.estBlesse = false;
 		this.direction = 0;
 		this.moving = false;
@@ -165,13 +165,13 @@ public class Joueur {
 		this.moving = moving;
 	}
 
-	public Animation[] getAnimation() {
-		return animation;
-	}
+//	public Animation[] getAnimation() {
+//		return animation;
+//	}
 
-	public void setAnimation(Animation[] animation) {
-		this.animation = animation;
-	}
+//	public void setAnimation(Animation[] animation) {
+//		this.animation = animation;
+//	}
 
 	public float getX() {
 		return x;
@@ -203,7 +203,7 @@ public class Joueur {
 				+ resistance + ", vitesse=" + vitesse + ", precision=" + precision + ", forcePsy=" + forcePsy
 				+ ", estBlesse=" + estBlesse + ", salaire=" + salaire + ", direction=" + direction + ", moving="
 				+ moving + ", x=" + x + ", y=" + y + ", fatigue=" + fatigue + ", animation="
-				+ Arrays.toString(animation) + "]\n";
+				/*+ Arrays.toString(animation)*/ + "]\n";
 	}
 
 }

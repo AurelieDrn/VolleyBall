@@ -10,7 +10,7 @@ import java.util.List;
  * @author Yumiao Fu
  * relecteurs Aurélie Durand, Meriem El Qsimi
  */
-public class Equipe implements Comparable<Equipe> {
+public class Equipe extends Set implements Comparable<Equipe> {
 	
 	private int numeroEquipe;
 	private String nomEquipe;

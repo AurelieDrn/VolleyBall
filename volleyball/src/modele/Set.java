@@ -7,7 +7,7 @@ package modele;
  * @author Yumiao Fu
  * relecteurs Aurélie Durand
  */
-public class Set {
+public class Set{
 
 	private boolean premierSet;
 	private boolean secondSet;
