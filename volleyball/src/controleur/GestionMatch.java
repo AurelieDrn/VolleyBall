@@ -25,12 +25,12 @@ public class GestionMatch {
 	public void fatigueJoueurs(){
 		for(Joueur joueur : match.getEquipeIA().getListJoueur()){
 			if(joueur.isEnJeu()){
-				joueur.setFatigue(joueur.getFatigue()+1);
+				this.gestionEquipeIA.fatigueJoueur(joueur);
 			}
 		}		
 		for(Joueur joueur : match.getEquipeJoueur().getListJoueur()){
 			if(joueur.isEnJeu()){
-				joueur.setFatigue(joueur.getFatigue()+1);
+				this.gestionEquipeJoueur.fatigueJoueur(joueur);
 			}
 		}
 	}

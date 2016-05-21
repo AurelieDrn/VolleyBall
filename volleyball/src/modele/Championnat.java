@@ -26,7 +26,7 @@ public class Championnat {
 		this.classementEquipe = new Classement(listEquipe);
 	}
 	public void initialiserClassement() {
-		
+		this.classementEquipe.initialiser();
 	}
 	public String getNomChampionnat() {
 		return nomChampionnat;

@@ -1,6 +1,4 @@
-/**
- * 
- */
+
 package controleur;
 
 import modele.Caracteristique;
@@ -31,9 +29,11 @@ public class GestionEquipe {
 	}
 	
 	public void reposerJoueur(Joueur joueur){
-		joueur.setFatigue(joueur.getFatigue()+1);
+		joueur.setFatigue(joueur.getFatigue()-1);
 	}
-	
+	public void fatigueJoueur(Joueur joueur){
+		joueur.setFatigue(joueur.getFatigue()+1);
+	}	
 	public void entrainerJoueur(Joueur joueur){
 		Caracteristique caracteristique = Caracteristique.getRandom();
 		switch(caracteristique){
