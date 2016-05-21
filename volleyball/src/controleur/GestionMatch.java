@@ -4,7 +4,14 @@
 package controleur;
 
 import modele.Match;
+import modele.Role;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import modele.Equipe;
 import modele.Joueur;
+import modele.JoueurBlesseException;
 
 /**
  * @author Meriem El Qsimi
@@ -14,13 +21,16 @@ public class GestionMatch {
 	private Match match;
 	private GestionEquipe gestionEquipeIA;
 	private GestionEquipe gestionEquipeJoueur;
+	List<Joueur> joueursEnJeuIA;
+	List<Joueur> joueursEnJeuJ;
 	public GestionMatch(Match match, GestionEquipe eqIA, GestionEquipe eqJ) {
 		super();
 		this.match = match;
 		this.gestionEquipeIA = eqIA;
 				//new GestionEquipe(this.match.getEquipeIA());
 		this.gestionEquipeIA = eqJ;
-
+		this.joueursEnJeuIA = new ArrayList<Joueur>();
+		this.joueursEnJeuJ = new ArrayList<Joueur>();
 	}
 	public void fatigueJoueurs(){
 		for(Joueur joueur : match.getEquipeIA().getListJoueur()){
@@ -60,6 +70,30 @@ public class GestionMatch {
 			}
 		}
 	}
+	
+	public void joueurJoueur(Joueur joueur, GestionEquipe gEquipe) throws JoueurBlesseException{
+		gEquipe.jouerJoueur(joueur);
+	}
+	
+	public boolean checkEquipeJ(){
+		int i = 0;
+		for(Joueur joueur : this.gestionEquipeJoueur.getJoueurEnJeu()){
+			if(joueur.getRole() == Role.passeur){
+				i++;
+			}
+		}
+		return (i==1);
+	}
+	public boolean checkEquipeIa(){		
+		int i = 0;
+		for(Joueur joueur : this.gestionEquipeIA.getJoueurEnJeu()){
+			if(joueur.getRole() == Role.passeur){
+				i++;
+			}
+		}
+	return (i==1);
+	}
+	
 	public void tempsMort(){
 	}
 	public void jouer(){

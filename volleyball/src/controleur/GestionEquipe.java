@@ -1,9 +1,13 @@
 
 package controleur;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import modele.Caracteristique;
 import modele.Equipe;
 import modele.Joueur;
+import modele.JoueurBlesseException;
 import modele.Sponsor;
 
 /**
@@ -12,10 +16,13 @@ import modele.Sponsor;
  */
 public class GestionEquipe {
 	private Equipe equipe;
+	private List<Joueur> joueurEnJeu;
 	
+
 	public GestionEquipe(Equipe equipe) {
 		super();
 		this.equipe = equipe;
+		this.joueurEnJeu = new ArrayList<Joueur>();
 	}
 	
 	public void recruterJoueur(Joueur joueur){
@@ -63,4 +70,25 @@ public class GestionEquipe {
 	public void obtenirArgentSponsors(Sponsor sponsor){
 		this.equipe.setBudget(this.equipe.getBudget() + sponsor.getMontantSubvention());
 	}
+	
+	public List<Joueur> getJoueurEnJeu() {
+		return joueurEnJeu;
+	}
+
+	public void setJoueurEnJeu(List<Joueur> joueurEnJeu) {
+		this.joueurEnJeu = joueurEnJeu;
+	}
+
+	public void jouerJoueur(Joueur joueur) throws JoueurBlesseException{
+			joueur.setEnJeu(true);
+			this.joueurEnJeu.add(joueur);
+	}
+	public Equipe getEquipe() {
+		return equipe;
+	}
+
+	public void setEquipe(Equipe equipe) {
+		this.equipe = equipe;
+	}
+	
 }
