@@ -67,7 +67,10 @@ public class Joueur {
 		return enJeu;
 	}
 
-	public void setEnJeu(boolean enJeu) {
+	public void setEnJeu(boolean enJeu) throws JoueurBlesseException {
+		if(enJeu == true && this.isEstBlesse()) {
+			throw new JoueurBlesseException();
+		}
 		this.enJeu = enJeu;
 	}
 
