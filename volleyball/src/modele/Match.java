@@ -5,7 +5,7 @@ package modele;
 
 /**
  * @author Yumiao Fu
- *
+ * relecteurs Aurelie Durand, Meriem El Qsimi
  */
 public class Match {
 
@@ -31,7 +31,7 @@ public class Match {
 		this.nbChangementsEquipeJoueur = 0;
 		this.doitFaireService = true;
 		this.balle = new Balle(7, 2);
-		this.score = new Score();
+		this.score = new Score(equipeIA, equipeJoueur);
 	}
 
 	public Equipe getEquipeJoueur() {

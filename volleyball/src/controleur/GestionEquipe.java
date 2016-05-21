@@ -18,7 +18,7 @@ public class GestionEquipe {
 	public GestionEquipe(Equipe equipe) {
 		super();
 		this.equipe = equipe;
-	} 
+	}
 	
 	public void recruterJoueur(Joueur joueur){
 		if(this.equipe.getBudget() > joueur.getSalaire() && !(this.equipe.equipeComplete())) {
@@ -31,7 +31,7 @@ public class GestionEquipe {
 	}
 	
 	public void reposerJoueur(Joueur joueur){
-		joueur.setFatigue(joueur.getFatigue()-1);
+		joueur.setFatigue(joueur.getFatigue()+1);
 	}
 	
 	public void entrainerJoueur(Joueur joueur){
@@ -56,14 +56,6 @@ public class GestionEquipe {
 		}
 	}
 	
-	public Equipe getEquipe() {
-		return equipe;
-	}
-
-	public void setEquipe(Equipe equipe) {
-		this.equipe = equipe;
-	}
-
 	public void obtenirSalaireEquipe(){
 		this.equipe.obtenirSalaire();
 	}

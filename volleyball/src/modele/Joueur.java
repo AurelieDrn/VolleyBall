@@ -5,11 +5,11 @@ package modele;
 
 import java.util.Arrays;
 
-//import org.newdawn.slick.Animation;
+import org.newdawn.slick.Animation;
 
 /**
  * @author Yumiao Fu
- * relecteurs Auré–˜ie Durand, Meriem EL QSIMI
+ * relecteurs Aurélie Durand
  */
 public class Joueur {
 	
@@ -24,13 +24,14 @@ public class Joueur {
 	private boolean estBlesse;
 	private int salaire;
 	private boolean enJeu;
-	private int direction; // de 0 ï¿½ 4
+
+	private int direction; // de 0 à 4
 	private boolean moving; // vrai si le joueur est en mouvement
 	private float x;
 	private float y;
 	private int fatigue;
 	
-//private Animation[] animation; // permet d'animer le joueur
+	private Animation[] animation; // permet d'animer le joueur
 	
 	public Joueur(int numero, String nom, Role role, int force, int resistance, int vitesse, int precision, int forcePsy, int salaire) {
 		this.numero = numero;
@@ -38,20 +39,28 @@ public class Joueur {
 		this.salaire = salaire;
 		this.role = role;
 		this.forcePsy = forcePsy;
-		this.enJeu = false;
-		// caracté–žistiques amé–˜iorables
+		
+		// caractéristiques améliorables
 		this.force = force;
 		this.resistance = resistance;
 		this.vitesse = vitesse;
 		this.precision = precision;
 
-		// é– ats
+		// états
 		this.estBlesse = false;
 		this.direction = 0;
 		this.moving = false;
 		this.x = 0;
 		this.y = 0;
 		this.fatigue = 0;
+		this.enJeu = false;
+	}
+	
+	// Constructeur provisoire pour tester rapidement dans l'interface
+	public Joueur(int direction, int x, int y) {
+		this.direction = direction;
+		this.x = x;
+		this.y = y;
 	}
 	
 	public boolean isEnJeu() {
@@ -60,13 +69,6 @@ public class Joueur {
 
 	public void setEnJeu(boolean enJeu) {
 		this.enJeu = enJeu;
-	}
-
-	// Constructeur provisoire pour tester rapidement dans l'interface
-	public Joueur(int direction, int x, int y) {
-		this.direction = direction;
-		this.x = x;
-		this.y = y;
 	}
 
 	public int getNumero() {
@@ -165,13 +167,13 @@ public class Joueur {
 		this.moving = moving;
 	}
 
-//	public Animation[] getAnimation() {
-//		return animation;
-//	}
+	public Animation[] getAnimation() {
+		return animation;
+	}
 
-//	public void setAnimation(Animation[] animation) {
-//		this.animation = animation;
-//	}
+	public void setAnimation(Animation[] animation) {
+		this.animation = animation;
+	}
 
 	public float getX() {
 		return x;
@@ -203,7 +205,7 @@ public class Joueur {
 				+ resistance + ", vitesse=" + vitesse + ", precision=" + precision + ", forcePsy=" + forcePsy
 				+ ", estBlesse=" + estBlesse + ", salaire=" + salaire + ", direction=" + direction + ", moving="
 				+ moving + ", x=" + x + ", y=" + y + ", fatigue=" + fatigue + ", animation="
-				/*+ Arrays.toString(animation)*/ + "]\n";
+				+ Arrays.toString(animation) + "]";
 	}
 
 }

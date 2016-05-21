@@ -9,7 +9,7 @@ import java.util.List;
 
 /**
  * @author Yumiao Fu
- * relecteurs Aur¨¦lie Durand
+ * relecteurs Aurélie Durand
  */
 public class Championnat {
 	private String nomChampionnat;

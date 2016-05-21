@@ -3,62 +3,72 @@
  */
 package modele;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * @author Yumiao Fu
  *
  */
 public class Score{
 
-	private int scoreEquipeIA;
-	private int scoreEquipeJoueur;
-	private Set setEquipeIA;
-	private Set setEquipeJoueur;
+	private List<Set> listSets;
+	private Equipe equipeIA;
+	private Equipe equipeJoueur;
+	private int nbSetIA; // nombre de set remportés par l'IA
+	private int nbSetJoueur; // nombre de set remportés par le joueur
 	
-	public Score(){
-		this.scoreEquipeIA = 0;
-		this.scoreEquipeJoueur = 0;
+	public Score(Equipe equipeIA, Equipe equipeJoueur){
+		this.equipeIA = equipeIA;
+		this.equipeJoueur = equipeJoueur;
+		this.nbSetIA = 0;
+		this.nbSetJoueur = 0;
+		this.listSets = new ArrayList<Set>();
 	}
 	
-	public void calculScore(){
-		if(this.setEquipeIA.getPremierSet() == true){
-			this.scoreEquipeIA ++;
-		}
-		else if(this.setEquipeIA.getSecondSet() == true){
-			this.scoreEquipeIA ++;
-		}
-		else if(this.setEquipeIA.getDernierSet() == true){
-			this.scoreEquipeIA ++;
-		}
-		else if(this.setEquipeJoueur.getPremierSet() == true){
-			this.scoreEquipeJoueur++;
-		}
-		else if(this.setEquipeJoueur.getSecondSet() == true){
-			this.scoreEquipeJoueur++;
-		}
-		else if(this.setEquipeJoueur.getDernierSet() == true){
-			this.scoreEquipeJoueur++;
-		}
+	public void incNbSetIA() {
+		this.nbSetIA++;
+	}
+	
+	public void incNbSetJoueur() {
+		this.nbSetJoueur++;
 	}
 
-	public int getScoreEquipeIA() {
-		return this.scoreEquipeIA;
+	public int getNbSetIA() {
+		return nbSetIA;
 	}
 
-	public void setScoreEquipeIA(int scoreEquipeIA) {
-		this.scoreEquipeIA = scoreEquipeIA;
+	public int getNbSetJoueur() {
+		return nbSetJoueur;
+	}
+	
+	public boolean egalite() {
+		return this.nbSetIA == 2 && this.nbSetJoueur == 2;
+	}
+	
+	public Set nouveauSet() throws SetEnCoursException {
+		if(!this.listSets.isEmpty()) {
+			Equipe e = this.listSets.get(this.listSets.size()-1).getGagnant();
+			if(e == this.equipeIA) {
+				this.incNbSetIA();
+			}
+			else {
+				this.incNbSetJoueur();
+			}
+		}
+		Set set;
+		if(this.egalite()) {
+			set = new TieBreak(this.listSets.size(), this.equipeIA, this.equipeJoueur);
+		}
+		else {
+			set = new Set(this.listSets.size(), this.equipeIA, this.equipeJoueur);
+		}
+		this.listSets.add(set);
+		return set;
 	}
 
-	public int getScoreEquipeJoueur() {
-		return this.scoreEquipeJoueur;
+	@Override
+	public String toString() {
+		return this.listSets.toString();
 	}
-
-	public void setScoreEquipeJoueur(int scoreEquipeJoueur) {
-		this.scoreEquipeJoueur = scoreEquipeJoueur;
-	}
-	public void init(){
-		this.scoreEquipeIA = 0;
-		this.scoreEquipeJoueur = 0;
-	}
-
-
 }

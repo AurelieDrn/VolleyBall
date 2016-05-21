@@ -4,48 +4,65 @@
 package modele;
 
 /**
- * @author Yumiao Fu
- * relecteurs Aurélie Durand
+ * @author Aurélie Durand
+ * 
  */
-public class Set{
+public class Set {
 
-	private boolean premierSet;
-	private boolean secondSet;
-	private boolean dernierSet;
+	protected int numero;
+	protected int scoreEquipeIA;
+	protected int scoreEquipeJoueur;
+	protected Equipe equipeIA;
+	protected Equipe equipeJoueur;
+	protected Equipe gagnant;
 	
-	public Set(){
-		this.premierSet = false;
-		this.secondSet = false;
-		this.dernierSet = false;
+	public Set(int numero, Equipe equipeIA, Equipe equipeJoueur) {
+		this.numero = numero;
+		this.scoreEquipeIA = 0;
+		this.scoreEquipeJoueur = 0;
+		this.equipeIA = equipeIA;
+		this.equipeJoueur = equipeJoueur;
+		this.gagnant = null;
+	}
+
+	public void incScoreIA() {
+		this.scoreEquipeIA++;
+		this.estFini();
 	}
 	
-	public Set(boolean premier, boolean second, boolean dernier){
-		this.premierSet = premier;
-		this.secondSet = second;
-		this.dernierSet = dernier;
+	public void incScoreJoueur() {
+		this.scoreEquipeJoueur++;
+		this.estFini();
 	}
 
-	public boolean getPremierSet() {
-		return this.premierSet;
+	public boolean estFini() {
+		if(this.scoreEquipeIA >= 25 && this.scoreEquipeIA-this.scoreEquipeJoueur >= 2) {
+			this.gagnant = this.equipeIA;
+			return true;
+		}
+		else if(this.scoreEquipeJoueur >= 25 && this.scoreEquipeJoueur-this.scoreEquipeIA >= 2) {
+			this.gagnant = this.equipeJoueur;
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+	
+	public Equipe getGagnant() throws SetEnCoursException {
+		if(this.estFini()) {
+			return this.gagnant;
+		}
+		throw new SetEnCoursException();
 	}
 
-	public void setPremierSet(boolean premierSet) {
-		this.premierSet = premierSet;
-	}
-
-	public boolean getSecondSet() {
-		return this.secondSet;
-	}
-
-	public void setSecondSet(boolean secondSet) {
-		this.secondSet = secondSet;
-	}
-
-	public boolean getDernierSet() {
-		return this.dernierSet;
-	}
-
-	public void setDernierSet(boolean dernierSet) {
-		this.dernierSet = dernierSet;
+	@Override
+	public String toString() {
+		String s = "Set numero "+this.numero+"\n";
+		s += this.equipeIA.getNomEquipe()+" VS "+this.equipeJoueur.getNomEquipe()+"\n";
+		s += "Score de l'équipe "+this.equipeIA.getNomEquipe()+" : "+this.scoreEquipeIA+"\n";
+		s += "Score de l'équipe "+this.equipeJoueur.getNomEquipe()+" : "+this.scoreEquipeJoueur+"\n";
+		s += "Gagant du set : "+this.gagnant+"\n";
+		return s;
 	}
 }
