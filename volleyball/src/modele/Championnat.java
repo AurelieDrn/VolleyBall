@@ -28,4 +28,35 @@ public class Championnat {
 	public void initialiserClassement() {
 		
 	}
+	public String getNomChampionnat() {
+		return nomChampionnat;
+	}
+	public void setNomChampionnat(String nomChampionnat) {
+		this.nomChampionnat = nomChampionnat;
+	}
+	public List<Equipe> getListEquipe() {
+		return listEquipe;
+	}
+	public void setListEquipe(List<Equipe> listEquipe) {
+		this.listEquipe = listEquipe;
+	}
+	public List<Sponsor> getListSponsors() {
+		return listSponsors;
+	}
+	public void setListSponsors(List<Sponsor> listSponsors) {
+		this.listSponsors = listSponsors;
+	}
+	public List<Match> getListMatch() {
+		return listMatch;
+	}
+	public void setListMatch(List<Match> listMatch) {
+		this.listMatch = listMatch;
+	}
+	public Classement getClassementEquipe() {
+		return classementEquipe;
+	}
+	public void setClassementEquipe(Classement classementEquipe) {
+		this.classementEquipe = classementEquipe;
+	}
+	
 }
