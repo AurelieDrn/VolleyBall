@@ -27,8 +27,7 @@ public class Joueur {
 
 	private int direction; // de 0 à 4
 	private boolean moving; // vrai si le joueur est en mouvement
-	private float x;
-	private float y;
+	private Position position;
 	private int fatigue;
 	
 	private Animation[] animation; // permet d'animer le joueur
@@ -50,17 +49,9 @@ public class Joueur {
 		this.estBlesse = false;
 		this.direction = 0;
 		this.moving = false;
-		this.x = 0;
-		this.y = 0;
+		this.position = new Position(0, 0);
 		this.fatigue = 0;
 		this.enJeu = false;
-	}
-	
-	// Constructeur provisoire pour tester rapidement dans l'interface
-	public Joueur(int direction, int x, int y) {
-		this.direction = direction;
-		this.x = x;
-		this.y = y;
 	}
 	
 	public boolean isEnJeu() {
@@ -178,20 +169,28 @@ public class Joueur {
 		this.animation = animation;
 	}
 
+	public Position getPosition() {
+		return this.position;
+	}
+	
+	public void setPosition(Position pos) {
+		this.position = pos;
+	}
+	
 	public float getX() {
-		return x;
+		return this.position.getX();
 	}
-
-	public void setX(float x) {
-		this.x = x;
-	}
-
+	
 	public float getY() {
-		return y;
+		return this.position.getY();
 	}
-
+	
+	public void setX(float x) {
+		this.position.setX(x);
+	}
+	
 	public void setY(float y) {
-		this.y = y;
+		this.position.setY(y);
 	}
 	
 	public int getFatigue() {
@@ -206,8 +205,8 @@ public class Joueur {
 	public String toString() {
 		return "Joueur [numero=" + numero + ", nom=" + nom + ", role=" + role + ", force=" + force + ", resistance="
 				+ resistance + ", vitesse=" + vitesse + ", precision=" + precision + ", forcePsy=" + forcePsy
-				+ ", estBlesse=" + estBlesse + ", salaire=" + salaire + ", direction=" + direction + ", moving="
-				+ moving + ", x=" + x + ", y=" + y + ", fatigue=" + fatigue + ", animation="
+				+ ", estBlesse=" + estBlesse + ", salaire=" + salaire + ", enJeu=" + enJeu + ", direction=" + direction
+				+ ", moving=" + moving + ", position=" + position + ", fatigue=" + fatigue + ", animation="
 				+ Arrays.toString(animation) + "]";
 	}
 

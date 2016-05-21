@@ -43,8 +43,10 @@ public class Test {
 		*/
 		ArrayList<Joueur> joueurs = JoueurFactory.getJoueurs(12);
 		WindowGame game = new WindowGame(joueurs);
-		new AppGameContainer(game, 832, 672, false).start();
-		//joueurs.get(0).setMoving(true);
+		AppGameContainer a = new AppGameContainer(game, 832, 672, false);
+		//a.start();
+		game.getJoueurs().get(0).setMoving(true);
+		a.start();
 		//game.setJoueurs(joueurs);
 		
 		//game.update(game.getContainer(), 0);
