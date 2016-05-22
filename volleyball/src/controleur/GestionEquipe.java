@@ -55,6 +55,7 @@ public class GestionEquipe {
 			default:
 				System.out.println("Quelle caractéristique dois-je améliorer ?");
 		}
+		joueur.setFatigue(joueur.getFatigue()-1);
 	}
 	
 	public void payerSalaireJoueurs(){

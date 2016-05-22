@@ -3,15 +3,13 @@
  */
 package controleur;
 
-import modele.Match;
-import modele.Role;
-
 import java.util.ArrayList;
 import java.util.List;
 
-import modele.Equipe;
 import modele.Joueur;
 import modele.JoueurBlesseException;
+import modele.Match;
+import modele.Role;
 
 /**
  * @author Meriem El Qsimi
