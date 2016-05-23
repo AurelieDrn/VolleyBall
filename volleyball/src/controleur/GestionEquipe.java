@@ -7,7 +7,7 @@ import java.util.List;
 import modele.Caracteristique;
 import modele.Equipe;
 import modele.Joueur;
-import modele.JoueurBlesseException;
+import modele.Role;
 import modele.Sponsor;
 
 /**
@@ -38,9 +38,11 @@ public class GestionEquipe {
 	public void reposerJoueur(Joueur joueur){
 		joueur.setFatigue(joueur.getFatigue()-1);
 	}
+	
 	public void fatigueJoueur(Joueur joueur){
 		joueur.setFatigue(joueur.getFatigue()+1);
-	}	
+	}
+	
 	public void entrainerJoueur(Joueur joueur){
 		Caracteristique caracteristique = Caracteristique.getRandom();
 		switch(caracteristique){
@@ -72,18 +74,14 @@ public class GestionEquipe {
 		this.equipe.setBudget(this.equipe.getBudget() + sponsor.getMontantSubvention());
 	}
 	
-	public List<Joueur> getJoueurEnJeu() {
+	public List<Joueur> getJoueursEnJeu() {
 		return joueurEnJeu;
 	}
 
-	public void setJoueurEnJeu(List<Joueur> joueurEnJeu) {
+	public void setJoueursEnJeu(List<Joueur> joueurEnJeu) {
 		this.joueurEnJeu = joueurEnJeu;
 	}
 
-	public void jouerJoueur(Joueur joueur) throws JoueurBlesseException{
-			joueur.setEnJeu(true);
-			this.joueurEnJeu.add(joueur);
-	}
 	public Equipe getEquipe() {
 		return equipe;
 	}
@@ -92,4 +90,11 @@ public class GestionEquipe {
 		this.equipe = equipe;
 	}
 	
+	public void changerRole(Joueur joueur, Role role) {
+		for(Joueur j : this.getEquipe().getListJoueur()) {
+			if(j.equals(joueur)) {
+				j.setRole(role);
+			}
+		}
+	}
 }

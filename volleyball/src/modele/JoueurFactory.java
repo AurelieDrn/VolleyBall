@@ -15,7 +15,7 @@ public class JoueurFactory {
 	public static ArrayList<Joueur> getJoueurs(int nombreJoueurs) {
 		List<Joueur> listJoueurs = new ArrayList<Joueur>();
 		for(int i=0; i < nombreJoueurs; i++){
-			int numero = 0;
+			int numero = i;
 			String nom = null;
 			Role role = Role.getRandom();
 			int force = randomInt(0, 10);

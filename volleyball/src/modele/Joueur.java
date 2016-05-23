@@ -3,8 +3,6 @@
  */
 package modele;
 
-import java.util.Arrays;
-
 import org.newdawn.slick.Animation;
 
 /**
@@ -59,7 +57,7 @@ public class Joueur {
 	}
 
 	public void setEnJeu(boolean enJeu) throws JoueurBlesseException {
-		if(enJeu == true && this.isEstBlesse()) {
+		if(enJeu == true && this.estBlesse()) {
 			throw new JoueurBlesseException();
 		}
 		this.enJeu = enJeu;
@@ -129,7 +127,7 @@ public class Joueur {
 		this.forcePsy = forcePsy;
 	}
 
-	public boolean isEstBlesse() {
+	public boolean estBlesse() {
 		return estBlesse;
 	}
 
@@ -203,11 +201,76 @@ public class Joueur {
 
 	@Override
 	public String toString() {
-		return "Joueur [numero=" + numero + ", nom=" + nom + ", role=" + role + ", force=" + force + ", resistance="
-				+ resistance + ", vitesse=" + vitesse + ", precision=" + precision + ", forcePsy=" + forcePsy
-				+ ", estBlesse=" + estBlesse + ", salaire=" + salaire + ", enJeu=" + enJeu + ", direction=" + direction
-				+ ", moving=" + moving + ", position=" + position + ", fatigue=" + fatigue + ", animation="
-				+ Arrays.toString(animation) + "]";
+		String s = "¤--------------------¤\n";
+		String s2 = "| N° : "+this.numero;
+		int l2 = s.length()-s2.length()-3;
+		for (int i=0; i<= l2; i++) {
+			s2 += " ";
+		}
+		s2 += "|\n";
+		
+		String s3 = "| Nom : "+this.nom;
+		int l3 = s.length()-s3.length()-3;
+		for (int i=0; i<= l3; i++) {
+			s3 += " ";
+		}
+		s3 += "|\n";
+		
+		String s33 = "| Etat : ";
+		if(!this.estBlesse()) {
+			s33 += "non blessé";
+		}
+		else {
+			s33 += "est blessé";
+		}
+		int l33 = s.length()-s33.length()-3;
+		for (int i=0; i<= l33; i++) {
+			s33 += " ";
+		}
+		s33 += "|\n";
+		
+		String s4 = "| Rôle : "+this.role;
+		int l4 = s.length()-s4.length()-3;
+		for (int i=0; i<= l4; i++) {
+			s4 += " ";
+		}
+		s4 += "|\n";
+		
+		String s5 = "| Force : "+this.force;
+		int l5 = s.length()-s5.length()-3;
+		for (int i=0; i<= l5; i++) {
+			s5 += " ";
+		}
+		s5 += "|\n";
+		
+		String s6 = "| Résistance : "+this.resistance;
+		int l6 = s.length()-s6.length()-3;
+		for (int i=0; i<= l6; i++) {
+			s6 += " ";
+		}
+		s6 += "|\n";
+		
+		String s7 = "| Vitesse : "+this.vitesse;
+		int l7 = s.length()-s7.length()-3;
+		for (int i=0; i<= l7; i++) {
+			s7 += " ";
+		}
+		s7 += "|\n";
+		
+		String s8 = "| Précision : "+this.precision;
+		int l8 = s.length()-s8.length()-3;
+		for (int i=0; i<= l8; i++) {
+			s8 += " ";
+		}
+		s8 += "|\n";
+		
+		String s9 = "| Force psy. : "+this.forcePsy;
+		int l9 = s.length()-s9.length()-3;
+		for (int i=0; i<= l9; i++) {
+			s9 += " ";
+		}
+		s9 += "|\n";
+		return s+s2+s3+s33+s4+s5+s6+s7+s8+s9;
 	}
 
 }

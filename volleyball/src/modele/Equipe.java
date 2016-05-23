@@ -95,7 +95,35 @@ public class Equipe implements Comparable<Equipe> {
 
 	@Override
 	public String toString() {
-		return "Equipe [numeroEquipe=" + numeroEquipe + ", nomEquipe=" + nomEquipe + ", budget=" + budget
-				+ ", listJoueurs=" + listJoueurs + ", listSponsors=" + listSponsors + "]";
+		String s = "¤------------------------------------------------------¤\n";
+		String s2 = "| N° équipe : "+this.numeroEquipe;
+		int l2 = s.length()-s2.length()-3;
+		for (int i=0; i<= l2; i++) {
+			s2 += " ";
+		}
+		s2 += "|\n";
+		
+		String s3 = "| Nom équipe : "+this.nomEquipe;
+		int l3 = s.length()-s3.length()-3;
+		for (int i=0; i<= l3; i++) {
+			s3 += " ";
+		}
+		s3 += "|\n";
+		
+		String s4 = "| Budget : "+this.budget;
+		int l4 = s.length()-s4.length()-3;
+		for (int i=0; i<= l4; i++) {
+			s4 += " ";
+		}
+		s4 += "|\n";
+		String s5 = "¤------------------------------------------------------¤\n";
+		String s6 = s+s2+s3+s4+s5;
+		for(int i=0; i < this.listJoueurs.size(); i++) {
+			s6 += this.listJoueurs.get(i).toString();
+			if(i == this.listJoueurs.size()-1) {
+				s6 += "¤--------------------¤\n";
+			}
+		}
+		return s6;
 	}
 }
