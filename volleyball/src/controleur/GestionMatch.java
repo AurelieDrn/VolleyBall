@@ -26,6 +26,8 @@ public class GestionMatch {
 	private Equipe equipeJoueur;
 	// on utilise ses deux classes pour nous aider
 	private GestionEquipe gestionEquipeIA;
+	
+
 	private GestionEquipe gestionEquipeJoueur;
 	// c'est l'état d'un match à sauvegarder
 	private Match match;
@@ -149,5 +151,44 @@ public class GestionMatch {
 	public void jouer() throws IOException, NumberFormatException, JoueurBlesseException{
 		System.out.println(this.equipeJoueur+" VS "+this.equipeIA);
 		constituerEquipe();
+	}
+	public Equipe getEquipeIA() {
+		return equipeIA;
+	}
+
+	public void setEquipeIA(Equipe equipeIA) {
+		this.equipeIA = equipeIA;
+	}
+
+	public Equipe getEquipeJoueur() {
+		return equipeJoueur;
+	}
+
+	public void setEquipeJoueur(Equipe equipeJoueur) {
+		this.equipeJoueur = equipeJoueur;
+	}
+
+	public GestionEquipe getGestionEquipeIA() {
+		return gestionEquipeIA;
+	}
+
+	public void setGestionEquipeIA(GestionEquipe gestionEquipeIA) {
+		this.gestionEquipeIA = gestionEquipeIA;
+	}
+
+	public GestionEquipe getGestionEquipeJoueur() {
+		return gestionEquipeJoueur;
+	}
+
+	public void setGestionEquipeJoueur(GestionEquipe gestionEquipeJoueur) {
+		this.gestionEquipeJoueur = gestionEquipeJoueur;
+	}
+
+	public Match getMatch() {
+		return match;
+	}
+
+	public void setMatch(Match match) {
+		this.match = match;
 	}
 }

@@ -5,6 +5,9 @@ import java.util.ArrayList;
 import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.SlickException;
 
+import controleur.GestionMatch;
+import modele.Equipe;
+import modele.EquipeFactory;
 import modele.Joueur;
 import modele.JoueurFactory;
 
@@ -41,11 +44,22 @@ public class Test {
 		joueurs.add(joueur10);
 		joueurs.add(joueur11);
 		*/
+
+		Equipe equipeJoueur = EquipeFactory.getEquipe();
+		equipeJoueur.setNomEquipe("La super équipe de Mr Dupont");
+
+		Equipe equipeIA = EquipeFactory.getEquipe();
+		equipeJoueur.setNomEquipe("IA");
+		InitPositionJoueurs init = new InitPositionJoueurs();
+		init.positionnerJoueursIA(equipeIA.getListJoueur());
+		init.positionnerJoueursNonIA(equipeJoueur.getListJoueur());
+		
+		GestionMatch gm = new GestionMatch(equipeJoueur, equipeIA);
 		ArrayList<Joueur> joueurs = JoueurFactory.getJoueurs(12);
-		WindowGame game = new WindowGame(joueurs);
+		WindowGame game = new WindowGame(gm);
 		AppGameContainer a = new AppGameContainer(game, 832, 672, false);
 		//a.start();
-		game.getJoueurs().get(0).setMoving(true);
+		//game.getJoueurs().get(0).setMoving(true);
 		a.start();
 		//game.setJoueurs(joueurs);
 		

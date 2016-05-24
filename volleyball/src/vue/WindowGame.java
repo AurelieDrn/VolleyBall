@@ -15,6 +15,7 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.SpriteSheet;
 import org.newdawn.slick.tiled.TiledMap;
 
+import controleur.GestionMatch;
 import modele.Joueur;
 
 /**
@@ -32,11 +33,12 @@ public class WindowGame extends BasicGame {
 	
 	//private ArrayList<Animation[]> joueurs;
 	private List<Joueur> joueurs;
+	private GestionMatch gm;
 	
-	public WindowGame(List<Joueur> list) {
+	public WindowGame(GestionMatch gestionM) {
 		super("WindowGame");
 		//this.joueurs = new ArrayList<Animation[]>();
-		this.joueurs = list;
+		this.gm = gestionM;
 	}
 	
 	/* (non-Javadoc)
@@ -72,8 +74,13 @@ public class WindowGame extends BasicGame {
 	@Override
 	public void render(GameContainer container, Graphics g) throws SlickException {
 		this.map.render(0, 0);
-		for(int i=0; i < this.joueurs.size(); i++) {
-			Joueur j = this.joueurs.get(i);
+		for(int i=0; i < this.gm.getEquipeIA().getListJoueur().size(); i++) {
+			Joueur j = this.gm.getEquipeIA().getListJoueur().get(i);
+			// dessine les joueurs sur le terrain
+			g.drawAnimation(j.getAnimation()[j.getDirection() + (j.isMoving() ? 4 : 0)], x+j.getX()*32, y-j.getY()*32);
+		}
+		for(int i=0; i < this.gm.getEquipeJoueur().getListJoueur().size(); i++) {
+			Joueur j = this.gm.getEquipeJoueur().getListJoueur().get(i);
 			// dessine les joueurs sur le terrain
 			g.drawAnimation(j.getAnimation()[j.getDirection() + (j.isMoving() ? 4 : 0)], x+j.getX()*32, y-j.getY()*32);
 		}
@@ -85,7 +92,7 @@ public class WindowGame extends BasicGame {
 	 */
 	@Override
 	public void update(GameContainer container, int delta) throws SlickException {
-    	Joueur j = this.joueurs.get(0);
+    	/*Joueur j = this.joueurs.get(0);
 		if (j.isMoving()) {
 	        switch (j.getDirection()) {
 	            case 0: j.setY(j.getY()+.01f * delta); break;
@@ -93,8 +100,7 @@ public class WindowGame extends BasicGame {
 	            case 2: j.setY(j.getY()-.01f * delta); break;
 	            case 3: j.setX(j.getX()+.01f * delta); break;
 	        }
-	    }
-		/*if(this.joueurs.get(0).isMoving()) {
+	    }if(this.joueurs.get(0).isMoving()) {
 			this.joueurs.get(0).setX(this.joueurs.get(0).getX()-0.1f * delta);
 		}*/
 	}
@@ -122,7 +128,7 @@ public class WindowGame extends BasicGame {
 	 * Crée les objets animations pour chaque joueur de la liste joueurs
 	 */
 	public void createAnimations() throws SlickException {
-		for(int i=0; i < this.joueurs.size(); i++) {
+		for(int i=0; i < this.gm.getEquipeIA().getListJoueur().size(); i++) {
 			SpriteSheet spriteSheet = new SpriteSheet("/src/main/resources/sprites/character.png", 32, 32);
 			Animation[] animation = new Animation[8];
 			animation[0] = loadAnimation(spriteSheet, 0, 1, 0);
@@ -133,7 +139,20 @@ public class WindowGame extends BasicGame {
 		    animation[5] = loadAnimation(spriteSheet, 1, 3, 1);
 		    animation[6] = loadAnimation(spriteSheet, 1, 3, 2);
 		    animation[7] = loadAnimation(spriteSheet, 1, 3, 3);
-		    this.joueurs.get(i).setAnimation(animation);
+		    this.gm.getEquipeIA().getListJoueur().get(i).setAnimation(animation);
+		}
+		for(int i=0; i < this.gm.getEquipeJoueur().getListJoueur().size(); i++) {
+			SpriteSheet spriteSheet = new SpriteSheet("/src/main/resources/sprites/character.png", 32, 32);
+			Animation[] animation = new Animation[8];
+			animation[0] = loadAnimation(spriteSheet, 0, 1, 0);
+		    animation[1] = loadAnimation(spriteSheet, 0, 1, 1);
+		    animation[2] = loadAnimation(spriteSheet, 0, 1, 2);
+		    animation[3] = loadAnimation(spriteSheet, 0, 1, 3);
+		    animation[4] = loadAnimation(spriteSheet, 1, 3, 0);
+		    animation[5] = loadAnimation(spriteSheet, 1, 3, 1);
+		    animation[6] = loadAnimation(spriteSheet, 1, 3, 2);
+		    animation[7] = loadAnimation(spriteSheet, 1, 3, 3);
+		    this.gm.getEquipeJoueur().getListJoueur().get(i).setAnimation(animation);
 		}
 	}
 	

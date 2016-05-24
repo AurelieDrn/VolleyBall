@@ -11,6 +11,7 @@ import org.newdawn.slick.Animation;
  */
 public class Joueur {
 	
+	
 	private int numero;
 	private String nom;
 	private Role role;
