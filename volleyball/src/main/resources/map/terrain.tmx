@@ -3,9 +3,6 @@
  <tileset firstgid="1" name="grass" tilewidth="32" tileheight="32" tilecount="169" columns="13">
   <image source="tuiles/grass.png" width="429" height="429"/>
  </tileset>
- <tileset firstgid="170" name="Pirate1 (Idle)" tilewidth="32" tileheight="32" tilecount="6" columns="6">
-  <image source="tuiles/Pirate1 (Idle).png" width="192" height="32"/>
- </tileset>
  <tileset firstgid="176" name="tilset_terrain_volley" tilewidth="32" tileheight="32" tilecount="16" columns="4">
   <image source="tuiles/tilset_terrain_volley.png" width="128" height="128"/>
  </tileset>
