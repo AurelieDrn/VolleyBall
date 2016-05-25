@@ -6,6 +6,8 @@ package modele;
 import java.util.ArrayList;
 import java.util.List;
 
+import exception.SetEnCoursException;
+
 /**
  * @author Yumiao Fu
  *

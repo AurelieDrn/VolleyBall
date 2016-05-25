@@ -2,6 +2,8 @@ package modele;
 
 import java.util.ArrayList;
 
+import exception.SetEnCoursException;
+
 public class TestModele {
 
 	public static void main(String[] args) {

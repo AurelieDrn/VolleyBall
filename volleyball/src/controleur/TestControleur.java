@@ -2,9 +2,9 @@ package controleur;
 
 import java.io.IOException;
 
+import exception.JoueurBlesseException;
 import modele.Equipe;
 import modele.EquipeFactory;
-import modele.JoueurBlesseException;
 
 public class TestControleur {
 

@@ -5,6 +5,8 @@ package modele;
 
 import org.newdawn.slick.Animation;
 
+import exception.JoueurBlesseException;
+
 /**
  * @author Yumiao Fu
  * relecteurs Aurélie Durand

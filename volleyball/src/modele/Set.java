@@ -3,6 +3,8 @@
  */
 package modele;
 
+import exception.SetEnCoursException;
+
 /**
  * @author Aurélie Durand
  * 

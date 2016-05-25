@@ -1,7 +1,7 @@
 /**
  * 
  */
-package modele;
+package exception;
 
 /**
  * @author Aurelie Durand
