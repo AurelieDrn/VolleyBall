@@ -18,7 +18,16 @@ public class Equipe implements Comparable<Equipe> {
 	private List<Joueur> listJoueurs;
 	private List<Sponsor> listSponsors;
 	private final int SALAIRE = 5000;
-		
+	
+	
+	public Equipe(int numeroEquipe, String nomEquipe, List<Joueur> listJoueurs) {
+		super();
+		this.numeroEquipe = numeroEquipe;
+		this.nomEquipe = nomEquipe;
+		this.listJoueurs = listJoueurs;
+		this.listSponsors = new ArrayList<>();
+	}
+
 	public Equipe(int numero, String nom) {
 		this.numeroEquipe = numero;
 		this.nomEquipe = nom;

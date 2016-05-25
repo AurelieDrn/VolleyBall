@@ -26,8 +26,6 @@ public class GestionMatch {
 	private Equipe equipeJoueur;
 	// on utilise ses deux classes pour nous aider
 	private GestionEquipe gestionEquipeIA;
-	
-
 	private GestionEquipe gestionEquipeJoueur;
 	// c'est l'état d'un match à sauvegarder
 	private Match match;
@@ -152,6 +150,7 @@ public class GestionMatch {
 		System.out.println(this.equipeJoueur+" VS "+this.equipeIA);
 		constituerEquipe();
 	}
+	
 	public Equipe getEquipeIA() {
 		return equipeIA;
 	}
