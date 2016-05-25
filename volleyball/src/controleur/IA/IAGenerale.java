@@ -12,6 +12,7 @@ import java.util.Map;
 import modele.Joueur;
 import modele.Match;
 import modele.Position;
+import modele.Role;
 
 /**
  * @author Aurelie
@@ -25,20 +26,27 @@ public class IAGenerale {
 	private Match match;
 	private int nbTouches;
 	private boolean terrain; // true si on vise le terrain du haut
+	private Joueur passeurIA;
+	private Joueur passeurJoueur;
+	private List<Joueur> attaquantsIA;
+	private List<Joueur> attaquantsJoueur;
+	private List<Joueur> defenseursIA;
+	private List<Joueur> defenseursJoueur;
 	
 	public IAGenerale(Match match) {
 		this.match = match;
 		this.nbTouches = 2; // initialisé à 2 pour le service
 		this.ciblesTerrainHaut = new ArrayList<Position>();
 		this.ciblesTerrainBas = new ArrayList<Position>();
+		this.attaquantsIA = new ArrayList<Joueur>();
+		this.attaquantsJoueur = new ArrayList<Joueur>();
+		this.defenseursIA = new ArrayList<Joueur>();
+		this.defenseursJoueur = new ArrayList<Joueur>();
 		this.terrain = true;
-		initCibles();
+		init();
 	}
 	
-	/**
-	 * Initialise les listes de cibles à viser lors de l'envoi d'une balle
-	 */
-	private void initCibles() {
+	private void init() {
 		this.ciblesTerrainHaut.add(new Position(1,10));
 		this.ciblesTerrainHaut.add(new Position(4,10));
 		this.ciblesTerrainHaut.add(new Position(7,10));
@@ -64,13 +72,75 @@ public class IAGenerale {
 		this.ciblesTerrainBas.add(new Position(1,1));
 		this.ciblesTerrainBas.add(new Position(4,1));
 		this.ciblesTerrainBas.add(new Position(7,1));
+		
+		for (Joueur joueur : this.match.getEquipeJoueur().getListJoueur()){
+			if(joueur.getRole() == Role.passeur) {
+				this.passeurJoueur = joueur;
+			} 
+			else if(joueur.getRole() == Role.attaquant) {
+				this.attaquantsJoueur.add(joueur);
+			}
+			else {
+				this.defenseursJoueur.add(joueur);
+			}
+		}
+		for (Joueur joueur : this.match.getEquipeIA().getListJoueur()){
+			if(joueur.getRole() == Role.passeur) {
+				this.passeurIA = joueur;
+			}
+			else if(joueur.getRole() == Role.attaquant) {
+				this.attaquantsIA.add(joueur);
+			}
+			else {
+				this.defenseursIA.add(joueur);
+			}
+		}
+	}
+	
+	/**
+	 * Changement de terrain.
+	 * true - on vise le terrain du haut
+	 * false - on vise le terrain du bas
+	 */
+	private void changementTerrain() {
+		if(this.terrain) {
+			this.terrain = false;
+		}
+		else {
+			this.terrain = true;
+		}
 	}
 	
 	public Match envoi() {
+		// On vise le terrain adverse
 		if(this.nbTouches == 2) {
 			this.positionArriveeBalle = this.choixCibleAdverse();
-			this.terrain = false;
+			this.changementTerrain();
 		}
+		else if(this.nbTouches == 1) { // Passe à un attaquant de l'équipe
+			List<Position> positionsCoequipiers = new ArrayList<Position>();
+			List<Joueur> coequipiers;
+			if(this.terrain) {
+				coequipiers = this.defenseursJoueur;
+			}
+			else {
+				coequipiers = this.defenseursIA;
+			}
+			for(Joueur joueur : coequipiers) {
+				positionsCoequipiers.add(joueur.getPosition());
+			}
+			// Choisir un coéquipier au hasard
+			this.positionArriveeBalle = positionsCoequipiers.get((int) (Math.random() * positionsCoequipiers.size()-1));
+		}
+		else { // Passe au passeur de l'équipe
+			if(terrain){
+				this.positionArriveeBalle = this.passeurJoueur.getPosition();
+			}
+			else {
+				this.positionArriveeBalle = this.passeurIA.getPosition();
+			}
+		}
+		// A finir
 		return match;
 	}
 	
