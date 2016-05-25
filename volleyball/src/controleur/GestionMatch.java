@@ -6,14 +6,13 @@ package controleur;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.List;
 
+import exception.JoueurBlesseException;
+import exception.NbChangementsDepassesException;
+import exception.NbrIncorrectPasseurException;
 import modele.Equipe;
 import modele.Joueur;
-import modele.JoueurBlesseException;
 import modele.Match;
-import modele.NbrIncorrectPasseurException;
 import modele.Role;
 
 /**
@@ -93,23 +92,31 @@ public class GestionMatch {
 	 * @param joueurAttente
 	 * @throws JoueurBlesseException
 	 * @throws NbrIncorrectPasseurException 
+	 * @throws NbChangementsDepassesException 
 	 */
-	public void rotation(Joueur joueurTerrain, Joueur joueurAttente) throws JoueurBlesseException, NbrIncorrectPasseurException {
-		// Le joueur en attente ne doit pas être blessé
-		if(joueurAttente.estBlesse()) {
-			throw new JoueurBlesseException();
-		}
-		if(joueurTerrain.getRole() == Role.passeur) {
-			if(joueurAttente.getRole() != Role.passeur) {
-				throw new NbrIncorrectPasseurException();
+	public void changerJoueurs(Joueur joueurTerrain, Joueur joueurAttente) throws JoueurBlesseException, NbrIncorrectPasseurException, NbChangementsDepassesException {
+		// Le joueur peut encore faire des changements
+		if(this.match.getNbChangementsEquipeJoueur() < 6) {
+			// Le joueur en attente ne doit pas être blessé
+			if(joueurAttente.estBlesse()) {
+				throw new JoueurBlesseException();
+			}
+			if(joueurTerrain.getRole() == Role.passeur) {
+				if(joueurAttente.getRole() != Role.passeur) {
+					throw new NbrIncorrectPasseurException();
+				}
+			}
+			else {
+				joueurTerrain.setEnJeu(false);
+				joueurAttente.setEnJeu(true);
+				// Ne pas oublier de repositionner le joueur
+				joueurAttente.setPosition(joueurTerrain.getPosition());
 			}
 		}
 		else {
-			joueurTerrain.setEnJeu(false);
-			joueurAttente.setEnJeu(true);
-			// Ne pas oublier de repositionner le joueur
-			joueurAttente.setPosition(joueurTerrain.getPosition());
+			throw new NbChangementsDepassesException();
 		}
+		
 	}
 	
 	private void constituerEquipe() throws IOException, NumberFormatException, JoueurBlesseException {
