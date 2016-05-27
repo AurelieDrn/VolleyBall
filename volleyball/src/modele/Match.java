@@ -30,7 +30,7 @@ public class Match {
 		this.nbChangementsEquipeIA = 0;
 		this.nbChangementsEquipeJoueur = 0;
 		this.doitFaireService = true;
-		this.balle = new Balle(7, 2);
+		this.balle = new Balle(new Position(7,2));
 		this.score = new Score(equipeIA, equipeJoueur);
 	}
 
