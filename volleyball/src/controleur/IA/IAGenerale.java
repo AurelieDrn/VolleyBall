@@ -30,6 +30,7 @@ public class IAGenerale {
 	private int nbTouches;
 	private boolean terrain; // true si on vise le terrain du haut
 	private double vitesseBalleTheorique;
+	private double distanceParcourue;
 	
 	private Joueur passeurIA;
 	private Joueur passeurJoueur;
@@ -129,7 +130,7 @@ public class IAGenerale {
 	
 	/**
 	 * Fonction qui permet à un joueur de renvoyer la balle.
-	 * @return une nouvelle instance de Match
+	 * @return un objet Match
 	 */
 	public Match envoi() {
 		// On vise le terrain adverse
@@ -205,6 +206,7 @@ public class IAGenerale {
 				this.positionArriveeBalle.setX(this.positionArriveeBalle.getX()+decalage);
 			}
 		}
+		this.distanceParcourue = Math.sqrt((Math.pow(this.positionArriveeBalle.getX()-tireur.getPosition().getX(), 2))+Math.pow(this.positionArriveeBalle.getY()-tireur.getPosition().getY(), 2));
 		// Envoi vers un membre de l'équipe, la vitesse de la balle est réduite
 		if(this.nbTouches < 2) {
 			this.vitesseBalleTheorique = tireur.getForce()/2;
@@ -222,6 +224,84 @@ public class IAGenerale {
 			}
 			else {
 				this.vitesseBalleTheorique = tireur.getForce()*3;
+			}
+		}
+		this.match.getBalle().setPosition(this.positionArriveeBalle);
+		return match;
+	}
+	
+	/**
+	 * Fonction qui permet de réceptionner la balle lors d'un match
+	 * @return un objet Match
+	 */
+	public Match Reception() {
+		double distance = 0;
+		double distanceJoueurBalle = 18;
+		Joueur joueur = null;
+		// C'est l'attaquant qui reçoit la balle du passeur
+		if(this.nbTouches == 2) {
+			// Choisir un attaquant au hasard
+			if(terrain) {
+				joueur = this.attaquantsJoueur.get((int) (Math.random() * this.attaquantsJoueur.size()-1));
+			}
+			else {
+				joueur = this.attaquantsIA.get((int) (Math.random() * this.attaquantsIA.size()-1));
+			}
+			distanceJoueurBalle = Math.sqrt(Math.pow(joueur.getPosition().getX()-this.positionArriveeBalle.getX(), 2)+Math.pow(joueur.getPosition().getY()-this.positionArriveeBalle.getY(), 2));
+		}
+		else if(this.nbTouches == 1) { // C'est au passeur de recevoir la balle du défenseur
+			if(terrain) {
+				joueur = this.passeurJoueur;
+			}
+			else {
+				joueur = this.passeurIA;
+			}
+			distanceJoueurBalle = Math.sqrt(Math.pow(joueur.getPosition().getX()-this.positionArriveeBalle.getX(), 2)+Math.pow(joueur.getPosition().getY()-this.positionArriveeBalle.getY(), 2));
+		}
+		else { // C'est au défenseur de réceptionner la balle
+			// Choisir le défenseur le plus proche
+			List<Joueur> defenseurs;
+			if(terrain) {
+				defenseurs = this.defenseursJoueur;
+			}
+			else {
+				defenseurs = this.defenseursIA;
+			}
+			for(Joueur defenseur : defenseurs) {
+				distance = Math.sqrt(Math.pow(defenseur.getPosition().getX()-this.positionArriveeBalle.getX(), 2)+Math.pow(defenseur.getPosition().getY()-this.positionArriveeBalle.getY(), 2));
+				if(distance < distanceJoueurBalle) {
+					distanceJoueurBalle = distance;
+					joueur = defenseur;
+				}
+			}
+		}
+		// Calcul théorique du temps de trajet du joueur vers la balle
+		double tjoueur = distanceJoueurBalle/joueur.getVitesse();
+		
+		// Calcul théorique du temps de trajet de la balle
+		double tballe = this.distanceParcourue/this.vitesseBalleTheorique;
+		
+		// Déplacer le joueur
+		List<Joueur> joueursQuiJouent;
+		if(terrain) {
+			joueursQuiJouent = this.match.getEquipeJoueur().getListJoueur();
+		}
+		else {
+			joueursQuiJouent = this.match.getEquipeIA().getListJoueur();
+		}
+		// Trouver le bon joueur dans Match et le faire bouger
+		for(Joueur j : joueursQuiJouent) {
+			if(j.equals(joueur)) {
+				j.setPosition(this.positionArriveeBalle);
+			}
+		}
+		// Si le joueur ne peut pas rattraper la balle
+		if(tjoueur < tballe) {
+			if(terrain) {
+				this.match.getScore().getSet().incScoreJoueur();
+			}
+			else {
+				this.match.getScore().getSet().incScoreIA();
 			}
 		}
 		return match;
