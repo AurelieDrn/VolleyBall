@@ -234,7 +234,7 @@ public class IAGenerale {
 	 * Fonction qui permet de réceptionner la balle lors d'un match
 	 * @return un objet Match
 	 */
-	public Match Reception() {
+	public Match reception() {
 		double distance = 0;
 		double distanceJoueurBalle = 18;
 		Joueur joueur = null;
