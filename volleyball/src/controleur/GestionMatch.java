@@ -172,7 +172,7 @@ public class GestionMatch {
 		IAGenerale ia = new IAGenerale(this.match);
 		while(this.matchFini() == false) {
 			ia.envoi();
-			ia.reception();
+			ia.Reception();
 		}
 	}
 	
