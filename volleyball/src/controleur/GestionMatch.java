@@ -17,7 +17,7 @@ import modele.Match;
 import modele.Role;
 
 /**
- * @author Meriem El Qsimi
+ * @author Meriem El Qsimi, Aurélie DURAND
  *
  */
 public class GestionMatch { 
