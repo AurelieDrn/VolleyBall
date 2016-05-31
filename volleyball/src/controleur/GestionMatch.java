@@ -7,6 +7,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
+import controleur.IA.IAGenerale;
 import exception.JoueurBlesseException;
 import exception.NbChangementsDepassesException;
 import exception.NbrIncorrectPasseurException;
@@ -149,13 +150,30 @@ public class GestionMatch {
 		return (i==1);
 	}
 	
+	private void resetEquipe() throws JoueurBlesseException {
+		for(Joueur joueur : this.getEquipeJoueur().getListJoueur()) {
+			joueur.setEnJeu(false);
+		}
+	}
+	
+	private boolean matchFini() {
+		return this.match.getScore().getNbSetIA() == 3 || this.match.getScore().getNbSetJoueur() == 3;
+	}
 	
 	public void tempsMort(){
 	}
 	
 	public void jouer() throws IOException, NumberFormatException, JoueurBlesseException{
 		System.out.println(this.equipeJoueur+" VS "+this.equipeIA);
-		constituerEquipe();
+		while(this.nombrePasseurCorrect() == false) {
+			this.resetEquipe();
+			this.constituerEquipe();
+		}
+		IAGenerale ia = new IAGenerale(this.match);
+		while(this.matchFini() == false) {
+			ia.envoi();
+			ia.reception();
+		}
 	}
 	
 	public Equipe getEquipeIA() {

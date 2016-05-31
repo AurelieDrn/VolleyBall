@@ -73,4 +73,8 @@ public class Score{
 	public String toString() {
 		return this.listSets.toString();
 	}
+	
+	public Set getSet() {
+		return this.listSets.get(this.listSets.size()-1);
+	}
 }
