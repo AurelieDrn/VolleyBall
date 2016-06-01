@@ -284,10 +284,11 @@ public class GestionMatch {
 		}
 		IAGenerale ia = new IAGenerale(this.match);
 		this.initPositions();
-		while(this.matchFini() == false) {
-			ia.envoi();
-			ia.reception();
-		}
+		ia.envoi();
+		//while(this.matchFini() == false) {
+			//ia.envoi();
+			//ia.reception();
+		//}
 	}
 	
 	// getters et setters
