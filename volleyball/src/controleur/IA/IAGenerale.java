@@ -179,6 +179,7 @@ public class IAGenerale {
 		for(Joueur joueur : equipeQuiJoue.getListJoueur()){
 			if(joueur.getPosition().equals(this.match.getBalle().getPosition())) {
 				tireur = joueur;
+				System.out.println(tireur);
 			}
 		}
 		// La position finale de la balle ne sera pas correct
