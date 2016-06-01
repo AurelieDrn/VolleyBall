@@ -2,8 +2,6 @@ package modele;
 
 import java.util.ArrayList;
 
-import exception.SetEnCoursException;
-
 public class TestModele {
 
 	public static void main(String[] args) {
@@ -20,15 +18,11 @@ public class TestModele {
 		System.out.println(equipeIA);
 		Score score = new Score(equipeIA, equipeJoueur);
 		Set s;
-		try {
-			s = score.nouveauSet();
-			for (int i=0; i <= 25; i++) {
-				s.incScoreJoueur();
-			}
-			Set s2 = score.nouveauSet();
-		} catch (SetEnCoursException e1) {
-			e1.printStackTrace();
+		s = score.nouveauSet();
+		for (int i=0; i <= 25; i++) {
+			s.incScoreJoueur();
 		}
+		Set s2 = score.nouveauSet();
 		
 		System.out.println(score);
 		System.out.println(score.getNbSetJoueur());
