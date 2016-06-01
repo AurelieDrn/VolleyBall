@@ -137,7 +137,6 @@ public class IAGenerale {
 		if(this.nbTouches == 2) {
 			// Choisir la case qu'on va viser
 			this.positionArriveeBalle = this.choixCibleAdverse();
-			this.changementTerrain();
 		}
 		else if(this.nbTouches == 1) { // Passe à un attaquant de l'équipe
 			List<Position> positionsCoequipiers = new ArrayList<Position>();
@@ -179,7 +178,6 @@ public class IAGenerale {
 		for(Joueur joueur : equipeQuiJoue.getListJoueur()){
 			if(joueur.getPosition().equals(this.match.getBalle().getPosition())) {
 				tireur = joueur;
-				System.out.println(tireur);
 			}
 		}
 		// La position finale de la balle ne sera pas correct
@@ -226,6 +224,10 @@ public class IAGenerale {
 			else {
 				this.vitesseBalleTheorique = tireur.getForce()*3;
 			}
+		}
+		
+		if(this.nbTouches == 2) {
+			this.changementTerrain();
 		}
 		this.match.getBalle().setPosition(this.positionArriveeBalle);
 		return match;

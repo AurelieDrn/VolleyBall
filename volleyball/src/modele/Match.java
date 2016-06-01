@@ -35,7 +35,7 @@ public class Match {
 	}
 
 	public Equipe getEquipeJoueur() {
-		return equipeJoueur;
+		return this.equipeJoueur;
 	}
 
 	public void setEquipeJoueur(Equipe equipeJoueur) {
@@ -43,7 +43,7 @@ public class Match {
 	}
 
 	public Equipe getEquipeIA() {
-		return equipeIA;
+		return this.equipeIA;
 	}
 
 	public void setEquipeIA(Equipe equipeIA) {

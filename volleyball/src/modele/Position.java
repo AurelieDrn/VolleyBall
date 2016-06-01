@@ -38,4 +38,11 @@ public class Position {
 		return "Position [x=" + x + ", y=" + y + "]";
 	}
 
+	@Override
+	public boolean equals(Object obj) {
+		Position myobj = (Position) obj; 
+		return this.x ==myobj.getX() && this.y == myobj.getY();
+	}
+
+	
 }
