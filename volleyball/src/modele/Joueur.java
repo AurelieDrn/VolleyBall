@@ -276,4 +276,9 @@ public class Joueur {
 		return s+s2+s3+s33+s4+s5+s6+s7+s8+s9;
 	}
 
+	@Override
+	public boolean equals(Object obj) {
+		return super.equals(obj);
+	}
+
 }

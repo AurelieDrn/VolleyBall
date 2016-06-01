@@ -20,6 +20,7 @@ import modele.Joueur;
 import modele.Match;
 import modele.Position;
 import modele.Role;
+import modele.Set;
 
 /**
  * @author Meriem El Qsimi, Aurélie DURAND
@@ -204,12 +205,10 @@ public class GestionMatch {
 		return this.match.getScore().getNbSetIA() == 3 || this.match.getScore().getNbSetJoueur() == 3;
 	}
 	
-	private void nouveauSet() throws SetEnCoursException{
-		if(!matchFini()){ //je suis pas sûre de ça, parce que tu le teste dans la fonction jouer..
-			this.match.getScore().nouveauSet();
-			this.match.setNbTempsMortEquipeIA(0);
-			this.match.setNbTempsMortEquipeJoueur(0);
-		}	
+	private void nouveauSet() {
+		this.match.getScore().nouveauSet();
+		this.match.setNbTempsMortEquipeIA(0);
+		this.match.setNbTempsMortEquipeJoueur(0);
 	}
 	
 	public boolean maxNbTempsMortIA(){
@@ -251,6 +250,7 @@ public class GestionMatch {
 			this.positionsDepartIA.add(((LinkedList<Position>) this.positionsDepartIA).removeFirst());
 		}
 		this.initPositions();
+		this.rendreBalleIA();
 	}
 	
 	/**
@@ -261,6 +261,21 @@ public class GestionMatch {
 			this.positionsDepartJoueur.add(((LinkedList<Position>) this.positionsDepartJoueur).removeFirst());
 		}
 		this.initPositions();
+		this.rendreBalleJoueur();
+	}
+	
+	/**
+	 * Rendre la balle à l'équipe du joueur
+	 */
+	private void rendreBalleJoueur() {
+		this.match.getBalle().setPosition(new Position(7,2));
+	}
+	
+	/**
+	 * Rendre la balle à l'équipe IA
+	 */
+	private void rendreBalleIA() {
+		this.match.getBalle().setPosition(new Position(1,15));
 	}
 	
 	/**
@@ -268,8 +283,10 @@ public class GestionMatch {
 	 * @throws IOException
 	 * @throws NumberFormatException
 	 * @throws JoueurBlesseException
+	 * @throws SetEnCoursException 
 	 */
-	public void jouer() throws IOException, NumberFormatException, JoueurBlesseException{
+	public void jouer() throws IOException, NumberFormatException, JoueurBlesseException, SetEnCoursException{
+		// Constituer l'équipe
 		System.out.println(this.match.getEquipeJoueur().getNomEquipe()+" VS "+this.match.getEquipeIA().getNomEquipe());
 		this.constituerEquipe();
 		while(this.nombrePasseurCorrect() == false) {
@@ -282,13 +299,40 @@ public class GestionMatch {
 			this.resetEquipe();
 			this.constituerEquipe();
 		}
+		// Commencer le match
 		IAGenerale ia = new IAGenerale(this.match);
 		this.initPositions();
-		ia.envoi();
-		//while(this.matchFini() == false) {
-			//ia.envoi();
-			//ia.reception();
-		//}
+		this.nouveauSet();
+		while(this.matchFini() == false) {
+			// Créer un nouveau set
+			this.nouveauSet();
+			// Jouer le set
+			while(this.match.getScore().getSet().estFini() == false) {
+				this.match = ia.envoi();
+				if(ia.getPointPerduJoueur()) {
+					this.rotationIA();
+					ia.setPointPerduJoueur(false);
+				}
+				else if(ia.getPointPerduIA()) {
+					this.rotationJoueur();
+					ia.setPointPerduIA(false);
+				}
+				else {
+					this.match = ia.reception();
+					if(ia.getPointPerduJoueur()) {
+						this.rotationIA();
+						ia.setPointPerduJoueur(false);
+					}
+					if(ia.getPointPerduIA()) {
+						this.rotationJoueur();
+						ia.setPointPerduIA(false);
+					}
+				}
+			}
+			// Incrémente le nombre de set gagné
+			this.match.getScore().miseAJourScoreSet();
+			ia.setMatch(this.match);
+		}
 	}
 	
 	// getters et setters

@@ -32,6 +32,9 @@ public class IAGenerale {
 	private double vitesseBalleTheorique;
 	private double distanceParcourue;
 	
+	private boolean pointPerduJoueur;	// boolean pour savoir si un point a été été par une équipe (utilisé par GestionMatch)
+	private boolean pointPerduIA;
+	
 	private Joueur passeurIA;
 	private Joueur passeurJoueur;
 	
@@ -52,6 +55,8 @@ public class IAGenerale {
 		this.defenseursIA = new ArrayList<Joueur>();
 		this.defenseursJoueur = new ArrayList<Joueur>();
 		this.terrain = true;
+		this.pointPerduJoueur = false;
+		this.pointPerduIA = false;
 		this.vitesseBalleTheorique = 0;
 		init();
 	}
@@ -137,6 +142,13 @@ public class IAGenerale {
 		if(this.nbTouches == 2) {
 			// Choisir la case qu'on va viser
 			this.positionArriveeBalle = this.choixCibleAdverse();
+			// [suivi]
+			if(this.terrain) {
+				System.out.println("Envoi - Service/Attaque - Equipe joueur - cible : "+this.positionArriveeBalle);
+			}
+			else {
+				System.out.println("Envoi - Service/Attaque - Equipe IA - cible : "+this.positionArriveeBalle);
+			}
 		}
 		else if(this.nbTouches == 1) { // Passe à un attaquant de l'équipe
 			List<Position> positionsCoequipiers = new ArrayList<Position>();
@@ -153,16 +165,27 @@ public class IAGenerale {
 			}
 			// Choisir un coéquipier au hasard
 			this.positionArriveeBalle = positionsCoequipiers.get((int) (Math.random() * positionsCoequipiers.size()-1));
+			// [suivi]
+			if(this.terrain) {
+				System.out.println("Envoi - Passe à l'attaquant - Equipe joueur - cible : "+this.positionArriveeBalle);
+			}
+			else {
+				System.out.println("Envoi - Passe à l'attaquant - Equipe IA - cible : "+this.positionArriveeBalle);
+			}
 		}
 		else { // Passe au passeur de l'équipe
 			if(terrain){
 				this.positionArriveeBalle = this.passeurJoueur.getPosition();
+				// [suivi]
+				System.out.println("Envoi - Passe au passeur - Equipe joueur - cible : "+this.positionArriveeBalle);
 			}
 			else {
 				this.positionArriveeBalle = this.passeurIA.getPosition();
+				// [suivi]
+				System.out.println("Envoi - Passe au passeur - Equipe IA - cible : "+this.positionArriveeBalle);
 			}
 		}
-		// Une fois que la position finale de la balle est déterminée, on va altérer notre tire selon la précision du tireur
+		// Une fois que la position finale de la balle est déterminée, on va altérer notre tir selon la précision du tireur
 		// n est compris entre 0 et 10
 		Random r = new Random();
 		int n = r.nextInt(MAX - MIN + 1) + MAX;
@@ -179,6 +202,7 @@ public class IAGenerale {
 			if(joueur.getPosition().equals(this.match.getBalle().getPosition())) {
 				tireur = joueur;
 			}
+			//System.out.println("Joueur : "+joueur.getPosition());
 		}
 		// La position finale de la balle ne sera pas correct
 		if(tireur.getPrecision() < n) {
@@ -188,8 +212,10 @@ public class IAGenerale {
 				decalage = 2;
 			}
 			else {
-				decalage= 1;
+				decalage = 1;
 			}
+			// [suivi]
+			System.out.println("Envoi - La position d'arrivée de la balle a été décalée de "+decalage+"cases !");
 			// Prendre une direction au hasard pour dévier la balle à l'arrivée
 			Direction d = Direction.getRandom();
 			if(d == Direction.Haut) {
@@ -204,6 +230,8 @@ public class IAGenerale {
 			else {
 				this.positionArriveeBalle.setX(this.positionArriveeBalle.getX()+decalage);
 			}
+			// [suivi]
+			System.out.println("Envoi - Position finale : "+this.positionArriveeBalle);
 		}
 		this.distanceParcourue = Math.sqrt((Math.pow(this.positionArriveeBalle.getX()-tireur.getPosition().getX(), 2))+Math.pow(this.positionArriveeBalle.getY()-tireur.getPosition().getY(), 2));
 		// Envoi vers un membre de l'équipe, la vitesse de la balle est réduite
@@ -214,22 +242,31 @@ public class IAGenerale {
 		else { // Attaque vers l'équipe adverse, la balle est plus rapide
 			// Si la balle est tirée en dehors du terrain
 			if(this.positionArriveeBalle.getX()<0 || this.positionArriveeBalle.getX()>8 || this.positionArriveeBalle.getY()<0 || this.positionArriveeBalle.getY()>17) {
+				this.nbTouches = 2;
 				if(terrain) {
-					this.match.getScore().getSet().incScoreJoueur();
+					this.match.getScore().getSet().incScoreIA();
+					this.pointPerduJoueur = true;
+		
+					// [suivi]
+					System.out.println("Envoi - La balle a été perdue ! - Equipe Joueur");
 				}
 				else {
-					this.match.getScore().getSet().incScoreIA();
+					this.match.getScore().getSet().incScoreJoueur();
+					this.pointPerduIA = true;
+					// [suivi]
+					System.out.println("Envoi - La balle a été perdue ! - Equipe IA");
 				}
+				
 			}
 			else {
 				this.vitesseBalleTheorique = tireur.getForce()*3;
+				this.nbTouches = 0;
 			}
-		}
-		
-		if(this.nbTouches == 2) {
-			this.changementTerrain();
+			this.changementTerrain(); // si nbtouche == 2 on change de terrain
 		}
 		this.match.getBalle().setPosition(this.positionArriveeBalle);
+		System.out.println("Balle : "+this.match.getBalle().getPosition());
+		
 		return match;
 	}
 	
@@ -246,18 +283,26 @@ public class IAGenerale {
 			// Choisir un attaquant au hasard
 			if(terrain) {
 				joueur = this.attaquantsJoueur.get((int) (Math.random() * this.attaquantsJoueur.size()-1));
+				// [suivi]
+				System.out.println("Réception - Passe à l'attaquant - Equipe joueur - cible : "+joueur.getPosition());
 			}
 			else {
-				joueur = this.attaquantsIA.get((int) (Math.random() * this.attaquantsIA.size()-1));
+				joueur = this.attaquantsIA.get((int) (Math.random() * (this.attaquantsIA.size()-1)));
+				// [suivi]
+				System.out.println("Réception - Passe à l'attaquant - Equipe IA - cible : "+joueur.getPosition());
 			}
 			distanceJoueurBalle = Math.sqrt(Math.pow(joueur.getPosition().getX()-this.positionArriveeBalle.getX(), 2)+Math.pow(joueur.getPosition().getY()-this.positionArriveeBalle.getY(), 2));
 		}
 		else if(this.nbTouches == 1) { // C'est au passeur de recevoir la balle du défenseur
 			if(terrain) {
 				joueur = this.passeurJoueur;
+				// [suivi]
+				System.out.println("Réception - Passe au passeur - Equipe joueur - cible : "+joueur.getPosition());
 			}
 			else {
 				joueur = this.passeurIA;
+				// [suivi]
+				System.out.println("Réception - Passe au passeur - Equipe IA - cible : "+joueur.getPosition());
 			}
 			distanceJoueurBalle = Math.sqrt(Math.pow(joueur.getPosition().getX()-this.positionArriveeBalle.getX(), 2)+Math.pow(joueur.getPosition().getY()-this.positionArriveeBalle.getY(), 2));
 		}
@@ -266,9 +311,13 @@ public class IAGenerale {
 			List<Joueur> defenseurs;
 			if(terrain) {
 				defenseurs = this.defenseursJoueur;
+				// [suivi]
+				System.out.println("Le défenseur doit rattraper la balle... - Equipe joueur");
 			}
 			else {
 				defenseurs = this.defenseursIA;
+				// [suivi]
+				System.out.println("Le défenseur doit rattraper la balle... - Equipe IA");
 			}
 			for(Joueur defenseur : defenseurs) {
 				distance = Math.sqrt(Math.pow(defenseur.getPosition().getX()-this.positionArriveeBalle.getX(), 2)+Math.pow(defenseur.getPosition().getY()-this.positionArriveeBalle.getY(), 2));
@@ -299,14 +348,23 @@ public class IAGenerale {
 			}
 		}
 		// Si le joueur ne peut pas rattraper la balle
-		if(tjoueur < tballe) {
+		if(tjoueur > tballe) {
+			this.nbTouches = 2;
 			if(terrain) {
-				this.match.getScore().getSet().incScoreJoueur();
+				this.match.getScore().getSet().incScoreIA();
+				this.pointPerduJoueur = true;
+				// [suivi]
+				System.out.println("Réception - La balle a été perdue ! - Equipe Joueur");
 			}
 			else {
-				this.match.getScore().getSet().incScoreIA();
+				this.match.getScore().getSet().incScoreJoueur();
+				this.pointPerduIA = true;
+				// [suivi]
+				System.out.println("Réception - La balle a été perdue ! - Equipe IA");
 			}
+			this.changementTerrain();
 		}
+		
 		return match;
 	}
 	
@@ -353,4 +411,30 @@ public class IAGenerale {
 		}
 		return cible;
 	}
+
+	// getters et setters
+	public Match getMatch() {
+		return match;
+	}
+
+	public void setMatch(Match match) {
+		this.match = match;
+	}
+
+	public boolean getPointPerduJoueur() {
+		return pointPerduJoueur;
+	}
+
+	public void setPointPerduJoueur(boolean pointPerduJoueur) {
+		this.pointPerduJoueur = pointPerduJoueur;
+	}
+
+	public boolean getPointPerduIA() {
+		return pointPerduIA;
+	}
+
+	public void setPointPerduIA(boolean pointPerduIA) {
+		this.pointPerduIA = pointPerduIA;
+	}
+	
 }

@@ -51,7 +51,7 @@ public class Score{
 	/**
 	 * Crée un nouveau set et l'ajoute dans la liste de sets
 	 * Si les deux équipes sont à égalité, le prochain set est un tie break
-	 * @return
+	 * @return le set créé
 	 */
 	public Set nouveauSet() {	
 		Set set;
@@ -70,7 +70,7 @@ public class Score{
 	 * Cette fonction doit être appelée après chaque fin de set
 	 * @throws SetEnCoursException
 	 */
-	public void miseAJourScore() throws SetEnCoursException {
+	public void miseAJourScoreSet() throws SetEnCoursException {
 		if(!this.listSets.isEmpty()) {
 			Equipe e = this.listSets.get(this.listSets.size()-1).getGagnant();
 			if(e == this.equipeIA) {

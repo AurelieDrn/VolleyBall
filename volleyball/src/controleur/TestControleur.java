@@ -3,6 +3,7 @@ package controleur;
 import java.io.IOException;
 
 import exception.JoueurBlesseException;
+import exception.SetEnCoursException;
 import modele.Equipe;
 import modele.EquipeFactory;
 import modele.Role;
@@ -26,6 +27,8 @@ public class TestControleur {
 		} catch (NumberFormatException | JoueurBlesseException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (SetEnCoursException e) {
 			e.printStackTrace();
 		}
 		
