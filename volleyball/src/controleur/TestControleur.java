@@ -14,17 +14,18 @@ public class TestControleur {
 		Equipe equipeIA = EquipeFactory.getEquipe();
 		equipeIA.setNomEquipe("L'équipe IA");
 		GestionMatch gm = new GestionMatch(equipeIA, equipeJoueur);
-		try {
-			try {
-				gm.jouer();
-			} catch (NumberFormatException | JoueurBlesseException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
+		/*try {
+			gm.jouer();
+		} catch (NumberFormatException | JoueurBlesseException e) {
 			e.printStackTrace();
-		}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}*/
+		
+		// Test rotation des joueurs
+		/*System.out.println(gm.getPositionsDepartJoueur());
+		gm.rotationJoueur();
+		System.out.println(gm.getPositionsDepartJoueur());*/
 	}
 
 }

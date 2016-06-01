@@ -183,19 +183,50 @@ public class GestionMatch {
 	}
 	
 	/**
-	 * Permet de positionner les joueurs du terrain du bas sans faire de rotation
+	 * Permet de repositionner les joueurs sur le terrain à la position de départ
 	 */
-	private void initPositionsJoueur() {
-		
+	private void initPositions() {
+		for(int i=0; i <= this.positionsDepartJoueur.size(); i++) {
+			this.match.getEquipeJoueur().getListJoueur().get(i).setPosition(this.positionsDepartJoueur.get(i));
+			this.match.getEquipeIA().getListJoueur().get(i).setPosition(this.positionsDepartIA.get(i));
+		}
 	}
 	
+	/**
+	 * Effectue une rotation dans l'équipe IA. Cette fonction place les joueurs, pas besoin d'appeler initPositions après.
+	 */
+	private void rotationIA() {
+		for(int i=0; i <= this.positionsDepartIA.size(); i++) {
+			this.positionsDepartIA.add(((LinkedList<Position>) this.positionsDepartIA).removeFirst());
+		}
+		this.initPositions();
+	}
+	
+	/**
+	 * Effectue une rotation dans l'équipe du joueur. Cette fonction place les joueurs, pas besoin d'appeler initPositions après.
+	 */
+	private void rotationJoueur() {
+		for(int i=0; i <= this.positionsDepartJoueur.size(); i++) {
+			this.positionsDepartJoueur.add(((LinkedList<Position>) this.positionsDepartJoueur).removeFirst());
+		}
+		this.initPositions();
+	}
+	
+	/**
+	 * Permet de faire jouer un match
+	 * @throws IOException
+	 * @throws NumberFormatException
+	 * @throws JoueurBlesseException
+	 */
 	public void jouer() throws IOException, NumberFormatException, JoueurBlesseException{
 		System.out.println(this.match.getEquipeJoueur()+" VS "+this.match.getEquipeIA());
+		this.constituerEquipe();
 		while(this.nombrePasseurCorrect() == false) {
 			this.resetEquipe();
 			this.constituerEquipe();
 		}
 		IAGenerale ia = new IAGenerale(this.match);
+		this.initPositions();
 		while(this.matchFini() == false) {
 			ia.envoi();
 			ia.reception();
@@ -241,5 +272,21 @@ public class GestionMatch {
 
 	public void setMatch(Match match) {
 		this.match = match;
+	}
+
+	public List<Position> getPositionsDepartJoueur() {
+		return positionsDepartJoueur;
+	}
+
+	public void setPositionsDepartJoueur(List<Position> positionsDepartJoueur) {
+		this.positionsDepartJoueur = positionsDepartJoueur;
+	}
+
+	public List<Position> getPositionsDepartIA() {
+		return positionsDepartIA;
+	}
+
+	public void setPositionsDepartIA(List<Position> positionsDepartIA) {
+		this.positionsDepartIA = positionsDepartIA;
 	}
 }
