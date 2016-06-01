@@ -6,6 +6,8 @@ package controleur;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.LinkedList;
+import java.util.List;
 
 import controleur.IA.IAGenerale;
 import exception.JoueurBlesseException;
@@ -14,6 +16,7 @@ import exception.NbrIncorrectPasseurException;
 import modele.Equipe;
 import modele.Joueur;
 import modele.Match;
+import modele.Position;
 import modele.Role;
 
 /**
@@ -21,22 +24,38 @@ import modele.Role;
  *
  */
 public class GestionMatch { 
-	// gérer le match entre deux équipes
-	private Equipe equipeIA;
-	private Equipe equipeJoueur;
 	// on utilise ses deux classes pour nous aider
 	private GestionEquipe gestionEquipeIA;
 	private GestionEquipe gestionEquipeJoueur;
 	// c'est l'état d'un match à sauvegarder
 	private Match match;
+	private List<Position> positionsDepartJoueur;
+	private List<Position> positionsDepartIA;
 	
 	public GestionMatch(Equipe equipeIA, Equipe equipeJoueur) {
-		this.equipeIA = equipeIA;
-		this.equipeJoueur = equipeJoueur;
-		
 		this.gestionEquipeIA = new GestionEquipe(equipeIA);
 		this.gestionEquipeJoueur = new GestionEquipe(equipeJoueur);
 		this.match = new Match(equipeIA, equipeJoueur);
+		
+		this.positionsDepartJoueur = new LinkedList<Position>();
+		this.positionsDepartIA = new LinkedList<Position>();
+		this.init();
+	}
+	
+	private void init() {
+		this.positionsDepartJoueur.add(new Position(7,2));
+		this.positionsDepartJoueur.add(new Position(4,2));
+		this.positionsDepartJoueur.add(new Position(1,2));
+		this.positionsDepartJoueur.add(new Position(1,7));
+		this.positionsDepartJoueur.add(new Position(4,7));
+		this.positionsDepartJoueur.add(new Position(7,7));
+		
+		this.positionsDepartIA.add(new Position(1,15));
+		this.positionsDepartIA.add(new Position(4,15));
+		this.positionsDepartIA.add(new Position(7,15));
+		this.positionsDepartIA.add(new Position(7,10));
+		this.positionsDepartIA.add(new Position(4,10));
+		this.positionsDepartIA.add(new Position(1,10));
 	}
 	
 	/**
@@ -121,7 +140,7 @@ public class GestionMatch {
 	}
 	
 	private void constituerEquipe() throws IOException, NumberFormatException, JoueurBlesseException {
-		System.out.println(this.equipeJoueur);
+		System.out.println(this.match.getEquipeJoueur());
 		System.out.println("Veuillez sélectionner les 6 joueurs qui vous voulez faire jouer.");
 		System.out.println("(Rentrez le numéro des joueurs un par un. Pensez à sélectionner un et un seul passeur.)");
 
@@ -130,7 +149,7 @@ public class GestionMatch {
         	System.out.print("Joueur "+i+" : ");
         	String numString = bufferRead.readLine();
         	int numero = Integer.parseInt(numString);
-        	this.equipeJoueur.getListJoueur().get(numero).setEnJeu(true);
+        	this.match.getEquipeJoueur().getListJoueur().get(numero).setEnJeu(true);
         	//A finir
         }
 	}
@@ -163,8 +182,15 @@ public class GestionMatch {
 	public void tempsMort(){
 	}
 	
+	/**
+	 * Permet de positionner les joueurs du terrain du bas sans faire de rotation
+	 */
+	private void initPositionsJoueur() {
+		
+	}
+	
 	public void jouer() throws IOException, NumberFormatException, JoueurBlesseException{
-		System.out.println(this.equipeJoueur+" VS "+this.equipeIA);
+		System.out.println(this.match.getEquipeJoueur()+" VS "+this.match.getEquipeIA());
 		while(this.nombrePasseurCorrect() == false) {
 			this.resetEquipe();
 			this.constituerEquipe();
@@ -176,20 +202,21 @@ public class GestionMatch {
 		}
 	}
 	
+	// getters et setters
 	public Equipe getEquipeIA() {
-		return equipeIA;
+		return this.match.getEquipeIA();
 	}
 
 	public void setEquipeIA(Equipe equipeIA) {
-		this.equipeIA = equipeIA;
+		this.match.setEquipeIA(equipeIA);
 	}
 
 	public Equipe getEquipeJoueur() {
-		return equipeJoueur;
+		return this.match.getEquipeJoueur();
 	}
 
 	public void setEquipeJoueur(Equipe equipeJoueur) {
-		this.equipeJoueur = equipeJoueur;
+		this.match.setEquipeJoueur(equipeJoueur);
 	}
 
 	public GestionEquipe getGestionEquipeIA() {
