@@ -16,13 +16,10 @@ import modele.Sponsor;
  */
 public class GestionEquipe {
 	private Equipe equipe;
-	private List<Joueur> joueurEnJeu;
-	
 
 	public GestionEquipe(Equipe equipe) {
 		super();
 		this.equipe = equipe;
-		this.joueurEnJeu = new ArrayList<Joueur>();
 	}
 	
 	public void recruterJoueur(Joueur joueur){
@@ -75,11 +72,13 @@ public class GestionEquipe {
 	}
 	
 	public List<Joueur> getJoueursEnJeu() {
-		return joueurEnJeu;
-	}
-
-	public void setJoueursEnJeu(List<Joueur> joueurEnJeu) {
-		this.joueurEnJeu = joueurEnJeu;
+		List<Joueur> joueursEnJeu = new ArrayList<Joueur>();
+		for(Joueur joueur : this.equipe.getListJoueur()) {
+			if(joueur.isEnJeu()) {
+				joueursEnJeu.add(joueur);
+			}
+		}
+		return joueursEnJeu;
 	}
 
 	public Equipe getEquipe() {

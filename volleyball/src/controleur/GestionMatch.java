@@ -32,10 +32,10 @@ public class GestionMatch {
 	private List<Position> positionsDepartJoueur;
 	private List<Position> positionsDepartIA;
 	
-	public GestionMatch(Equipe equipeIA, Equipe equipeJoueur) {
+	public GestionMatch(Equipe equipeJoueur, Equipe equipeIA) {
 		this.gestionEquipeIA = new GestionEquipe(equipeIA);
 		this.gestionEquipeJoueur = new GestionEquipe(equipeJoueur);
-		this.match = new Match(equipeIA, equipeJoueur);
+		this.match = new Match(equipeJoueur, equipeIA);
 		
 		this.positionsDepartJoueur = new LinkedList<Position>();
 		this.positionsDepartIA = new LinkedList<Position>();
@@ -139,6 +139,12 @@ public class GestionMatch {
 		
 	}
 	
+	/**
+	 * Permet au joueur de choisir les joueurs qui vont jouer.
+	 * @throws IOException
+	 * @throws NumberFormatException
+	 * @throws JoueurBlesseException
+	 */
 	private void constituerEquipe() throws IOException, NumberFormatException, JoueurBlesseException {
 		System.out.println(this.match.getEquipeJoueur());
 		System.out.println("Veuillez sélectionner les 6 joueurs qui vous voulez faire jouer.");
@@ -149,8 +155,13 @@ public class GestionMatch {
         	System.out.print("Joueur "+i+" : ");
         	String numString = bufferRead.readLine();
         	int numero = Integer.parseInt(numString);
-        	this.match.getEquipeJoueur().getListJoueur().get(numero).setEnJeu(true);
-        	//A finir
+        	// Il faudra rentrer l'id unique
+        	for(Joueur joueur : this.match.getEquipeJoueur().getListJoueur()) {
+        		if(joueur.getNumero() == numero) {
+        			joueur.setEnJeu(true);
+        			break;
+        		}
+        	}
         }
 	}
 	
@@ -167,6 +178,18 @@ public class GestionMatch {
 			}
 		}
 		return (i==1);
+	}
+	
+	/**
+	 * Fonction qui vérifie que le joueur a bien sélectionné 6 joueurs pour jouer
+	 * @return true si l'équipe contient 6 joueurs en jeu, faux sinon
+	 */
+	private boolean nombreJoueursCorrect() {
+		int compteur = 0;
+		for(Joueur joueur : this.gestionEquipeJoueur.getJoueursEnJeu()) {
+			compteur++;
+		}
+		return (compteur==6);
 	}
 	
 	private void resetEquipe() throws JoueurBlesseException {
@@ -186,7 +209,7 @@ public class GestionMatch {
 	 * Permet de repositionner les joueurs sur le terrain à la position de départ
 	 */
 	private void initPositions() {
-		for(int i=0; i <= this.positionsDepartJoueur.size(); i++) {
+		for(int i=0; i < this.positionsDepartJoueur.size(); i++) {
 			this.match.getEquipeJoueur().getListJoueur().get(i).setPosition(this.positionsDepartJoueur.get(i));
 			this.match.getEquipeIA().getListJoueur().get(i).setPosition(this.positionsDepartIA.get(i));
 		}
@@ -219,9 +242,15 @@ public class GestionMatch {
 	 * @throws JoueurBlesseException
 	 */
 	public void jouer() throws IOException, NumberFormatException, JoueurBlesseException{
-		System.out.println(this.match.getEquipeJoueur()+" VS "+this.match.getEquipeIA());
+		System.out.println(this.match.getEquipeJoueur().getNomEquipe()+" VS "+this.match.getEquipeIA().getNomEquipe());
 		this.constituerEquipe();
 		while(this.nombrePasseurCorrect() == false) {
+			System.out.println("Il faut un et un seul passeur dans votre équipe.\n");
+			this.resetEquipe();
+			this.constituerEquipe();
+		}
+		while(this.nombreJoueursCorrect() == false) {
+			System.out.println("Vous devez sélectionner 6 joueurs dans votre équipe.\n");
 			this.resetEquipe();
 			this.constituerEquipe();
 		}

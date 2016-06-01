@@ -13,14 +13,14 @@ public class TestControleur {
 		equipeJoueur.setNomEquipe("La super équipe de Mr Dupont");
 		Equipe equipeIA = EquipeFactory.getEquipe();
 		equipeIA.setNomEquipe("L'équipe IA");
-		GestionMatch gm = new GestionMatch(equipeIA, equipeJoueur);
-		/*try {
+		GestionMatch gm = new GestionMatch(equipeJoueur, equipeIA);
+		try {
 			gm.jouer();
 		} catch (NumberFormatException | JoueurBlesseException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
-		}*/
+		}
 		
 		// Test rotation des joueurs
 		/*System.out.println(gm.getPositionsDepartJoueur());
