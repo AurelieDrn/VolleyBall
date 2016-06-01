@@ -12,7 +12,9 @@ import java.util.List;
 import controleur.IA.IAGenerale;
 import exception.JoueurBlesseException;
 import exception.NbChangementsDepassesException;
+import exception.NbTempsMortsException;
 import exception.NbrIncorrectPasseurException;
+import exception.SetEnCoursException;
 import modele.Equipe;
 import modele.Joueur;
 import modele.Match;
@@ -202,7 +204,33 @@ public class GestionMatch {
 		return this.match.getScore().getNbSetIA() == 3 || this.match.getScore().getNbSetJoueur() == 3;
 	}
 	
-	public void tempsMort(){
+	private void nouveauSet() throws SetEnCoursException{
+		if(!matchFini()){ //je suis pas sûre de ça, parce que tu le teste dans la fonction jouer..
+			this.match.getScore().nouveauSet();
+			this.match.setNbTempsMortEquipeIA(0);
+			this.match.setNbTempsMortEquipeJoueur(0);
+		}	
+	}
+	
+	public boolean maxNbTempsMortIA(){
+		return this.match.getNbTempsMortEquipeIA() == 2;
+	}
+	
+	public boolean maxNbTempsMortJ(){
+		return this.match.getNbTempsMortEquipeIA() == 2;
+	}
+	public void tempsMortIA() throws NbTempsMortsException{
+		if(maxNbTempsMortIA()) throw new NbTempsMortsException();
+		else{
+			this.match.getScore().incNbSetIA();
+		}
+	}
+	
+	public void tempsMortJ() throws NbTempsMortsException{
+		if(maxNbTempsMortJ()) throw new NbTempsMortsException();
+		else{
+			this.match.getScore().incNbSetJoueur();
+		}
 	}
 	
 	/**
