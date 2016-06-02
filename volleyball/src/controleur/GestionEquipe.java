@@ -33,11 +33,15 @@ public class GestionEquipe {
 	}
 	
 	public void reposerJoueur(Joueur joueur){
-		joueur.setFatigue(joueur.getFatigue()-1);
+		if(joueur.getFatigue() > 0) {
+			joueur.setFatigue(joueur.getFatigue()-1);
+		}
 	}
 	
 	public void fatigueJoueur(Joueur joueur){
-		joueur.setFatigue(joueur.getFatigue()+1);
+		if(joueur.getFatigue() < 10) {
+			joueur.setFatigue(joueur.getFatigue()+1);
+		}
 	}
 	
 	public void entrainerJoueur(Joueur joueur){

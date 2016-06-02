@@ -287,16 +287,25 @@ public class GestionMatch {
 			this.initPositions();
 			ia.setPointPerduJoueur(false);
 			this.rendreBalleIA();
+			this.fatigueJoueurs();
+			this.reposJoueurs();
 		}
 		else if(ia.getPointPerduIA()) {
 			this.rotationJoueur();
 			this.initPositions();
 			ia.setPointPerduIA(false);
 			this.rendreBalleJoueur();
+			this.fatigueJoueurs();
+			this.reposJoueurs();
 		}
 		return (ia.getPointPerduJoueur() || ia.getPointPerduIA());
 	}
 	
+	/**
+	 * Trouve le gagnant du match
+	 * @return l'équipe gagnante
+	 * @throws MatchEnCoursException
+	 */
 	private Equipe determinerGagnant() throws MatchEnCoursException {
 		if(this.match.getEtat() == Etat.EnCours) {
 			throw new MatchEnCoursException();

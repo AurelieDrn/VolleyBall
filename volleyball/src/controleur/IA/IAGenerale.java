@@ -23,7 +23,7 @@ public class IAGenerale {
 	
 	private static final int MIN = 0;
 	private static final int MAX = 0;
-	private static final double COEFF = 1.5;
+	private static final double COEFF = 2;
 	private static final int COEFF_BALLE = 2;
 	
 	private Position positionArriveeBalle;
@@ -32,6 +32,8 @@ public class IAGenerale {
 	private boolean terrain; // true si on vise le terrain du haut
 	private double vitesseBalleTheorique;
 	private double distanceParcourue;
+	private int malus;
+	private int bonus;
 	
 	private boolean pointPerduJoueur;	// boolean pour savoir si un point a été été par une équipe (utilisé par GestionMatch)
 	private boolean pointPerduIA;
@@ -59,6 +61,8 @@ public class IAGenerale {
 		this.pointPerduJoueur = false;
 		this.pointPerduIA = false;
 		this.vitesseBalleTheorique = 0;
+		this.malus = 0;
+		this.bonus = 0;
 		init();
 	}
 	
@@ -151,6 +155,12 @@ public class IAGenerale {
 			else {
 				System.out.println("Envoi - Service/Attaque - Equipe IA - cible : "+this.positionArriveeBalle);
 			}
+			/*for(Joueur j : this.match.getEquipeJoueur().getListJoueur()) {
+				System.out.println("JOUEUR : "+j.getPosition());
+			}
+			for(Joueur k : this.match.getEquipeIA().getListJoueur()) {
+				System.out.println("IA : "+k.getPosition());
+			}*/
 		}
 		else if(this.nbTouches == 1) { // Passe à un attaquant de l'équipe
 			List<Position> positionsCoequipiers = new ArrayList<Position>();
@@ -207,17 +217,17 @@ public class IAGenerale {
 			//System.out.println("Joueur : "+joueur.getPosition());
 		}
 		// La position finale de la balle ne sera pas correct
-		if(tireur.getPrecision() < n) {
+		if((tireur.getPrecision()-tireur.getFatigue()) < n) {
 			// Si la précision du joueur est plus petite que le nombre aléatoirement généré malgré qu'on l'ait augmenté, on dévier le tire de 2 cases
 			int decalage = 0;	//Le nombre de cases à décaler
-			if(COEFF*tireur.getPrecision() < n) {
+			if((tireur.getPrecision()+COEFF-tireur.getFatigue()) < n) {
 				decalage = 2;
 			}
 			else {
 				decalage = 1;
 			}
 			// [suivi]
-			System.out.println("Envoi - La position d'arrivée de la balle a été décalée de "+decalage+"cases !");
+			System.out.println("Envoi - La position d'arrivée de la balle a été décalée de "+decalage+" cases !");
 			// Prendre une direction au hasard pour dévier la balle à l'arrivée
 			Direction d = Direction.getRandom();
 			if(d == Direction.Haut) {
@@ -238,7 +248,7 @@ public class IAGenerale {
 		this.distanceParcourue = Math.sqrt((Math.pow(this.positionArriveeBalle.getX()-tireur.getPosition().getX(), 2))+Math.pow(this.positionArriveeBalle.getY()-tireur.getPosition().getY(), 2));
 		// Envoi vers un membre de l'équipe, la vitesse de la balle est réduite
 		if(this.nbTouches < 2) {
-			this.vitesseBalleTheorique = tireur.getForce()/2;
+			this.vitesseBalleTheorique = (tireur.getForce()-tireur.getFatigue())/2;
 			this.nbTouches++;
 		}
 		else { // Attaque vers l'équipe adverse, la balle est plus rapide
@@ -261,7 +271,7 @@ public class IAGenerale {
 				
 			}
 			else {
-				this.vitesseBalleTheorique = tireur.getForce()*COEFF_BALLE;
+				this.vitesseBalleTheorique = (tireur.getForce()-tireur.getFatigue())*COEFF_BALLE;
 				this.nbTouches = 0;
 			}
 			this.changementTerrain(); // si nbtouche == 2 on change de terrain
@@ -331,7 +341,7 @@ public class IAGenerale {
 			}
 		}
 		// Calcul théorique du temps de trajet du joueur vers la balle
-		double tjoueur = distanceJoueurBalle/joueur.getVitesse();
+		double tjoueur = distanceJoueurBalle/(joueur.getVitesse()-joueur.getFatigue());
 		
 		// Calcul théorique du temps de trajet de la balle
 		double tballe = this.distanceParcourue/this.vitesseBalleTheorique;
@@ -439,5 +449,20 @@ public class IAGenerale {
 	public void setPointPerduIA(boolean pointPerduIA) {
 		this.pointPerduIA = pointPerduIA;
 	}
-	
+
+	public int getMalus() {
+		return malus;
+	}
+
+	public void setMalus(int malus) {
+		this.malus = malus;
+	}
+
+	public int getBonus() {
+		return bonus;
+	}
+
+	public void setBonus(int bonus) {
+		this.bonus = bonus;
+	}
 }
