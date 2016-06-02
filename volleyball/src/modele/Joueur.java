@@ -11,7 +11,7 @@ import exception.JoueurBlesseException;
  * @author Yumiao Fu
  * relecteurs Aurélie Durand
  */
-public class Joueur {
+public class Joueur implements Cloneable {
 	
 	
 	private int numero;
@@ -278,7 +278,12 @@ public class Joueur {
 
 	@Override
 	public boolean equals(Object obj) {
-		return super.equals(obj);
+		Joueur myobj = (Joueur) obj; 
+		return this.numero==myobj.getNumero();
 	}
 
+	@Override
+	public Object clone() throws CloneNotSupportedException {
+		return super.clone();
+	}
 }

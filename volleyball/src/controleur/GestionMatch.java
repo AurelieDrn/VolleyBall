@@ -284,8 +284,9 @@ public class GestionMatch {
 	 * @throws NumberFormatException
 	 * @throws JoueurBlesseException
 	 * @throws SetEnCoursException 
+	 * @throws CloneNotSupportedException 
 	 */
-	public void jouer() throws IOException, NumberFormatException, JoueurBlesseException, SetEnCoursException{
+	public void jouer() throws IOException, NumberFormatException, JoueurBlesseException, SetEnCoursException, CloneNotSupportedException{
 		// Constituer l'équipe
 		System.out.println(this.match.getEquipeJoueur().getNomEquipe()+" VS "+this.match.getEquipeIA().getNomEquipe());
 		this.constituerEquipe();

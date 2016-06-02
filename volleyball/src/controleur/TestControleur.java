@@ -21,6 +21,12 @@ public class TestControleur {
 		equipeJoueur.getListJoueur().get(5).setRole(Role.defenseur);
 		Equipe equipeIA = EquipeFactory.getEquipe();
 		equipeIA.setNomEquipe("L'équipe IA");
+		equipeIA.getListJoueur().get(0).setRole(Role.passeur);
+		equipeIA.getListJoueur().get(1).setRole(Role.attaquant);
+		equipeIA.getListJoueur().get(2).setRole(Role.attaquant);
+		equipeIA.getListJoueur().get(3).setRole(Role.defenseur);
+		equipeIA.getListJoueur().get(4).setRole(Role.defenseur);
+		equipeIA.getListJoueur().get(5).setRole(Role.defenseur);
 		GestionMatch gm = new GestionMatch(equipeJoueur, equipeIA);
 		try {
 			gm.jouer();
@@ -29,6 +35,8 @@ public class TestControleur {
 		} catch (IOException e) {
 			e.printStackTrace();
 		} catch (SetEnCoursException e) {
+			e.printStackTrace();
+		} catch (CloneNotSupportedException e) {
 			e.printStackTrace();
 		}
 		

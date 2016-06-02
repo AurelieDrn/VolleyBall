@@ -24,6 +24,7 @@ public class IAGenerale {
 	private static final int MIN = 0;
 	private static final int MAX = 0;
 	private static final double COEFF = 1.5;
+	private static final int COEFF_BALLE = 2;
 	
 	private Position positionArriveeBalle;
 	private Match match;
@@ -136,8 +137,9 @@ public class IAGenerale {
 	/**
 	 * Fonction qui permet à un joueur de renvoyer la balle.
 	 * @return un objet Match
+	 * @throws CloneNotSupportedException 
 	 */
-	public Match envoi() {
+	public Match envoi() throws CloneNotSupportedException {
 		// On vise le terrain adverse
 		if(this.nbTouches == 2) {
 			// Choisir la case qu'on va viser
@@ -200,7 +202,7 @@ public class IAGenerale {
 		// Trouver le joueur qui tire
 		for(Joueur joueur : equipeQuiJoue.getListJoueur()){
 			if(joueur.getPosition().equals(this.match.getBalle().getPosition())) {
-				tireur = joueur;
+				tireur = (Joueur) joueur.clone();
 			}
 			//System.out.println("Joueur : "+joueur.getPosition());
 		}
@@ -259,7 +261,7 @@ public class IAGenerale {
 				
 			}
 			else {
-				this.vitesseBalleTheorique = tireur.getForce()*3;
+				this.vitesseBalleTheorique = tireur.getForce()*COEFF_BALLE;
 				this.nbTouches = 0;
 			}
 			this.changementTerrain(); // si nbtouche == 2 on change de terrain
@@ -273,8 +275,9 @@ public class IAGenerale {
 	/**
 	 * Fonction qui permet de réceptionner la balle lors d'un match
 	 * @return un objet Match
+	 * @throws CloneNotSupportedException 
 	 */
-	public Match reception() {
+	public Match reception() throws CloneNotSupportedException {
 		double distance = 0;
 		double distanceJoueurBalle = 18;
 		Joueur joueur = null;
@@ -295,12 +298,12 @@ public class IAGenerale {
 		}
 		else if(this.nbTouches == 1) { // C'est au passeur de recevoir la balle du défenseur
 			if(terrain) {
-				joueur = this.passeurJoueur;
+				joueur = (Joueur) this.passeurJoueur.clone();
 				// [suivi]
 				System.out.println("Réception - Passe au passeur - Equipe joueur - cible : "+joueur.getPosition());
 			}
 			else {
-				joueur = this.passeurIA;
+				joueur = (Joueur) this.passeurIA.clone();
 				// [suivi]
 				System.out.println("Réception - Passe au passeur - Equipe IA - cible : "+joueur.getPosition());
 			}
@@ -323,7 +326,7 @@ public class IAGenerale {
 				distance = Math.sqrt(Math.pow(defenseur.getPosition().getX()-this.positionArriveeBalle.getX(), 2)+Math.pow(defenseur.getPosition().getY()-this.positionArriveeBalle.getY(), 2));
 				if(distance < distanceJoueurBalle) {
 					distanceJoueurBalle = distance;
-					joueur = defenseur;
+					joueur = (Joueur) defenseur.clone();
 				}
 			}
 		}
