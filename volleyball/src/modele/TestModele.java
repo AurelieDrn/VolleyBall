@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class TestModele {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws CloneNotSupportedException {
 		ArrayList<Joueur> joueurs = JoueurFactory.getJoueurs(6);
 		for(Joueur joueur : joueurs) {
 			//System.out.println(joueur);

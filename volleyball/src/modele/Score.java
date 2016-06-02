@@ -9,7 +9,7 @@ import java.util.List;
 import exception.SetEnCoursException;
 
 /**
- * @author Yumiao Fu
+ * @author Yumiao Fu, Aurélie Durand
  *
  */
 public class Score{
@@ -90,4 +90,5 @@ public class Score{
 	public Set getSet() {
 		return this.listSets.get(this.listSets.size()-1);
 	}
+
 }

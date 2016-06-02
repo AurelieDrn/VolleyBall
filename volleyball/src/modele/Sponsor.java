@@ -42,4 +42,5 @@ public class Sponsor {
 	public void setMontantSubvention(int montantSubvention) {
 		this.montantSubvention = montantSubvention;
 	}
+
 }

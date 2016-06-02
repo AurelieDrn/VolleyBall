@@ -3,6 +3,7 @@ package controleur;
 import java.io.IOException;
 
 import exception.JoueurBlesseException;
+import exception.MatchEnCoursException;
 import exception.SetEnCoursException;
 import modele.Equipe;
 import modele.EquipeFactory;
@@ -37,6 +38,8 @@ public class TestControleur {
 		} catch (SetEnCoursException e) {
 			e.printStackTrace();
 		} catch (CloneNotSupportedException e) {
+			e.printStackTrace();
+		} catch (MatchEnCoursException e) {
 			e.printStackTrace();
 		}
 		

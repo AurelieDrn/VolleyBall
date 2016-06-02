@@ -11,16 +11,17 @@ import java.util.List;
 
 import controleur.IA.IAGenerale;
 import exception.JoueurBlesseException;
+import exception.MatchEnCoursException;
 import exception.NbChangementsDepassesException;
 import exception.NbTempsMortsException;
 import exception.NbrIncorrectPasseurException;
 import exception.SetEnCoursException;
 import modele.Equipe;
+import modele.Etat;
 import modele.Joueur;
 import modele.Match;
 import modele.Position;
 import modele.Role;
-import modele.Set;
 
 /**
  * @author Meriem El Qsimi, Aurélie DURAND
@@ -189,7 +190,7 @@ public class GestionMatch {
 	 */
 	private boolean nombreJoueursCorrect() {
 		int compteur = 0;
-		for(Joueur joueur : this.gestionEquipeJoueur.getJoueursEnJeu()) {
+		for(@SuppressWarnings("unused") Joueur joueur : this.gestionEquipeJoueur.getJoueursEnJeu()) {
 			compteur++;
 		}
 		return (compteur==6);
@@ -204,7 +205,7 @@ public class GestionMatch {
 	private boolean matchFini() {
 		return this.match.getScore().getNbSetIA() == 3 || this.match.getScore().getNbSetJoueur() == 3;
 	}
-	
+		
 	private void nouveauSet() {
 		this.match.getScore().nouveauSet();
 		this.match.setNbTempsMortEquipeIA(0);
@@ -218,6 +219,7 @@ public class GestionMatch {
 	public boolean maxNbTempsMortJ(){
 		return this.match.getNbTempsMortEquipeIA() == 2;
 	}
+	
 	public void tempsMortIA() throws NbTempsMortsException{
 		if(maxNbTempsMortIA()) throw new NbTempsMortsException();
 		else{
@@ -243,25 +245,21 @@ public class GestionMatch {
 	}
 	
 	/**
-	 * Effectue une rotation dans l'équipe IA. Cette fonction place les joueurs, pas besoin d'appeler initPositions après.
+	 * Effectue une rotation dans l'équipe IA
 	 */
 	private void rotationIA() {
 		for(int i=0; i <= this.positionsDepartIA.size(); i++) {
 			this.positionsDepartIA.add(((LinkedList<Position>) this.positionsDepartIA).removeFirst());
 		}
-		this.initPositions();
-		this.rendreBalleIA();
 	}
 	
 	/**
-	 * Effectue une rotation dans l'équipe du joueur. Cette fonction place les joueurs, pas besoin d'appeler initPositions après.
+	 * Effectue une rotation dans l'équipe du joueur. 
 	 */
 	private void rotationJoueur() {
 		for(int i=0; i <= this.positionsDepartJoueur.size(); i++) {
 			this.positionsDepartJoueur.add(((LinkedList<Position>) this.positionsDepartJoueur).removeFirst());
 		}
-		this.initPositions();
-		this.rendreBalleJoueur();
 	}
 	
 	/**
@@ -279,14 +277,48 @@ public class GestionMatch {
 	}
 	
 	/**
+	 * Vérifie s'il y a eu un changement de point et effectue les opérations nécessaires.
+	 * @param ia : IAGenerale
+	 * @return true si un changement de point a eu lieu
+	 */
+	private boolean changementDePoint(IAGenerale ia) {
+		if(ia.getPointPerduJoueur()) {
+			this.rotationIA();
+			this.initPositions();
+			ia.setPointPerduJoueur(false);
+			this.rendreBalleIA();
+		}
+		else if(ia.getPointPerduIA()) {
+			this.rotationJoueur();
+			this.initPositions();
+			ia.setPointPerduIA(false);
+			this.rendreBalleJoueur();
+		}
+		return (ia.getPointPerduJoueur() || ia.getPointPerduIA());
+	}
+	
+	private Equipe determinerGagnant() throws MatchEnCoursException {
+		if(this.match.getEtat() == Etat.EnCours) {
+			throw new MatchEnCoursException();
+		}
+		if(this.match.getScore().getNbSetJoueur() == 3) {
+			return this.match.getEquipeJoueur();
+		}
+		else {
+			return this.match.getEquipeIA();
+		}
+	}
+	
+	/**
 	 * Permet de faire jouer un match
 	 * @throws IOException
 	 * @throws NumberFormatException
 	 * @throws JoueurBlesseException
 	 * @throws SetEnCoursException 
 	 * @throws CloneNotSupportedException 
+	 * @throws MatchEnCoursException 
 	 */
-	public void jouer() throws IOException, NumberFormatException, JoueurBlesseException, SetEnCoursException, CloneNotSupportedException{
+	public void jouer() throws IOException, NumberFormatException, JoueurBlesseException, SetEnCoursException, CloneNotSupportedException, MatchEnCoursException{
 		// Constituer l'équipe
 		System.out.println(this.match.getEquipeJoueur().getNomEquipe()+" VS "+this.match.getEquipeIA().getNomEquipe());
 		this.constituerEquipe();
@@ -303,37 +335,25 @@ public class GestionMatch {
 		// Commencer le match
 		IAGenerale ia = new IAGenerale(this.match);
 		this.initPositions();
-		this.nouveauSet();
 		while(this.matchFini() == false) {
 			// Créer un nouveau set
 			this.nouveauSet();
 			// Jouer le set
 			while(this.match.getScore().getSet().estFini() == false) {
 				this.match = ia.envoi();
-				if(ia.getPointPerduJoueur()) {
-					this.rotationIA();
-					ia.setPointPerduJoueur(false);
-				}
-				else if(ia.getPointPerduIA()) {
-					this.rotationJoueur();
-					ia.setPointPerduIA(false);
-				}
-				else {
+				if(!this.changementDePoint(ia)) {
 					this.match = ia.reception();
-					if(ia.getPointPerduJoueur()) {
-						this.rotationIA();
-						ia.setPointPerduJoueur(false);
-					}
-					if(ia.getPointPerduIA()) {
-						this.rotationJoueur();
-						ia.setPointPerduIA(false);
-					}
+					this.changementDePoint(ia);
 				}
 			}
 			// Incrémente le nombre de set gagné
 			this.match.getScore().miseAJourScoreSet();
 			ia.setMatch(this.match);
 		}
+		System.out.println(this.match.getScore());
+		this.match.setEtat(Etat.Fini);
+		this.match.setEquipeGagnante(this.determinerGagnant());
+		System.out.println(this.match.getEquipeGagnante().getNomEquipe());
 	}
 	
 	// getters et setters
