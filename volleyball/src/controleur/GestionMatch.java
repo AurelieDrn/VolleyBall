@@ -29,12 +29,12 @@ import modele.Role;
  */
 public class GestionMatch { 
 	// on utilise ses deux classes pour nous aider
-	private GestionEquipe gestionEquipeIA;
-	private GestionEquipe gestionEquipeJoueur;
+	public GestionEquipe gestionEquipeIA;
+	public GestionEquipe gestionEquipeJoueur;
 	// c'est l'état d'un match à sauvegarder
-	private Match match;
-	private List<Position> positionsDepartJoueur;
-	private List<Position> positionsDepartIA;
+	public Match match;
+	public List<Position> positionsDepartJoueur;
+	public List<Position> positionsDepartIA;
 	
 	public GestionMatch(Equipe equipeJoueur, Equipe equipeIA) {
 		this.gestionEquipeIA = new GestionEquipe(equipeIA);
@@ -46,7 +46,7 @@ public class GestionMatch {
 		this.init();
 	}
 	
-	private void init() {
+	public void init() {
 		this.positionsDepartJoueur.add(new Position(7,2));
 		this.positionsDepartJoueur.add(new Position(4,2));
 		this.positionsDepartJoueur.add(new Position(1,2));
@@ -65,7 +65,7 @@ public class GestionMatch {
 	/**
 	 * Fonction qui permet d'augmenter la fatigue de tous les joueurs sur le terrain
 	 */
-	private void fatigueJoueurs(){
+	public void fatigueJoueurs(){
 		for(Joueur joueur : match.getEquipeIA().getListJoueur()){
 			if(joueur.isEnJeu()){
 				this.gestionEquipeIA.fatigueJoueur(joueur);
@@ -81,7 +81,7 @@ public class GestionMatch {
 	/**
 	 * Fonction qui permet de diminuer la fatiguge de tous les joueurs qui attendent
 	 */
-	private void reposJoueurs(){
+	public void reposJoueurs(){
 		for(Joueur joueur : match.getEquipeIA().getListJoueur()){
 			if(!joueur.isEnJeu()){
 				this.gestionEquipeIA.reposerJoueur(joueur);
@@ -97,7 +97,7 @@ public class GestionMatch {
 	/**
 	 * Fonction qui permet de créer un accident à un joueur sur le terrain lorsque sa fatigue est au maximum
 	 */
-	private void gestionAccident(){
+	public void gestionAccident(){
 		for(Joueur joueur : this.match.getEquipeIA().getListJoueur()){
 			if(joueur.getFatigue() == 10){
 				joueur.setEstBlesse(true);
@@ -149,7 +149,7 @@ public class GestionMatch {
 	 * @throws NumberFormatException
 	 * @throws JoueurBlesseException
 	 */
-	private void constituerEquipe() throws IOException, NumberFormatException, JoueurBlesseException {
+	public void constituerEquipe() throws IOException, NumberFormatException, JoueurBlesseException {
 		System.out.println(this.match.getEquipeJoueur());
 		System.out.println("Veuillez sélectionner les 6 joueurs qui vous voulez faire jouer.");
 		System.out.println("(Rentrez le numéro des joueurs un par un. Pensez à sélectionner un et un seul passeur.)");
@@ -174,7 +174,7 @@ public class GestionMatch {
 	 * L'IA ne doit pas faire d'erreur à ce niveau là.
 	 * @return true si l'équipe de joueurs qui jouent contient un et un seul passeur, faux sinon
 	 */
-	private boolean nombrePasseurCorrect(){
+	public boolean nombrePasseurCorrect(){
 		int i = 0;
 		for(Joueur joueur : this.gestionEquipeJoueur.getJoueursEnJeu()){
 			if(joueur.getRole() == Role.passeur){
@@ -188,7 +188,7 @@ public class GestionMatch {
 	 * Fonction qui vérifie que le joueur a bien sélectionné 6 joueurs pour jouer
 	 * @return true si l'équipe contient 6 joueurs en jeu, faux sinon
 	 */
-	private boolean nombreJoueursCorrect() {
+	public boolean nombreJoueursCorrect() {
 		int compteur = 0;
 		for(@SuppressWarnings("unused") Joueur joueur : this.gestionEquipeJoueur.getJoueursEnJeu()) {
 			compteur++;
@@ -196,17 +196,17 @@ public class GestionMatch {
 		return (compteur==6);
 	}
 	
-	private void resetEquipe() throws JoueurBlesseException {
+	public void resetEquipe() throws JoueurBlesseException {
 		for(Joueur joueur : this.getEquipeJoueur().getListJoueur()) {
 			joueur.setEnJeu(false);
 		}
 	}
 	
-	private boolean matchFini() {
+	public boolean matchFini() {
 		return this.match.getScore().getNbSetIA() == 3 || this.match.getScore().getNbSetJoueur() == 3;
 	}
 		
-	private void nouveauSet() {
+	public void nouveauSet() {
 		this.match.getScore().nouveauSet();
 		this.match.setNbTempsMortEquipeIA(0);
 		this.match.setNbTempsMortEquipeJoueur(0);
@@ -246,7 +246,7 @@ public class GestionMatch {
 	/**
 	 * Permet de repositionner les joueurs sur le terrain à la position de départ
 	 */
-	private void initPositions() {
+	public void initPositions() {
 		for(int i=0; i < this.positionsDepartJoueur.size(); i++) {
 			this.match.getEquipeJoueur().getListJoueur().get(i).setPosition(this.positionsDepartJoueur.get(i));
 			this.match.getEquipeIA().getListJoueur().get(i).setPosition(this.positionsDepartIA.get(i));
@@ -256,7 +256,7 @@ public class GestionMatch {
 	/**
 	 * Effectue une rotation dans l'équipe IA
 	 */
-	private void rotationIA() {
+	public void rotationIA() {
 		for(int i=0; i <= this.positionsDepartIA.size(); i++) {
 			this.positionsDepartIA.add(((LinkedList<Position>) this.positionsDepartIA).removeFirst());
 		}
@@ -265,7 +265,7 @@ public class GestionMatch {
 	/**
 	 * Effectue une rotation dans l'équipe du joueur. 
 	 */
-	private void rotationJoueur() {
+	public void rotationJoueur() {
 		for(int i=0; i <= this.positionsDepartJoueur.size(); i++) {
 			this.positionsDepartJoueur.add(((LinkedList<Position>) this.positionsDepartJoueur).removeFirst());
 		}
@@ -274,14 +274,14 @@ public class GestionMatch {
 	/**
 	 * Rendre la balle à l'équipe du joueur
 	 */
-	private void rendreBalleJoueur() {
+	public void rendreBalleJoueur() {
 		this.match.getBalle().setPosition(new Position(7,2));
 	}
 	
 	/**
 	 * Rendre la balle à l'équipe IA
 	 */
-	private void rendreBalleIA() {
+	public void rendreBalleIA() {
 		this.match.getBalle().setPosition(new Position(1,15));
 	}
 	
@@ -292,7 +292,7 @@ public class GestionMatch {
 	 * @throws IOException 
 	 * @throws NbTempsMortsException 
 	 */
-	private boolean changementDePointIA(IAGenerale ia) {
+	public boolean changementDePointIA(IAGenerale ia) {
 		boolean b = ia.getPointPerduIA();
 		if(ia.getPointPerduIA()) {
 			this.rotationJoueur();
@@ -305,7 +305,7 @@ public class GestionMatch {
 		return b;
 	}
 	
-	private boolean changementDePointJoueur(IAGenerale ia) {
+	public boolean changementDePointJoueur(IAGenerale ia) {
 		boolean b = ia.getPointPerduJoueur();
 		if(ia.getPointPerduJoueur()) {
 			this.rotationIA();
@@ -325,7 +325,7 @@ public class GestionMatch {
 	 * @throws NbTempsMortsException
 	 * @throws IOException
 	 */
-	private IAGenerale demanderTempsMort(IAGenerale ia) throws NbTempsMortsException, IOException {
+	public IAGenerale demanderTempsMort(IAGenerale ia) throws NbTempsMortsException, IOException {
 		if(!maxNbTempsMortJ()) {
 			System.out.println("Vous pouvez encore prendre "+(2-this.match.getNbTempsMortEquipeJoueur())+" temps mort(s).\n");
 			System.out.println("Voulez-vous prendre un temps mort ? (oui/non)\n");
@@ -348,7 +348,7 @@ public class GestionMatch {
 	 * @return l'équipe gagnante
 	 * @throws MatchEnCoursException
 	 */
-	private Equipe determinerGagnant() throws MatchEnCoursException {
+	public Equipe determinerGagnant() throws MatchEnCoursException {
 		if(this.match.getEtat() == Etat.EnCours) {
 			throw new MatchEnCoursException();
 		}
@@ -388,11 +388,12 @@ public class GestionMatch {
 		// Commencer le match
 		IAGenerale ia = new IAGenerale(this.match);
 		this.initPositions();
-		while(this.matchFini() == false) {
+		while(this.matchFini() == false){
 			// Créer un nouveau set
 			this.nouveauSet();
 			// Jouer le set
 			while(this.match.getScore().getSet().estFini() == false) {
+				
 				this.match = ia.envoi();
 				if(this.changementDePointIA(ia)) {
 					this.demanderTempsMort(ia);
@@ -401,7 +402,7 @@ public class GestionMatch {
 
 				}
 				else {
-					Thread.sleep(3000);//2000ms = 2s
+					//Thread.sleep(3000);//2000ms = 2s
 					this.match = ia.reception();
 					if(this.changementDePointIA(ia)) {
 						this.demanderTempsMort(ia);
@@ -419,6 +420,7 @@ public class GestionMatch {
 		this.match.setEtat(Etat.Fini);
 		this.match.setEquipeGagnante(this.determinerGagnant());
 		System.out.println(this.match.getEquipeGagnante().getNomEquipe());
+		
 	}
 	
 	// getters et setters
