@@ -3,15 +3,17 @@
  */
 package modele;
 
+import java.io.Serializable;
+
 import org.newdawn.slick.Animation;
 
 import exception.JoueurBlesseException;
 
 /**
  * @author Yumiao Fu
- * relecteurs Aurélie Durand
+ * relecteurs Aurélie Durand, Meriem EL QSIMI
  */
-public class Joueur implements Cloneable {
+public class Joueur implements Cloneable , Serializable{
 	
 	
 	private int numero;
