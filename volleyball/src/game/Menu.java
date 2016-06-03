@@ -25,6 +25,7 @@ public class Menu extends BasicGameState{
 		Image jouer = new Image("/res/jouer.png");
 		Image equipe = new Image("/res/equipe.png");
 		Image quitter = new Image("/res/quitter.png");
+		
 		g.drawImage(jouer, 300, 130);
 		g.drawImage(equipe, 300, 260);
 		g.drawImage(quitter, 300, 390);
@@ -49,6 +50,7 @@ public class Menu extends BasicGameState{
 				gc.exit();
 			}
 		} 
+		
 	}
 	
 	public int getID(){
