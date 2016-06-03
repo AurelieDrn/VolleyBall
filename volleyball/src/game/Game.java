@@ -58,7 +58,6 @@ public class Game extends StateBasedGame{
 		equipeJoueur.getListJoueur().get(4).setRole(Role.defenseur);
 		equipeJoueur.getListJoueur().get(5).setRole(Role.defenseur);
 		Equipe equipeIA = EquipeFactory.getEquipe();
-<<<<<<< HEAD
 		equipeIA.setNomEquipe("L'équipe IA");
 		equipeIA.getListJoueur().get(0).setRole(Role.passeur);
 		equipeIA.getListJoueur().get(1).setRole(Role.attaquant);
@@ -67,9 +66,7 @@ public class Game extends StateBasedGame{
 		equipeIA.getListJoueur().get(4).setRole(Role.defenseur);
 		equipeIA.getListJoueur().get(5).setRole(Role.defenseur);
 		equipeJoueur.setNomEquipe("IA");
-=======
 		equipeIA.setNomEquipe("IA");
->>>>>>> refs/remotes/origin/master
 
 		InitPositionJoueurs.positionnerJoueursIA(equipeIA.getListJoueur());
 		InitPositionJoueurs.positionnerJoueursNonIA(equipeJoueur.getListJoueur());

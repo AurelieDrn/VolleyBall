@@ -3,7 +3,6 @@
  */
 package game;
 
-<<<<<<< HEAD
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -11,7 +10,6 @@ import java.util.List;
 import org.newdawn.slick.*;
 import org.newdawn.slick.state.*;
 import org.newdawn.slick.tests.xml.Entity;
-=======
 import org.lwjgl.input.Mouse;
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.GameContainer;
@@ -22,20 +20,16 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.SpriteSheet;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
->>>>>>> refs/remotes/origin/master
 import org.newdawn.slick.tiled.TiledMap;
 
 import controleur.GestionMatch;
-<<<<<<< HEAD
 import controleur.IA.IAGenerale;
 import exception.JoueurBlesseException;
 import exception.MatchEnCoursException;
 import exception.NbTempsMortsException;
 import exception.SetEnCoursException;
 import modele.Etat;
-=======
 import exception.SetEnCoursException;
->>>>>>> refs/remotes/origin/master
 import modele.Joueur;
 
 /**
@@ -122,7 +116,7 @@ public class Play extends BasicGameState{
 	}
 	
 	public void update(GameContainer gc, StateBasedGame sbg, int delta) throws SlickException{
-<<<<<<< HEAD
+
 		for(int i=0; i < this.gm.getEquipeJoueur().getListJoueur().size(); i++) {
 			Joueur j = this.gm.getEquipeJoueur().getListJoueur().get(i);
 			if(j.isMoving()){
@@ -145,7 +139,6 @@ public class Play extends BasicGameState{
 				}
 			}
 		}
-=======
 		Input input = gc.getInput();
 		int xpos = Mouse.getX();
 		int ypos = Mouse.getY();
@@ -160,7 +153,6 @@ public class Play extends BasicGameState{
 				System.out.println("Clic sur bouton changer de joueur");
 			}
 		} 
->>>>>>> refs/remotes/origin/master
 	}
 	
 	
