@@ -49,7 +49,10 @@ public class Game extends StateBasedGame{
 	public static void main(String[] args) throws NumberFormatException, IOException, JoueurBlesseException, SetEnCoursException, CloneNotSupportedException, MatchEnCoursException, NbTempsMortsException, InterruptedException {
 		Equipe equipeJoueur = EquipeFactory.getEquipe();
 		equipeJoueur.setNomEquipe("Joueur");
-
+		Equipe equipeIA = EquipeFactory.getEquipe();
+		equipeIA.setNomEquipe("L'équipe IA");
+		
+		
 		equipeJoueur.setNomEquipe("La super équipe de Mr Dupont");
 		equipeJoueur.getListJoueur().get(0).setRole(Role.passeur);
 		equipeJoueur.getListJoueur().get(1).setRole(Role.attaquant);
@@ -57,21 +60,18 @@ public class Game extends StateBasedGame{
 		equipeJoueur.getListJoueur().get(3).setRole(Role.defenseur);
 		equipeJoueur.getListJoueur().get(4).setRole(Role.defenseur);
 		equipeJoueur.getListJoueur().get(5).setRole(Role.defenseur);
-		Equipe equipeIA = EquipeFactory.getEquipe();
-		equipeIA.setNomEquipe("L'équipe IA");
+
 		equipeIA.getListJoueur().get(0).setRole(Role.passeur);
 		equipeIA.getListJoueur().get(1).setRole(Role.attaquant);
 		equipeIA.getListJoueur().get(2).setRole(Role.attaquant);
 		equipeIA.getListJoueur().get(3).setRole(Role.defenseur);
 		equipeIA.getListJoueur().get(4).setRole(Role.defenseur);
 		equipeIA.getListJoueur().get(5).setRole(Role.defenseur);
-		equipeJoueur.setNomEquipe("IA");
-		equipeIA.setNomEquipe("IA");
 
 		InitPositionJoueurs.positionnerJoueursIA(equipeIA.getListJoueur());
 		InitPositionJoueurs.positionnerJoueursNonIA(equipeJoueur.getListJoueur());
 		
-		GestionMatch gm = new GestionMatch(equipeJoueur, equipeIA);
+		GestionMatch gm = new GestionMatch(equipeIA, equipeJoueur);
 		AppGameContainer appgc;
 		gm.jouer();
 		try{

@@ -17,7 +17,7 @@ import modele.Position;
 public class InitPositionJoueurs {
 	
 	// positionne les joueurs de l'équipe sur le demi terrain du bas
-	public static ArrayList<Joueur> positionnerJoueursNonIA(List<Joueur> joueurs) {
+	public static ArrayList<Joueur> positionnerJoueursIA(List<Joueur> joueurs) {
 		Collections.shuffle(joueurs);
 		// tous les joueurs regardent vers le Nord
 		for(Joueur joueur : joueurs) {
@@ -35,7 +35,7 @@ public class InitPositionJoueurs {
 	}
 	
 	// positionne les joueurs de l'équipe sur le demi terrain du haut
-		public static ArrayList<Joueur> positionnerJoueursIA(List<Joueur> joueurs) {
+		public static ArrayList<Joueur> positionnerJoueursNonIA(List<Joueur> joueurs) {
 			Collections.shuffle(joueurs);
 			// tous les joueurs regardent vers le Nord
 			for(Joueur joueur : joueurs) {
