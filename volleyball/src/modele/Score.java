@@ -88,7 +88,17 @@ public class Score{
 	}
 	
 	public Set getSet() {
+		if(this.listSets.size() == 0){
+			return new Set(0, this.equipeIA, this.equipeJoueur);
+		}
 		return this.listSets.get(this.listSets.size()-1);
 	}
 
+	public List<Set> getListSets() {
+		return listSets;
+	}
+
+	public void setListSets(List<Set> listSets) {
+		this.listSets = listSets;
+	}
 }

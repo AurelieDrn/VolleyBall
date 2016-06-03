@@ -3,11 +3,20 @@
  */
 package game;
 
-import org.newdawn.slick.*;
-import org.newdawn.slick.state.*;
+import org.lwjgl.input.Mouse;
+import org.newdawn.slick.Animation;
+import org.newdawn.slick.GameContainer;
+import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Image;
+import org.newdawn.slick.Input;
+import org.newdawn.slick.SlickException;
+import org.newdawn.slick.SpriteSheet;
+import org.newdawn.slick.state.BasicGameState;
+import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.tiled.TiledMap;
 
 import controleur.GestionMatch;
+import exception.SetEnCoursException;
 import modele.Joueur;
 
 /**
@@ -39,9 +48,75 @@ public class Play extends BasicGameState{
 			Joueur j = this.gm.getEquipeJoueur().getListJoueur().get(i);
 			g.drawAnimation(j.getAnimation()[j.getDirection() + (j.isMoving() ? 4 : 0)], x+j.getX()*32, y-j.getY()*32);
 		}
+		g.drawString(this.gm.getEquipeJoueur().getNomEquipe(), 50, 100);
+		g.drawString(this.gm.getEquipeIA().getNomEquipe(), 700, 100);
+		
+		g.drawString("Temps morts : "+this.gm.getMatch().getNbTempsMortEquipeJoueur()+"/2", 50, 200);
+		g.drawString("Temps morts : "+this.gm.getMatch().getNbTempsMortEquipeIA()+"/2", 600, 200);
+	
+		Image tempsmort = new Image("/res/tempsmort.png");
+		g.drawImage(tempsmort, 50, 220);
+		
+		g.drawString("Changements : "+this.gm.getMatch().getNbChangementsEquipeJoueur()+"/6", 50, 300);
+		g.drawString("Changements : "+this.gm.getMatch().getNbChangementsEquipeIA()+"/6", 600, 300);
+		
+		Image changer = new Image("/res/changer.png");
+		g.drawImage(changer, 50, 320);
+		
+		g.drawString("Score : "+this.gm.getMatch().getScore().getSet().getScoreEquipeJoueur(), 280, 10);
+		g.drawString("Score : "+this.gm.getMatch().getScore().getSet().getScoreEquipeIA(), 440, 10);
+		
+		Image balle = new Image("res/balle.png");
+		g.drawImage(balle, this.x+this.gm.getMatch().getBalle().getPosition().getX()*32, this.y-this.gm.getMatch().getBalle().getPosition().getY()*32);
+		
+		int xJoueur = 280;
+		int xIA = 440;
+		for(int i=0; i<=2; i++){
+			if(this.gm.getMatch().getScore().getListSets().size() <= i) {
+				g.drawOval(xJoueur, 30, 10, 10);
+				xJoueur = xJoueur+20;
+				
+				g.drawOval(xIA, 30, 10, 10);
+				xIA = xIA+20;
+			}
+			else {
+				try {
+					if(this.gm.getMatch().getScore().getListSets().get(i).getGagnant().equals(this.gm.getEquipeJoueur())) {
+						g.fillOval(xJoueur, 30, 10, 10);
+						xJoueur = xJoueur+20;
+						
+						g.drawOval(xIA, 30, 10, 10);
+						xIA = xIA+20;
+					} 
+					else {
+						g.drawOval(xJoueur, 30, 10, 10);
+						xJoueur = xJoueur+20;
+						
+						g.fillOval(xIA, 30, 10, 10);
+						xIA = xIA+20;
+					}
+				} catch (SetEnCoursException e) {
+					e.printStackTrace();
+				}
+			}
+		}
 	}
 	
 	public void update(GameContainer gc, StateBasedGame sbg, int delta) throws SlickException{
+		Input input = gc.getInput();
+		int xpos = Mouse.getX();
+		int ypos = Mouse.getY();
+		if((xpos>51&&xpos<434) && (ypos>417&&ypos<437)){
+			if(input.isMouseButtonDown(0)){
+				//this.gm.prendreTempsMortJoueur(ia);
+				System.out.println("Vous avez pris un temps mort !");
+			}
+		} 
+		if((xpos>50&&xpos<232) && (ypos>317&&ypos<349)){
+			if(input.isMouseButtonDown(0)){
+				System.out.println("Clic sur bouton changer de joueur");
+			}
+		} 
 	}
 	
 	public int getID(){

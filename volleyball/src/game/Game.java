@@ -41,10 +41,10 @@ public class Game extends StateBasedGame{
 	
 	public static void main(String[] args) {
 		Equipe equipeJoueur = EquipeFactory.getEquipe();
-		equipeJoueur.setNomEquipe("La super équipe de Mr Dupont");
+		equipeJoueur.setNomEquipe("Joueur");
 
 		Equipe equipeIA = EquipeFactory.getEquipe();
-		equipeJoueur.setNomEquipe("IA");
+		equipeIA.setNomEquipe("IA");
 
 		InitPositionJoueurs.positionnerJoueursIA(equipeIA.getListJoueur());
 		InitPositionJoueurs.positionnerJoueursNonIA(equipeJoueur.getListJoueur());

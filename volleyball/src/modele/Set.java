@@ -89,4 +89,20 @@ public class Set {
 		s6 += "|\n";
 		return s+s2+s3+s4+s5+s6;
 	}
+
+	public int getScoreEquipeIA() {
+		return scoreEquipeIA;
+	}
+
+	public void setScoreEquipeIA(int scoreEquipeIA) {
+		this.scoreEquipeIA = scoreEquipeIA;
+	}
+
+	public int getScoreEquipeJoueur() {
+		return scoreEquipeJoueur;
+	}
+
+	public void setScoreEquipeJoueur(int scoreEquipeJoueur) {
+		this.scoreEquipeJoueur = scoreEquipeJoueur;
+	}
 }
