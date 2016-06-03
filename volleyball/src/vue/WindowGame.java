@@ -100,7 +100,8 @@ public class WindowGame extends BasicGame {
 	            case 2: j.setY(j.getY()-.01f * delta); break;
 	            case 3: j.setX(j.getX()+.01f * delta); break;
 	        }
-	    }if(this.joueurs.get(0).isMoving()) {
+	    }*/
+	    /*if(this.joueurs.get(0).isMoving()) {
 			this.joueurs.get(0).setX(this.joueurs.get(0).getX()-0.1f * delta);
 		}*/
 	}
@@ -111,17 +112,17 @@ public class WindowGame extends BasicGame {
         if (Input.KEY_ESCAPE == key) {
             container.exit();
         }
-        this.joueurs.get(0).setMoving(false);
+        //this.joueurs.get(0).setMoving(false);
     }
 	
 	@Override
 	public void keyPressed(int key, char c) {
-	    switch (key) {
+	    /*switch (key) {
 	        case Input.KEY_UP:    this.joueurs.get(0).setDirection(0); this.joueurs.get(0).setMoving(true); break;
 	        case Input.KEY_LEFT:  this.joueurs.get(0).setDirection(1); this.joueurs.get(0).setMoving(true); break;
 	        case Input.KEY_DOWN:  this.joueurs.get(0).setDirection(2); this.joueurs.get(0).setMoving(true); break;
 	        case Input.KEY_RIGHT: this.joueurs.get(0).setDirection(3); this.joueurs.get(0).setMoving(true); break;
-	    }
+	    }*/
 	}
 	
 	/*

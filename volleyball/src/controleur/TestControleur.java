@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import exception.JoueurBlesseException;
 import exception.MatchEnCoursException;
+import exception.NbTempsMortsException;
 import exception.SetEnCoursException;
 import modele.Equipe;
 import modele.EquipeFactory;
@@ -40,6 +41,10 @@ public class TestControleur {
 		} catch (CloneNotSupportedException e) {
 			e.printStackTrace();
 		} catch (MatchEnCoursException e) {
+			e.printStackTrace();
+		} catch (NbTempsMortsException e) {
+			e.printStackTrace();
+		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
 		

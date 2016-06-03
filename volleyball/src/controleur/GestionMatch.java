@@ -217,7 +217,7 @@ public class GestionMatch {
 	}
 	
 	public boolean maxNbTempsMortJ(){
-		return this.match.getNbTempsMortEquipeIA() == 2;
+		return this.match.getNbTempsMortEquipeJoueur() == 2;
 	}
 	
 	public void tempsMortIA() throws NbTempsMortsException{
@@ -227,11 +227,20 @@ public class GestionMatch {
 		}
 	}
 	
-	public void tempsMortJ() throws NbTempsMortsException{
+	/**
+	 * Permet au joueur de temps un temps mort
+	 * Un bonus de +1 est appliqué à toutes les caractéristiques des joueurs du joueur sur le terrain
+	 * @param ia : IAGenerale
+	 * @return une IAGenerale avec un bonus
+	 * @throws NbTempsMortsException
+	 */
+	public IAGenerale prendreTempsMortJoueur(IAGenerale ia) throws NbTempsMortsException{
 		if(maxNbTempsMortJ()) throw new NbTempsMortsException();
 		else{
-			this.match.getScore().incNbSetJoueur();
+			ia.setBonus(1);
+			this.match.setNbTempsMortEquipeJoueur(this.match.getNbTempsMortEquipeJoueur()+1);
 		}
+		return ia;
 	}
 	
 	/**
@@ -280,8 +289,24 @@ public class GestionMatch {
 	 * Vérifie s'il y a eu un changement de point et effectue les opérations nécessaires.
 	 * @param ia : IAGenerale
 	 * @return true si un changement de point a eu lieu
+	 * @throws IOException 
+	 * @throws NbTempsMortsException 
 	 */
-	private boolean changementDePoint(IAGenerale ia) {
+	private boolean changementDePointIA(IAGenerale ia) {
+		boolean b = ia.getPointPerduIA();
+		if(ia.getPointPerduIA()) {
+			this.rotationJoueur();
+			this.initPositions();
+			ia.setPointPerduIA(false);
+			this.rendreBalleJoueur();
+			this.fatigueJoueurs();
+			this.reposJoueurs();
+		}
+		return b;
+	}
+	
+	private boolean changementDePointJoueur(IAGenerale ia) {
+		boolean b = ia.getPointPerduJoueur();
 		if(ia.getPointPerduJoueur()) {
 			this.rotationIA();
 			this.initPositions();
@@ -290,15 +315,32 @@ public class GestionMatch {
 			this.fatigueJoueurs();
 			this.reposJoueurs();
 		}
-		else if(ia.getPointPerduIA()) {
-			this.rotationJoueur();
-			this.initPositions();
-			ia.setPointPerduIA(false);
-			this.rendreBalleJoueur();
-			this.fatigueJoueurs();
-			this.reposJoueurs();
+		return b;
+	}
+	
+	/**
+	 * Demande au joueur s'il veut prendre un temps mort
+	 * @param ia IAGenerale
+	 * @return l'ia
+	 * @throws NbTempsMortsException
+	 * @throws IOException
+	 */
+	private IAGenerale demanderTempsMort(IAGenerale ia) throws NbTempsMortsException, IOException {
+		if(!maxNbTempsMortJ()) {
+			System.out.println("Vous pouvez encore prendre "+(2-this.match.getNbTempsMortEquipeJoueur())+" temps mort(s).\n");
+			System.out.println("Voulez-vous prendre un temps mort ? (oui/non)\n");
+			BufferedReader bufferRead = new BufferedReader(new InputStreamReader(System.in));
+	        
+	        String reponse = bufferRead.readLine();
+	        while(!(reponse.equals("oui")) && !(reponse.equals("non"))) {
+	        	System.out.println("Voulez-vous prendre un temps mort ? (oui/non)\n");
+	        	reponse = bufferRead.readLine();
+	        }
+	        if(reponse.equals("oui")) {
+	        	this.prendreTempsMortJoueur(ia);
+	        }
 		}
-		return (ia.getPointPerduJoueur() || ia.getPointPerduIA());
+		return ia;
 	}
 	
 	/**
@@ -326,8 +368,10 @@ public class GestionMatch {
 	 * @throws SetEnCoursException 
 	 * @throws CloneNotSupportedException 
 	 * @throws MatchEnCoursException 
+	 * @throws NbTempsMortsException 
+	 * @throws InterruptedException 
 	 */
-	public void jouer() throws IOException, NumberFormatException, JoueurBlesseException, SetEnCoursException, CloneNotSupportedException, MatchEnCoursException{
+	public void jouer() throws IOException, NumberFormatException, JoueurBlesseException, SetEnCoursException, CloneNotSupportedException, MatchEnCoursException, NbTempsMortsException, InterruptedException{
 		// Constituer l'équipe
 		System.out.println(this.match.getEquipeJoueur().getNomEquipe()+" VS "+this.match.getEquipeIA().getNomEquipe());
 		this.constituerEquipe();
@@ -350,9 +394,21 @@ public class GestionMatch {
 			// Jouer le set
 			while(this.match.getScore().getSet().estFini() == false) {
 				this.match = ia.envoi();
-				if(!this.changementDePoint(ia)) {
+				if(this.changementDePointIA(ia)) {
+					this.demanderTempsMort(ia);
+				}
+				else if (this.changementDePointJoueur(ia)) {
+
+				}
+				else {
+					Thread.sleep(3000);//2000ms = 2s
 					this.match = ia.reception();
-					this.changementDePoint(ia);
+					if(this.changementDePointIA(ia)) {
+						this.demanderTempsMort(ia);
+					}
+					else if (this.changementDePointJoueur(ia)) {
+						
+					}
 				}
 			}
 			// Incrémente le nombre de set gagné
