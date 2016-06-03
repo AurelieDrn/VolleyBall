@@ -81,6 +81,14 @@ public class Play extends BasicGameState{
 		
 		Image balle = new Image("res/balle.png");
 		g.drawImage(balle, this.x+this.gm.getMatch().getBalle().getPosition().getX()*32, this.y-this.gm.getMatch().getBalle().getPosition().getY()*32);
+	
+		for(Joueur j : this.gm.getMatch().getEquipeJoueur().getListJoueur()) {
+			g.drawString(j.getNumero()+"", (x+j.getX()*32)+12, (y-j.getY()*32)+30);
+		}
+		
+		for(Joueur j : this.gm.getMatch().getEquipeIA().getListJoueur()) {
+			g.drawString(j.getNumero()+"", (x+j.getX()*32)+12, (y-j.getY()*32)-20);
+		}
 		
 		int xJoueur = 280;
 		int xIA = 440;
@@ -154,9 +162,7 @@ public class Play extends BasicGameState{
 			}
 		} 
 	}
-	
-	
-	
+		
 	public int getID(){
 		return 1;
 	}
