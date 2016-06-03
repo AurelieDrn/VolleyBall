@@ -3,14 +3,21 @@
  */
 package game;
 
+import java.io.IOException;
+
 import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
 
 import controleur.GestionMatch;
+import exception.JoueurBlesseException;
+import exception.MatchEnCoursException;
+import exception.NbTempsMortsException;
+import exception.SetEnCoursException;
 import modele.Equipe;
 import modele.EquipeFactory;
+import modele.Role;
 
 /**
  * @author Aurelie
@@ -39,11 +46,25 @@ public class Game extends StateBasedGame{
 		this.enterState(menu);
 	}
 	
-	public static void main(String[] args) {
+	public static void main(String[] args) throws NumberFormatException, IOException, JoueurBlesseException, SetEnCoursException, CloneNotSupportedException, MatchEnCoursException, NbTempsMortsException, InterruptedException {
 		Equipe equipeJoueur = EquipeFactory.getEquipe();
 		equipeJoueur.setNomEquipe("La super équipe de Mr Dupont");
 
+		equipeJoueur.setNomEquipe("La super équipe de Mr Dupont");
+		equipeJoueur.getListJoueur().get(0).setRole(Role.passeur);
+		equipeJoueur.getListJoueur().get(1).setRole(Role.attaquant);
+		equipeJoueur.getListJoueur().get(2).setRole(Role.attaquant);
+		equipeJoueur.getListJoueur().get(3).setRole(Role.defenseur);
+		equipeJoueur.getListJoueur().get(4).setRole(Role.defenseur);
+		equipeJoueur.getListJoueur().get(5).setRole(Role.defenseur);
 		Equipe equipeIA = EquipeFactory.getEquipe();
+		equipeIA.setNomEquipe("L'équipe IA");
+		equipeIA.getListJoueur().get(0).setRole(Role.passeur);
+		equipeIA.getListJoueur().get(1).setRole(Role.attaquant);
+		equipeIA.getListJoueur().get(2).setRole(Role.attaquant);
+		equipeIA.getListJoueur().get(3).setRole(Role.defenseur);
+		equipeIA.getListJoueur().get(4).setRole(Role.defenseur);
+		equipeIA.getListJoueur().get(5).setRole(Role.defenseur);
 		equipeJoueur.setNomEquipe("IA");
 
 		InitPositionJoueurs.positionnerJoueursIA(equipeIA.getListJoueur());
@@ -51,6 +72,7 @@ public class Game extends StateBasedGame{
 		
 		GestionMatch gm = new GestionMatch(equipeJoueur, equipeIA);
 		AppGameContainer appgc;
+		gm.jouer();
 		try{
 			appgc = new AppGameContainer(new Game(gamename, gm));
 			appgc.setDisplayMode(832, 672, false);

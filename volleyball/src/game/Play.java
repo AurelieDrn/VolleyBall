@@ -3,11 +3,22 @@
  */
 package game;
 
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.newdawn.slick.*;
 import org.newdawn.slick.state.*;
+import org.newdawn.slick.tests.xml.Entity;
 import org.newdawn.slick.tiled.TiledMap;
 
 import controleur.GestionMatch;
+import controleur.IA.IAGenerale;
+import exception.JoueurBlesseException;
+import exception.MatchEnCoursException;
+import exception.NbTempsMortsException;
+import exception.SetEnCoursException;
+import modele.Etat;
 import modele.Joueur;
 
 /**
@@ -28,7 +39,7 @@ public class Play extends BasicGameState{
 		this.map = new TiledMap("/res/map/terrain.tmx");
 		this.createAnimations();
 	}
-	
+	List<Entity> entities = new ArrayList<Entity>();
 	public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException{
 		this.map.render(0, 0);
 		for(int i=0; i < this.gm.getEquipeIA().getListJoueur().size(); i++) {
@@ -42,7 +53,31 @@ public class Play extends BasicGameState{
 	}
 	
 	public void update(GameContainer gc, StateBasedGame sbg, int delta) throws SlickException{
+		for(int i=0; i < this.gm.getEquipeJoueur().getListJoueur().size(); i++) {
+			Joueur j = this.gm.getEquipeJoueur().getListJoueur().get(i);
+			if(j.isMoving()){
+				switch(j.getDirection()){
+				case 0: this.y -= .1f * delta; break;
+	            case 1: this.x -= .1f * delta; break;
+	            case 2: this.y += .1f * delta; break;
+	            case 3: this.x += .1f * delta; break;
+				}
+			}
+		}
+		for(int i=0; i < this.gm.getEquipeIA().getListJoueur().size(); i++) {
+			Joueur j = this.gm.getEquipeIA().getListJoueur().get(i);
+			if(j.isMoving()){
+				switch(j.getDirection()){
+				case 0: this.y -= .1f * delta; break;
+	            case 1: this.x -= .1f * delta; break;
+	            case 2: this.y += .1f * delta; break;
+	            case 3: this.x += .1f * delta; break;
+				}
+			}
+		}
 	}
+	
+	
 	
 	public int getID(){
 		return 1;
@@ -56,6 +91,7 @@ public class Play extends BasicGameState{
 	    }
 	    return animation;
 	}
+
 	
 	public void createAnimations() throws SlickException {
 		for(int i=0; i < this.gm.getEquipeIA().getListJoueur().size(); i++) {
