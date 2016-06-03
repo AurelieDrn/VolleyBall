@@ -3,11 +3,13 @@
  */
 package modele;
 
+import java.io.Serializable;
+
 /**
  * @author Aurelie
  *
  */
-public class Position {
+public class Position implements Serializable{
 	
 	private float x;
 	private float y;
