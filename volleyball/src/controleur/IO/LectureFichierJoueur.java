@@ -12,6 +12,11 @@ import java.util.ArrayList;
 
 import modele.Joueur;
 
+/**
+ * @author Meriem EL QSIMI
+ *
+ */
+
 public class LectureFichierJoueur {
 
 	private ArrayList<Joueur> joueurs;

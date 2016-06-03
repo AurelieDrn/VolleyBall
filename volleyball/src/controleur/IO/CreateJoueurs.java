@@ -12,6 +12,11 @@ import modele.Joueur;
 import modele.JoueurFactory;
 import modele.Role;
 
+/**
+ * @author Meriem EL QSIMI
+ *
+ */
+
 public class CreateJoueurs {
 	private JoueurFactory jFactory ;
 	private ArrayList<Joueur> joueurs;
