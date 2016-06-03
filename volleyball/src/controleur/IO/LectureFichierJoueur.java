@@ -7,39 +7,44 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.ObjectInputStream;
+import java.util.ArrayList;
+
+import modele.Joueur;
 
 public class LectureFichierJoueur {
 
-
-
-
-	public static void main(String[] args) {
-		FileInputStream fis = null;
-		InputStreamReader isr = null;
-		BufferedReader br = null; 
-		try {
-			String str = "";
-			String str1 = "";
-			fis = new FileInputStream("/home/fuyumiao/workspace/volleyball/src/modele/test");
-			isr = new InputStreamReader(fis);
-			br = new BufferedReader(isr);
-			while ((str = br.readLine()) != null) {
-				str1 += str + "\n";
+	private ArrayList<Joueur> joueurs;
+	private String nomFichier;
+	public LectureFichierJoueur(String file) {
+		super();
+		this.joueurs = new ArrayList<Joueur>();
+		this.nomFichier = file;
+	}	
+	public void load(){
+		try(
+			FileInputStream fis = new FileInputStream(nomFichier);
+			ObjectInputStream read = new ObjectInputStream(fis);){
+			
+			int nbrJ = read.readInt();
+			for(int i = 0; i < nbrJ; i++){
+				this.joueurs.add((Joueur)read.readObject());
 			}
-			System.out.println(str1);
-			} catch (FileNotFoundException e) {
-				System.out.println("ne peux pas chercher le fichier.");
-				} catch (IOException e) {
-					System.out.println("n'est pas succed.");
-					} finally {
-						try {
-							br.close();
-							isr.close();
-							fis.close();
-							} catch (IOException e) {
-								e.printStackTrace();
-					}
-				}
-	 		}
+			
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+	}
+	@Override
+	public String toString() {
+		return "LectureFichierJoueur [joueurs=" + joueurs + "]";
+	}
+
+
+	
 }
 
