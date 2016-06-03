@@ -1,71 +1,62 @@
 package controleur.IO;
 
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 import modele.Joueur;
+import modele.JoueurFactory;
 import modele.Role;
 
-public class CreateJoueurs {
+/**
+ * @author Meriem EL QSIMI
+ *
+ */
 
-	private List<Joueur> joueurs;
-	private int nbrJoueurs;
+public class CreateJoueurs {
+	private JoueurFactory jFactory ;
+	private ArrayList<Joueur> joueurs;
+	
 	
 	public CreateJoueurs() {
 		super();
-		this.joueurs = new ArrayList<Joueur>();
-		this.nbrJoueurs = 96;
-		for(int i = 0; i<this.nbrJoueurs; i++){
-			int fatigue = 0;
-			int numero = 0;
-			
-			int force = loadRandom();
-			int salaireHebdo = loadRandomSalary();
-			int precision = loadRandom();
-			int fpsy = loadRandom();
-			int resis = loadRandom();
-			int vitesse = loadRandom();
-			Role role = Role.getRandom();
-			int resistance = loadRandom();
-			this.joueurs.add(new Joueur(resistance, null, role, resistance, resistance, resistance, resistance, resistance, resistance));
-			
-		}	
+		this.setjFactory(new JoueurFactory());
+		this.joueurs = JoueurFactory.getJoueurs(96);
 	}
-    public static int randomInt(int min, int max) {
 
-        int random = (int) ((max - min + 1) * Math.random() + min);
-        return random;
 
-    }
-	
-	public Role loadRandomRole(){
-		return null;	
-	}
-	
-	public static int loadRandomSalary(){
-		int min = 100;
-		int max = 500;
-		return randomInt(min,max);
-	}
-	public static int loadRandom(){
-		int min = 0;
-		int max = 100;
-		return randomInt(min,max);
-	}
-	public List<Joueur> getJoueurs() {
-		return joueurs;
-	}
-	public void setJoueurs(List<Joueur> joueurs) {
-		this.joueurs = joueurs;
-	}
-	public int getNbrJoueurs() {
-		return nbrJoueurs;
-	}
-	public void setNbrJoueurs(int nbrJoueurs) {
-		this.nbrJoueurs = nbrJoueurs;
+	public void save(){
+			
+			try(ObjectOutputStream write = new ObjectOutputStream(new FileOutputStream("joueurs.csv"));){
+				
+				write.writeInt(this.joueurs.size()); 
+				for(Joueur joueurs : this.joueurs){
+					write.writeObject(joueurs);
+				}
+				
+			} catch (FileNotFoundException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+
+	public void clear(){
+		this.joueurs.clear();
 	}
 	
 	
-	
+	public JoueurFactory getjFactory() {
+		return jFactory;
+	}
+
+
+	public void setjFactory(JoueurFactory jFactory) {
+		this.jFactory = jFactory;
+	}
+		
 }
