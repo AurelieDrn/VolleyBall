@@ -3,13 +3,9 @@
  */
 package game;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.newdawn.slick.*;
-import org.newdawn.slick.state.*;
-import org.newdawn.slick.tests.xml.Entity;
 import org.lwjgl.input.Mouse;
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.GameContainer;
@@ -20,15 +16,10 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.SpriteSheet;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
+import org.newdawn.slick.tests.xml.Entity;
 import org.newdawn.slick.tiled.TiledMap;
 
 import controleur.GestionMatch;
-import controleur.IA.IAGenerale;
-import exception.JoueurBlesseException;
-import exception.MatchEnCoursException;
-import exception.NbTempsMortsException;
-import exception.SetEnCoursException;
-import modele.Etat;
 import exception.SetEnCoursException;
 import modele.Joueur;
 
@@ -53,6 +44,10 @@ public class Play extends BasicGameState{
 	List<Entity> entities = new ArrayList<Entity>();
 	public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException{
 		this.map.render(0, 0);
+		
+		Image retour = new Image("/res/retour.png");
+		g.drawImage(retour, 90, 10);
+		
 		for(int i=0; i < this.gm.getEquipeIA().getListJoueur().size(); i++) {
 			Joueur j = this.gm.getEquipeIA().getListJoueur().get(i);
 			g.drawAnimation(j.getAnimation()[j.getDirection() + (j.isMoving() ? 4 : 0)], x+j.getX()*32, y-j.getY()*32);
@@ -161,6 +156,12 @@ public class Play extends BasicGameState{
 				System.out.println("Clic sur bouton changer de joueur");
 			}
 		} 
+		
+		if((xpos>90&&xpos<194) && (ypos>625&&ypos<662)){
+			if(input.isMouseButtonDown(0)){
+				sbg.enterState(0);
+			}
+		}
 	}
 		
 	public int getID(){

@@ -42,7 +42,7 @@ public class Menu extends BasicGameState{
 		} 
 		if((xpos>300&&xpos<492) && (ypos>323&&ypos<412)){
 			if(input.isMouseButtonDown(0)){
-				sbg.enterState(1);
+				sbg.enterState(2);
 			}
 		} 
 		if((xpos>300&&xpos<492) && (ypos>194&&ypos<281)){

@@ -45,20 +45,30 @@ public class GestionEquipe {
 	}
 	
 	public void entrainerJoueur(Joueur joueur){
-		Caracteristique caracteristique = Caracteristique.getRandom();
-		switch(caracteristique){
-			case force:
-				joueur.setForce(joueur.getForce()+1);
-			case resistance:
-				joueur.setResistance(joueur.getResistance()+1);
-			case vitesse:
-				joueur.setVitesse(joueur.getVitesse()+1);
-			case precision:
-				joueur.setPrecision(joueur.getPrecision()+1);
-			default:
-				System.out.println("Quelle caractéristique dois-je améliorer ?");
+		if(joueur.getFatigue()<10) {
+			Caracteristique caracteristique = Caracteristique.getRandom();
+			switch(caracteristique){
+				case force:
+					if(joueur.getForce()<10){
+						joueur.setForce(joueur.getForce()+1);
+					}
+				case resistance:
+					if(joueur.getResistance()<10){
+						joueur.setResistance(joueur.getResistance()+1);
+					}
+				case vitesse:
+					if(joueur.getVitesse()<10){
+						joueur.setVitesse(joueur.getVitesse()+1);
+					}
+				case precision:
+					if(joueur.getPrecision()<10){
+						joueur.setPrecision(joueur.getPrecision()+1);
+					}
+				default:
+					
+			}
+			joueur.setFatigue(joueur.getFatigue()+1);
 		}
-		joueur.setFatigue(joueur.getFatigue()-1);
 	}
 	
 	public void payerSalaireJoueurs(){
